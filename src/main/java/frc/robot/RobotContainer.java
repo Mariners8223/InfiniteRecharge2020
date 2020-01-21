@@ -8,16 +8,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.commands.ChassisCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.CollectLemonCommand;
+import frc.robot.commands.EjectLemonCommand;
 import frc.robot.subsystems.Chassis;
 
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public ChassisCommand chassisCommand = new ChassisCommand();
-  public Chassis chassis = Chassis.getInstance();
-  public static Joystick joystick = new Joystick(Constants.JOYSTICK);
-
+  public static Chassis chassis = Chassis.getInstance();
+  public static Joystick joystick = new Joystick(Constants.DRIVER_STICK);
+  private static JoystickButton collectButton = new JoystickButton(joystick, 1);
+  private static JoystickButton ejectButton = new JoystickButton(joystick, 4);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -25,6 +27,8 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
+    collectButton.whileHeld(new CollectLemonCommand());
+    ejectButton.whileHeld(new EjectLemonCommand());
   }
 
 
