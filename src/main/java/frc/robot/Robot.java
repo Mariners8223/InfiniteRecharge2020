@@ -16,8 +16,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private Chassis chassis = Chassis.getInstance();
-  private ChassisCommand chassisCommand = new ChassisCommand();
+  private final Chassis chassis = Chassis.getInstance();
+  private final ChassisCommand chassisCommand = new ChassisCommand();
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.

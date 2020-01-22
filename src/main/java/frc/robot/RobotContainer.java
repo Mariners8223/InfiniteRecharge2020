@@ -1,25 +1,21 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CollectLemonCommand;
 import frc.robot.commands.EjectLemonCommand;
+import frc.robot.commands.IntakeForwordCommand;
+import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.subsystems.Chassis;
 
 
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   public static Chassis chassis = Chassis.getInstance();
   public static Joystick joystick = new Joystick(Constants.DRIVER_STICK);
   private static JoystickButton collectButton = new JoystickButton(joystick, 1);
   private static JoystickButton ejectButton = new JoystickButton(joystick, 4);
+  private static JoystickButton intakeForwordButton = new JoystickButton(joystick, 2);
+  private static JoystickButton intakeReverseButton = new JoystickButton(joystick, 3);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -29,6 +25,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     collectButton.whileHeld(new CollectLemonCommand());
     ejectButton.whileHeld(new EjectLemonCommand());
+    intakeForwordButton.whenPressed(new IntakeForwordCommand());
+    intakeReverseButton.whenPressed(new IntakeReverseCommand());
   }
 
 
