@@ -25,8 +25,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     collectButton.whileHeld(new CollectLemonCommand());
     ejectButton.whileHeld(new EjectLemonCommand());
-    intakeForwordButton.whenPressed(new IntakeForwordCommand());
-    intakeReverseButton.whenPressed(new IntakeReverseCommand());
+    intakeForwordButton.whileHeld(new IntakeForwordCommand());
+    intakeReverseButton.whileHeld(new IntakeReverseCommand());
   }
 
 

@@ -13,6 +13,7 @@ public class EjectLemonCommand extends CommandBase {
   @Override
   public void execute() {
     bull.eject();
+    System.out.print("eject");
   }
 
   @Override
