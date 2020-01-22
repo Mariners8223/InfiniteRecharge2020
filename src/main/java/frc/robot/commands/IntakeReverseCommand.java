@@ -11,15 +11,8 @@ public class IntakeReverseCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    bull.intake_move_reverse();
-    System.out.println("safdkhlsfjahfsulfh");
-  }
-
-  @Override
   public void execute() {
     bull.intake_move_reverse();
-    System.out.println("safdkhlsfjahfsulfh");
   }
 
   @Override
