@@ -12,10 +12,10 @@ import frc.robot.subsystems.Chassis;
 public class RobotContainer {
   public static Chassis chassis = Chassis.getInstance();
   public static Joystick joystick = new Joystick(Constants.DRIVER_STICK);
-  private static JoystickButton collectButton = new JoystickButton(joystick, 1);
-  private static JoystickButton ejectButton = new JoystickButton(joystick, 4);
-  private static JoystickButton intakeForwordButton = new JoystickButton(joystick, 2);
-  private static JoystickButton intakeReverseButton = new JoystickButton(joystick, 3);
+  private static JoystickButton collectButton = new JoystickButton(joystick, Constants.COLLECTER_COLLECT_BUTTON);
+  private static JoystickButton ejectButton = new JoystickButton(joystick, Constants.COLLECTER_EJECT_BUTTON);
+  private static JoystickButton intakeForwordButton = new JoystickButton(joystick, Constants.INTAKE_FORWORD_BUTTON);
+  private static JoystickButton intakeReverseButton = new JoystickButton(joystick, Constants.INTAKE_REVERSE_BUTTON);
 
   public RobotContainer() {
     configureButtonBindings();
