@@ -12,6 +12,8 @@ public final class Constants {
     public static final int INTAKE_FORWORD_BUTTON = 2;
     public static final int INTAKE_REVERSE_BUTTON = 3;
     
+    public static final int ANGLE_VISION_PID_BUTTON = 7; //change when posible
+    
     public static final int COLLACTER_MOTOR = 6;
     public static final int SOLONOID_A = 3;
     public static final int SOLONOID_B = 4;

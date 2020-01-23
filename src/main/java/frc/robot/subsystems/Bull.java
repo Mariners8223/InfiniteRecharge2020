@@ -14,6 +14,10 @@ public class Bull extends SubsystemBase {
   private final Encoder shooter_encoder;
 
   private final PIDController shooter_speed_pid;
+  private final double KP_SHOOTER_SPEED = 0;
+  private final double KI_SHOOTER_SPEED = 0;
+  private final double KD_SHOOTER_SPEED = 0;
+
   private final double COLLECTOR_SPEED = 0.5;
 
   private final Compressor compressor;
@@ -23,12 +27,17 @@ public class Bull extends SubsystemBase {
 
   private Bull() {
     collector = new Spark(Constants.COLLACTER_MOTOR);
+
     shooter_motor = new Spark(Constants.SHOOTER_MOTOR);
     shooter_encoder = new Encoder(Constants.SHOOTER_ENCODER_A, Constants.SHOOTER_ENCODER_B);
     shooter_encoder.setDistancePerPulse(Constants.DISTANCE_PER_PULSE);
+
     compressor = new Compressor();
+
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
-    shooter_speed_pid = new PIDController(0, 0, 0, 0.1);
+    
+    shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
+    shooter_speed_pid.setTolerance(0.03);
   }
 
   public static Bull getInstance() {
@@ -66,7 +75,12 @@ public class Bull extends SubsystemBase {
     solenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
-  public void enable_shooter(double speed){
-    shooter_encoder.getRate();
+  public void shoot(double speed){
+    shooter_motor.set(shooter_speed_pid.calculate(shooter_encoder.getRate()));
+  }
+
+  public void shoot_disable(){
+    shooter_speed_pid.reset();
+    shooter_motor.set(0);
   }
 }
