@@ -21,5 +21,5 @@ public final class Constants {
     public static final int SHOOTER_MOTOR = 0;     //change when posible
     public static final int SHOOTER_ENCODER_A = 0; //change when posible
     public static final int SHOOTER_ENCODER_B = 0; //change when posible
-    public static final int DISTANCE_PER_PULSE = 0;
+    public static final double DISTANCE_PER_PULSE = 0.000396;
 }

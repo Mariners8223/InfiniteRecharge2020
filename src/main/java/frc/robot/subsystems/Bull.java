@@ -6,22 +6,25 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Bull extends SubsystemBase {
-  private final Spark collector;
-  private final Spark shooter_motor;
-  private final Encoder shooter_encoder;
+  private Spark collector;
+  private Spark shooter_motor;
+  private Encoder shooter_encoder;
 
-  private final PIDController shooter_speed_pid;
+  private PIDController shooter_speed_pid;
+
   private final double KP_SHOOTER_SPEED = 0;
   private final double KI_SHOOTER_SPEED = 0;
   private final double KD_SHOOTER_SPEED = 0;
-
+  private final double SHOOTER_TOLERANCE = 0.03;
+  
   private final double COLLECTOR_SPEED = 0.5;
 
-  private final Compressor compressor;
-  private final DoubleSolenoid solenoid;
+  private Compressor compressor;
+  private DoubleSolenoid solenoid;
 
   private static Bull instance;
 
@@ -37,7 +40,7 @@ public class Bull extends SubsystemBase {
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
     
     shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
-    shooter_speed_pid.setTolerance(0.03);
+    shooter_speed_pid.setTolerance(SHOOTER_TOLERANCE);
   }
 
   public static Bull getInstance() {
@@ -75,8 +78,12 @@ public class Bull extends SubsystemBase {
     solenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
-  public void shoot(double speed){
-    shooter_motor.set(shooter_speed_pid.calculate(shooter_encoder.getRate()));
+  public void shoot_enable(double speed){
+    shooter_speed_pid.setSetpoint(speed);
+  }
+
+  public void shoot(){
+    shooter_motor.set(MathUtil.clamp(shooter_speed_pid.calculate(shooter_encoder.getRate()), 0, 1));
   }
 
   public void shoot_disable(){

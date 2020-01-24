@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
@@ -27,7 +28,7 @@ public class Chassis extends SubsystemBase {
 
   private static Chassis instance;
 
-  private Chassis(){
+  private Chassis() {
     m_frontLeft = new Spark(Constants.LEFT_FRONT_MOTOR);
     m_backLeft = new Spark(Constants.LEFT_BACK_MOTOR);
     m_left = new SpeedControllerGroup(m_frontLeft, m_backLeft);
@@ -39,33 +40,35 @@ public class Chassis extends SubsystemBase {
     m_drive = new DifferentialDrive(m_left, m_right);
 
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
-    angle_vision_pid.enableContinuousInput(-1, 1);
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANC);
+    angle_vision_pid.setSetpoint(0);
   }
 
   public static Chassis getInstance() {
-    if(instance == null) instance = new Chassis();
+    if (instance == null)
+      instance = new Chassis();
     return instance;
   }
 
-  public void setSpeed(double l, double r){
+  public void setSpeed(double l, double r) {
     m_drive.tankDrive(l, r);
   }
 
-  public double angle_vision_pid_output( double angle){
+  public double angle_vision_pid_output(double angle) {
     return angle_vision_pid.calculate(angle, 0.0);
   }
 
-  public void pid_vision( double angle ) {
+  public void pid_vision(double angle) {
     double speed = angle_vision_pid_output(angle);
-    setSpeed(speed , -speed);
- }
+    speed = MathUtil.clamp(speed, -1, 1);
+    setSpeed(speed, -speed);
+  }
 
   public boolean stop_angle_vision_pid() {
     return angle_vision_pid.atSetpoint();
   }
 
-  public void pid_reset(){
+  public void pid_reset() {
     angle_vision_pid.reset();
     setSpeed(0, 0);
   }
