@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -9,15 +10,18 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
-  private Spark m_frontLeft;
-  private Spark m_backLeft;
-  private SpeedControllerGroup m_left;
+  private Spark front_left;
+  private Spark back_left;
+  private SpeedControllerGroup left;
 
-  private Spark m_frontRight;
-  private Spark m_backRight;
-  private SpeedControllerGroup m_right;
+  private Spark front_right;
+  private Spark back_right;
+  private SpeedControllerGroup right;
 
-  private DifferentialDrive m_drive;
+  private DifferentialDrive drive;
+
+  private Encoder enc_left;
+  private Encoder enc_right;
 
   private final PIDController angle_vision_pid;
   private final double KP_ANGLE_VISION = 0;
@@ -29,15 +33,24 @@ public class Chassis extends SubsystemBase {
   private static Chassis instance;
 
   private Chassis() {
-    m_frontLeft = new Spark(Constants.LEFT_FRONT_MOTOR);
-    m_backLeft = new Spark(Constants.LEFT_BACK_MOTOR);
-    m_left = new SpeedControllerGroup(m_frontLeft, m_backLeft);
+    front_left = new Spark(Constants.LEFT_FRONT_MOTOR);
+    back_left = new Spark(Constants.LEFT_BACK_MOTOR);
+    left = new SpeedControllerGroup(front_left, back_left);
 
-    m_frontRight = new Spark(Constants.RIGHT_FRONT_MOTOR);
-    m_backRight = new Spark(Constants.RIGHT_BACK_MOTOR);
-    m_right = new SpeedControllerGroup(m_frontRight, m_backRight);
+    front_right = new Spark(Constants.RIGHT_FRONT_MOTOR);
+    back_right = new Spark(Constants.RIGHT_BACK_MOTOR);
+    right = new SpeedControllerGroup(front_right, back_right);
 
-    m_drive = new DifferentialDrive(m_left, m_right);
+    drive = new DifferentialDrive(left, right);
+
+    // Encoder setup
+    enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
+    enc_left.setDistancePerPulse(Constants.LEFT_DISTANCE_PER_PULSE);
+    enc_left.reset();
+    
+    enc_right = new Encoder(Constants.ENC_RIGHT_PORT_A, Constants.ENC_RIGHT_PORT_B);
+    enc_right.setDistancePerPulse(Constants.RIGHT_DISTANCE_PER_PULSE);
+    enc_right.reset();
 
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANC);
@@ -50,8 +63,8 @@ public class Chassis extends SubsystemBase {
     return instance;
   }
 
-  public void setSpeed(double l, double r) {
-    m_drive.tankDrive(l, r);
+  public void set_speed(double l, double r){
+    drive.tankDrive(l, r);
   }
 
   public double angle_vision_pid_output(double angle) {
@@ -61,7 +74,7 @@ public class Chassis extends SubsystemBase {
   public void pid_vision(double angle) {
     double speed = angle_vision_pid_output(angle);
     speed = MathUtil.clamp(speed, -1, 1);
-    setSpeed(speed, -speed);
+    set_speed(speed, -speed);
   }
 
   public boolean stop_angle_vision_pid() {
@@ -70,6 +83,6 @@ public class Chassis extends SubsystemBase {
 
   public void pid_reset() {
     angle_vision_pid.reset();
-    setSpeed(0, 0);
+    set_speed(0, 0);
   }
 }

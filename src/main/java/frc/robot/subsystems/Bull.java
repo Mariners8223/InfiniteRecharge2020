@@ -11,8 +11,11 @@ import frc.robot.Constants;
 
 public class Bull extends SubsystemBase {
   private Spark collector;
-  private Spark shooter_motor;
-  private Encoder shooter_encoder;
+  private Spark transportation;
+  private Spark shot;
+
+  private Encoder enc_shot;
+  private Encoder enc_trans;
 
   private PIDController shooter_speed_pid;
 
@@ -29,16 +32,22 @@ public class Bull extends SubsystemBase {
   private static Bull instance;
 
   private Bull() {
-    collector = new Spark(Constants.COLLACTER_MOTOR);
-
-    shooter_motor = new Spark(Constants.SHOOTER_MOTOR);
-    shooter_encoder = new Encoder(Constants.SHOOTER_ENCODER_A, Constants.SHOOTER_ENCODER_B);
-    shooter_encoder.setDistancePerPulse(Constants.DISTANCE_PER_PULSE);
-
     compressor = new Compressor();
 
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
+
+    transportation = new Spark(Constants.TRANS_MOTOR);
+    shot = new Spark(Constants.SHOT_MOTOR);
+    collector = new Spark(Constants.COLLACTER_MOTOR);
+
+    // Eencoder setup
+    enc_shot = new Encoder(Constants.ENC_SHOT_PORT_A, Constants.ENC_SHOT_PORT_B);
+    enc_shot.setDistancePerPulse(Constants.SHOT_DISTANCE_PER_PULSE);
+    enc_shot.reset();
     
+    enc_trans = new Encoder(Constants.ENC_TRANS_PORT_A, Constants.ENC_TRANS_PORT_B);
+    enc_trans.setDistancePerPulse(Constants.TRANS_DISTANCE_PER_PULSE);
+    enc_trans.reset();
     shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
     shooter_speed_pid.setTolerance(SHOOTER_TOLERANCE);
   }
@@ -78,16 +87,32 @@ public class Bull extends SubsystemBase {
     solenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
+  public void shot_set_speed(double speed){
+    shot.set(speed);
+  }
+
+  public void trans_set_speed(double speed){
+    transportation.set(speed);
+  }
+
+  public void shot_stop(){
+    shot.set(0);
+  }
+
+  public void trans_stop(){
+    transportation.set(0);
+  }
+
   public void shoot_enable(double speed){
     shooter_speed_pid.setSetpoint(speed);
   }
 
   public void shoot(){
-    shooter_motor.set(MathUtil.clamp(shooter_speed_pid.calculate(shooter_encoder.getRate()), 0, 1));
+    shot_set_speed(MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), 0, 1));
   }
 
   public void shoot_disable(){
     shooter_speed_pid.reset();
-    shooter_motor.set(0);
+    shot_stop();
   }
 }
