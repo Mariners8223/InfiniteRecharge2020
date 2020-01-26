@@ -15,7 +15,7 @@ public class ChassisCommand extends CommandBase {
   public void execute() {
     double x = RobotContainer.joystick.getRawAxis(1);
     double y = RobotContainer.joystick.getRawAxis(5);
-    chassis.set_speed(Math.signum(x) * x * x, Math.signum(y) * y * y);
+    chassis.set_speed(Math.signum(x) * x * x * 0.5, Math.signum(y) * y * y * 0.5);
   }
 
   @Override

@@ -20,8 +20,8 @@ public class Chassis extends SubsystemBase {
 
   private DifferentialDrive drive;
 
-  private Encoder enc_left;
-  private Encoder enc_right;
+  //private Encoder enc_left;
+  //private Encoder enc_right;
 
   private final PIDController angle_vision_pid;
   private final double KP_ANGLE_VISION = 0;
@@ -44,13 +44,13 @@ public class Chassis extends SubsystemBase {
     drive = new DifferentialDrive(left, right);
 
     // Encoder setup
-    enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
+    /*enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
     enc_left.setDistancePerPulse(Constants.LEFT_DISTANCE_PER_PULSE);
     enc_left.reset();
     
     enc_right = new Encoder(Constants.ENC_RIGHT_PORT_A, Constants.ENC_RIGHT_PORT_B);
     enc_right.setDistancePerPulse(Constants.RIGHT_DISTANCE_PER_PULSE);
-    enc_right.reset();
+    enc_right.reset();*/
 
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANC);

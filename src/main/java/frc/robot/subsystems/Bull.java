@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,8 +14,8 @@ public class Bull extends SubsystemBase {
   private Spark transportation;
   private Spark shot;
 
-  private Encoder enc_shot;
-  private Encoder enc_trans;
+  //private Encoder enc_shot;
+  //private Encoder enc_trans;
 
   private PIDController shooter_speed_pid;
 
@@ -32,6 +32,7 @@ public class Bull extends SubsystemBase {
   private static Bull instance;
 
   private Bull() {
+    
     compressor = new Compressor();
 
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
@@ -41,13 +42,13 @@ public class Bull extends SubsystemBase {
     collector = new Spark(Constants.COLLACTER_MOTOR);
 
     // Eencoder setup
-    enc_shot = new Encoder(Constants.ENC_SHOT_PORT_A, Constants.ENC_SHOT_PORT_B);
+    /*enc_shot = new Encoder(Constants.ENC_SHOT_PORT_A, Constants.ENC_SHOT_PORT_B);
     enc_shot.setDistancePerPulse(Constants.SHOT_DISTANCE_PER_PULSE);
     enc_shot.reset();
     
     enc_trans = new Encoder(Constants.ENC_TRANS_PORT_A, Constants.ENC_TRANS_PORT_B);
     enc_trans.setDistancePerPulse(Constants.TRANS_DISTANCE_PER_PULSE);
-    enc_trans.reset();
+    enc_trans.reset();*/
     shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
     shooter_speed_pid.setTolerance(SHOOTER_TOLERANCE);
   }
@@ -107,9 +108,9 @@ public class Bull extends SubsystemBase {
     shooter_speed_pid.setSetpoint(speed);
   }
 
-  public void shoot(){
+  /*public void shoot(){
     shot_set_speed(MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), 0, 1));
-  }
+  }*/
 
   public void shoot_disable(){
     shooter_speed_pid.reset();

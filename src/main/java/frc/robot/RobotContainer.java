@@ -7,6 +7,8 @@ import frc.robot.commands.EjectLemonCommand;
 import frc.robot.commands.IntakeForwordCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.AngleVisionPidCommand;
+import frc.robot.commands.EverestClimbCommand;
+import frc.robot.commands.EverestDisClimbCommand;
 import frc.robot.subsystems.Chassis;
 
 
@@ -18,6 +20,8 @@ public class RobotContainer {
   private static JoystickButton intakeForwordButton = new JoystickButton(joystick, Constants.INTAKE_FORWORD_BUTTON);
   private static JoystickButton intakeReverseButton = new JoystickButton(joystick, Constants.INTAKE_REVERSE_BUTTON);
   private static JoystickButton angleVisionPidButton = new JoystickButton(joystick, Constants.ANGLE_VISION_PID_BUTTON);
+  //private static JoystickButton everestClimb = new JoystickButton(joystick, 7);
+  //private static JoystickButton everestDisClimb = new JoystickButton(joystick, 8);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -32,6 +36,10 @@ public class RobotContainer {
     intakeReverseButton.whileHeld(new IntakeReverseCommand());
 
     angleVisionPidButton.whileHeld(new AngleVisionPidCommand());
+
+    //everestClimb.whileHeld(new EverestClimbCommand());
+    //everestDisClimb.whileHeld(new EverestDisClimbCommand());
+
   }
 
 

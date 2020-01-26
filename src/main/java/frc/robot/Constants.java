@@ -15,14 +15,14 @@ public final class Constants {
     public static final int INTAKE_REVERSE_BUTTON = 3;
     public static final int ANGLE_VISION_PID_BUTTON = 5; // TODO
     
-    public static final int COLLACTER_MOTOR = 6;
+    public static final int COLLACTER_MOTOR = 5;
     public static final int SOLONOID_A = 3;
     public static final int SOLONOID_B = 4;
 
-    public static final double SHOT_DISTANCE_PER_PULSE = 0.000395;//0.000505433;
-    public static final double TRANS_DISTANCE_PER_PULSE = 0.000395; // TODO
-    public static final double RIGHT_DISTANCE_PER_PULSE = 0.000395; // TODO
-    public static final double LEFT_DISTANCE_PER_PULSE = 0.000395; // TODO
+    public static final double SHOT_DISTANCE_PER_PULSE = 0.000396;//0.000505433;
+    public static final double TRANS_DISTANCE_PER_PULSE = 0.000396; // TODO
+    public static final double RIGHT_DISTANCE_PER_PULSE = 0.000396; // TODO
+    public static final double LEFT_DISTANCE_PER_PULSE = 0.000396; // TODO
 
     public static final int ENC_SHOT_PORT_A = 3;
     public static final int ENC_SHOT_PORT_B = 2;
