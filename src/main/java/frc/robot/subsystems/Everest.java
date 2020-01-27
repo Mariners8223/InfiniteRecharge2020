@@ -20,7 +20,11 @@ public class Everest extends SubsystemBase {
     piston = new Spark(Constants.PISTON_MOTOR);
     climber = new Spark(Constants.CLIMER_MOTOR);
   }
-
+  
+  /**
+   * Singelton function, returns the ONLY instance of the class.
+   * @return instance of the class.
+   */
   public static Everest getInstance() {
     if (instance == null)
       instance = new Everest();

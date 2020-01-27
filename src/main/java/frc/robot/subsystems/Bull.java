@@ -1,10 +1,14 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.EntryListenerFlags;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-//import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
@@ -14,8 +18,8 @@ public class Bull extends SubsystemBase {
   private Spark transportation;
   private Spark shot;
 
-  //private Encoder enc_shot;
-  //private Encoder enc_trans;
+  private Encoder enc_shot;
+  private Encoder enc_trans;
 
   private PIDController shooter_speed_pid;
 
@@ -49,10 +53,15 @@ public class Bull extends SubsystemBase {
     enc_trans = new Encoder(Constants.ENC_TRANS_PORT_A, Constants.ENC_TRANS_PORT_B);
     enc_trans.setDistancePerPulse(Constants.TRANS_DISTANCE_PER_PULSE);
     enc_trans.reset();*/
+
     shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
     shooter_speed_pid.setTolerance(SHOOTER_TOLERANCE);
   }
 
+  /**
+   * Singelton function, returns the ONLY instance of the class.
+   * @return instance of the class.
+   */
   public static Bull getInstance() {
     if (instance == null)
       instance = new Bull();
@@ -71,19 +80,32 @@ public class Bull extends SubsystemBase {
     collector.set(-COLLECTOR_SPEED);
   }
 
+  /**
+   * Strat/Stop the compressor.
+   * @param comp Start = ture , Stop = false
+   */
   public void set_compressor(final boolean comp) {
     if(comp) compressor.start();
     else compressor.stop();
   }
 
+  /**
+   * Set the solenoid to forword postion ("DoubleSolenoid.Value.kForward")
+   */
   public void intake_move_forword(){
     solenoid.set(DoubleSolenoid.Value.kForward);
   }
 
+  /**
+   * Stop the solenoid ("DoubleSolenoid.Value.kOff")
+   */
   public void intake_stop(){
     solenoid.set(DoubleSolenoid.Value.kOff);
   }
 
+  /**
+   * Set the solenoid to reverse postion ("DoubleSolenoid.Value.kReverse")
+   */
   public void intake_move_reverse(){
     solenoid.set(DoubleSolenoid.Value.kReverse);
   }
@@ -108,9 +130,9 @@ public class Bull extends SubsystemBase {
     shooter_speed_pid.setSetpoint(speed);
   }
 
-  /*public void shoot(){
-    shot_set_speed(MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), 0, 1));
-  }*/
+  public void shoot(){
+    //shot_set_speed(MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), 0, 1));
+  }
 
   public void shoot_disable(){
     shooter_speed_pid.reset();

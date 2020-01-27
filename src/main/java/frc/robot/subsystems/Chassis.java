@@ -58,14 +58,23 @@ public class Chassis extends SubsystemBase {
     angle_vision_pid.setSetpoint(0);
   }
 
+  /**
+   * Singelton function, returns the ONLY instance of the class.
+   * @return instance of the class.
+   */
   public static Chassis getInstance() {
     if (instance == null)
       instance = new Chassis();
     return instance;
   }
 
-  public void set_speed(double l, double r){
-    drive.tankDrive(l, r);
+  /**
+   * set speed for the drivetrain
+   * @param left - left motors speed
+   * @param right  - right motors speed
+   */
+  public void set_speed(double left, double right){
+    drive.tankDrive(left, right);
   }
 
   public double angle_vision_pid_output(double angle) {
