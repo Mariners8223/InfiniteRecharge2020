@@ -9,19 +9,35 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.AngleVisionPidCommand;
 import frc.robot.commands.EverestClimbCommand;
 import frc.robot.commands.EverestDisClimbCommand;
+import frc.robot.commands.EverestDisPistonCommand;
+import frc.robot.commands.EverestDisPullupCommand;
+import frc.robot.commands.EverestPistonCommand;
+import frc.robot.commands.EverestPullupCommand;
 import frc.robot.subsystems.Chassis;
 
 
 public class RobotContainer {
   public static Chassis chassis = Chassis.getInstance();
-  public static Joystick joystick = new Joystick(Constants.DRIVER_STICK);
-  private static JoystickButton collectButton = new JoystickButton(joystick, Constants.COLLECTER_COLLECT_BUTTON);
-  private static JoystickButton ejectButton = new JoystickButton(joystick, Constants.COLLECTER_EJECT_BUTTON);
-  private static JoystickButton intakeForwordButton = new JoystickButton(joystick, Constants.INTAKE_FORWORD_BUTTON);
-  private static JoystickButton intakeReverseButton = new JoystickButton(joystick, Constants.INTAKE_REVERSE_BUTTON);
-  private static JoystickButton angleVisionPidButton = new JoystickButton(joystick, Constants.ANGLE_VISION_PID_BUTTON);
-  //private static JoystickButton everestClimb = new JoystickButton(joystick, 7);
-  //private static JoystickButton everestDisClimb = new JoystickButton(joystick, 8);
+
+  public static Joystick driver_joystick = new Joystick(Constants.DRIVER_STICK);
+  public static Joystick arms_joystick = new Joystick(Constants.ARMS_STICK);
+
+  private static JoystickButton collect_button = new JoystickButton(arms_joystick, Constants.COLLECTER_COLLECT_BUTTON);
+  private static JoystickButton eject_button = new JoystickButton(arms_joystick, Constants.COLLECTER_EJECT_BUTTON);
+  private static JoystickButton intake_forword_button = new JoystickButton(arms_joystick, Constants.INTAKE_FORWORD_BUTTON);
+  private static JoystickButton intake_reverse_button = new JoystickButton(arms_joystick, Constants.INTAKE_REVERSE_BUTTON);
+
+  private static JoystickButton everest_pullup_button = new JoystickButton(arms_joystick, Constants.Everest_Pullup_BUTTON);
+  private static JoystickButton everest_dis_pullup_button = new JoystickButton(arms_joystick, Constants.Everest_Dis_Pullup_BUTTON);
+
+  private static JoystickButton everest_climb_button = new JoystickButton(arms_joystick, Constants.Everest_Climb_BUTTON);
+  private static JoystickButton everest_dis_climb_button = new JoystickButton(arms_joystick, Constants.Everest_Dis_Climb_BUTTON);
+
+  private static JoystickButton everest_piston_button = new JoystickButton(arms_joystick, Constants.Everest_Piston_BUTTON);
+  private static JoystickButton everest_dis_piston_button = new JoystickButton(arms_joystick, Constants.Everest_Dis_Piston_BUTTON);
+
+  private static JoystickButton angle_vision_pid_button = new JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
+
 
   public RobotContainer() {
     configureButtonBindings();
@@ -29,16 +45,22 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-    collectButton.whileHeld(new CollectLemonCommand());
-    ejectButton.whileHeld(new EjectLemonCommand());
+    collect_button.whileHeld(new CollectLemonCommand());
+    eject_button.whileHeld(new EjectLemonCommand());
     
-    intakeForwordButton.whileHeld(new IntakeForwordCommand());
-    intakeReverseButton.whileHeld(new IntakeReverseCommand());
+    intake_forword_button.whileHeld(new IntakeForwordCommand());
+    intake_reverse_button.whileHeld(new IntakeReverseCommand());
 
-    angleVisionPidButton.whileHeld(new AngleVisionPidCommand());
+    angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
 
-    //everestClimb.whileHeld(new EverestClimbCommand());
-    //everestDisClimb.whileHeld(new EverestDisClimbCommand());
+    everest_pullup_button.whileHeld(new EverestPullupCommand());
+    everest_dis_pullup_button.whileHeld(new EverestDisPullupCommand());   
+
+    everest_climb_button.whileHeld(new EverestClimbCommand());
+    everest_dis_climb_button.whileHeld(new EverestDisClimbCommand());   
+    
+    everest_dis_piston_button.whileHeld(new EverestDisPistonCommand());   
+    everest_piston_button.whileHeld(new EverestPistonCommand());
 
   }
 

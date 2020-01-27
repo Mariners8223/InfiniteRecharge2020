@@ -7,16 +7,18 @@ import frc.robot.Constants;
 public class Everest extends SubsystemBase {
   private Spark piston;
   private Spark climber;
+  private Spark pullup;
 
   public final double CLIMER_SPEED = 1.0;
   public final double PISTON_SPEED = 1.0;
+  public final double PULLUP_SPEED = 1.0;
 
   private static Everest instance;
 
   private Everest() {
-
-    piston = new Spark(Constants.TRANS_MOTOR);
-    climber = new Spark(Constants.SHOT_MOTOR);
+    // pullup = new Spark(Constants.PULLUP_MOTOR);
+    piston = new Spark(Constants.PISTON_MOTOR);
+    climber = new Spark(Constants.CLIMER_MOTOR);
   }
 
   public static Everest getInstance() {
@@ -29,7 +31,11 @@ public class Everest extends SubsystemBase {
     climber.set(speed);
   }
   
-  public void electric_bochna_set_speed(double speed){
+  public void piston_set_speed(double speed){
     piston.set(speed);
+  }
+
+  public void pullup_set_speed(double speed){
+    pullup.set(speed);
   }
 }

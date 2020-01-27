@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Chassis;
 
@@ -13,8 +14,8 @@ public class ChassisCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double x = RobotContainer.joystick.getRawAxis(1);
-    double y = RobotContainer.joystick.getRawAxis(5);
+    double x = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
+    double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
     chassis.set_speed(Math.signum(x) * x * x * 0.5, Math.signum(y) * y * y * 0.5);
   }
 
