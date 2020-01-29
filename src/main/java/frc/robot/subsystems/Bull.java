@@ -28,7 +28,7 @@ public class Bull extends SubsystemBase {
   private final double KD_SHOOTER_SPEED = 0;
   private final double SHOOTER_TOLERANCE = 0.03;
   
-  private final double COLLECTOR_SPEED = 0.5;
+  private final double COLLECTOR_SPEED = 0.7;
 
   private Compressor compressor;
   private DoubleSolenoid solenoid;
@@ -59,7 +59,7 @@ public class Bull extends SubsystemBase {
   }
 
   /**
-   * Singelton function, returns the ONLY instance of the class.
+   * Singleton function, returns the ONLY instance of the class.
    * @return instance of the class.
    */
   public static Bull getInstance() {
@@ -82,7 +82,7 @@ public class Bull extends SubsystemBase {
 
   /**
    * Strat/Stop the compressor.
-   * @param comp Start = ture , Stop = false
+   * @param comp Start = true , Stop = false
    */
   public void set_compressor(final boolean comp) {
     if(comp) compressor.start();

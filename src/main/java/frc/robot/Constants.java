@@ -2,16 +2,16 @@ package frc.robot;
 
 public final class Constants {
     // PWM
-    public static final int LEFT_FRONT_MOTOR = 1;
-    public static final int RIGHT_FRONT_MOTOR = 3;
-    public static final int LEFT_BACK_MOTOR = 2;
-    public static final int RIGHT_BACK_MOTOR = 4;
+    public static final int LEFT_FRONT_MOTOR = 4;
+    public static final int RIGHT_FRONT_MOTOR = 2;
+    public static final int LEFT_BACK_MOTOR = 3;
+    public static final int RIGHT_BACK_MOTOR = 1;
     public static final int COLLACTER_MOTOR = 5;
     public static final int SHOT_MOTOR = 8;
     public static final int TRANS_MOTOR = 7;
-    public static final int CLIMER_MOTOR = 6;
+    public static final int CLIMER_MOTOR = 0;  // TODO
     public static final int PISTON_MOTOR = 9;
-    public static final int PULLUP_MOTOR = 0;  // TODO
+    public static final int PULLUP_MOTOR = 6;  // TODO
 
     // JoySticks And Bottons
     public static final int DRIVER_STICK = 0;
@@ -28,12 +28,12 @@ public final class Constants {
     public static final int INTAKE_FORWORD_BUTTON = 2;
     public static final int INTAKE_REVERSE_BUTTON = 3;
 
-    public static final int Everest_Climb_BUTTON = 5;  // TODO
-    public static final int Everest_Dis_Climb_BUTTON = 5;  // TODO
+    public static final int Everest_Climb_BUTTON = 10;  // TODO
+    public static final int Everest_Dis_Climb_BUTTON = 10;  // TODO
     public static final int Everest_Pullup_BUTTON = 5;  // TODO
-    public static final int Everest_Dis_Pullup_BUTTON = 5;  // TODO
-    public static final int Everest_Piston_BUTTON = 5;  // TODO
-    public static final int Everest_Dis_Piston_BUTTON = 5;  // TODO
+    public static final int Everest_Dis_Pullup_BUTTON = 6;  // TODO
+    public static final int Everest_Piston_BUTTON = 10;  // TODO
+    public static final int Everest_Dis_Piston_BUTTON = 10;  // TODO
     
     // PCM
     public static final int SOLONOID_A = 3;

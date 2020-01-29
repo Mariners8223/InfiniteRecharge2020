@@ -6,7 +6,7 @@ import frc.robot.subsystems.Everest;
 public class EverestPistonCommand extends CommandBase {
     Everest everest = Everest.getInstance();
 
-  public EverestPistonCommand() {
+  public EverestPistonCommand(boolean isReversed) {
     addRequirements(everest);
   }
 

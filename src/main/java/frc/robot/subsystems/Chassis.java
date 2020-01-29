@@ -59,7 +59,7 @@ public class Chassis extends SubsystemBase {
   }
 
   /**
-   * Singelton function, returns the ONLY instance of the class.
+   * Singleton function, returns the ONLY instance of the class.
    * @return instance of the class.
    */
   public static Chassis getInstance() {

@@ -14,6 +14,8 @@ import frc.robot.commands.EverestDisPullupCommand;
 import frc.robot.commands.EverestPistonCommand;
 import frc.robot.commands.EverestPullupCommand;
 import frc.robot.subsystems.Chassis;
+import frc.robot.commands.ShootCommand;
+import frc.robot.commands.TransCommand;
 
 
 public class RobotContainer {
@@ -38,6 +40,8 @@ public class RobotContainer {
 
   private static JoystickButton angle_vision_pid_button = new JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
 
+  private static JoystickButton shoot_button = new JoystickButton(arms_joystick, 7);
+  private static JoystickButton trans_button = new JoystickButton(arms_joystick, 8);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -60,7 +64,9 @@ public class RobotContainer {
     everest_dis_climb_button.whileHeld(new EverestDisClimbCommand());   
     
     everest_dis_piston_button.whileHeld(new EverestDisPistonCommand());   
-    everest_piston_button.whileHeld(new EverestPistonCommand());
+    //everest_piston_button.whileHeld(new EverestPistonCommand());
+    shoot_button.whileHeld(new ShootCommand());
+    trans_button.whileHeld(new TransCommand());
 
   }
 

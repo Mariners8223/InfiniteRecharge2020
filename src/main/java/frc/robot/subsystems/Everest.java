@@ -9,9 +9,9 @@ public class Everest extends SubsystemBase {
   private Spark climber;
   private Spark pullup;
 
-  public final double CLIMER_SPEED = 1.0;
-  public final double PISTON_SPEED = 1.0;
-  public final double PULLUP_SPEED = 1.0;
+  public final double CLIMER_SPEED = 0.5;
+  public final double PISTON_SPEED = 0.5;
+  public final double PULLUP_SPEED = 0.3;
 
   private static Everest instance;
 
@@ -22,7 +22,7 @@ public class Everest extends SubsystemBase {
   }
   
   /**
-   * Singelton function, returns the ONLY instance of the class.
+   * Singleton function, returns the ONLY instance of the class.
    * @return instance of the class.
    */
   public static Everest getInstance() {
