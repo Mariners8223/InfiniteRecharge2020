@@ -5,8 +5,9 @@ import frc.robot.subsystems.Bull;
 
 public class ShootCommand extends CommandBase {
   Bull bull = Bull.getInstance();
-  public ShootCommand() {
-    //addRequirements(bull);
+  boolean dir;
+  public ShootCommand(boolean dir) {
+    this.dir = dir;
   }
 
   @Override
@@ -15,13 +16,13 @@ public class ShootCommand extends CommandBase {
 
   @Override
   public void execute() {
-    bull.shot_set_speed(1);
+    if(dir) bull.shot_set_speed(1);
+    else bull.shot_set_speed(-1);
   }
 
   @Override
   public void end(boolean interrupted) {
-    bull.shot_stop();
-    
+    bull.shot_set_speed(0);
   }
 
   @Override

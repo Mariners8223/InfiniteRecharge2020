@@ -28,7 +28,8 @@ public class Bull extends SubsystemBase {
   private final double KD_SHOOTER_SPEED = 0;
   private final double SHOOTER_TOLERANCE = 0.03;
   
-  private final double COLLECTOR_SPEED = 0.7;
+  public final double COLLECTOR_SPEED = 0.7;
+  public final double TRANS_SPEED = 0.4;
 
   private Compressor compressor;
   private DoubleSolenoid solenoid;
@@ -68,18 +69,6 @@ public class Bull extends SubsystemBase {
     return instance;
   }
 
-  public void collect() {
-    collector.set(COLLECTOR_SPEED);
-  }
-
-  public void collector_stop() {
-    collector.set(0);
-  }
-
-  public void eject() {
-    collector.set(-COLLECTOR_SPEED);
-  }
-
   /**
    * Strat/Stop the compressor.
    * @param comp Start = true , Stop = false
@@ -114,17 +103,6 @@ public class Bull extends SubsystemBase {
     shot.set(speed);
   }
 
-  public void trans_set_speed(double speed){
-    transportation.set(speed);
-  }
-
-  public void shot_stop(){
-    shot.set(0);
-  }
-
-  public void trans_stop(){
-    transportation.set(0);
-  }
 
   public void shoot_enable(double speed){
     shooter_speed_pid.setSetpoint(speed);
@@ -136,6 +114,14 @@ public class Bull extends SubsystemBase {
 
   public void shoot_disable(){
     shooter_speed_pid.reset();
-    shot_stop();
+    shot_set_speed(0);
+  }
+
+  public void trans_move(){
+    transportation.set(-TRANS_SPEED);
+  }
+
+  public void trans_move_reverse(){
+    transportation.set(TRANS_SPEED);
   }
 }

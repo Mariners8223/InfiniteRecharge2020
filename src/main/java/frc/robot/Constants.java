@@ -9,8 +9,7 @@ public final class Constants {
     public static final int COLLACTER_MOTOR = 5;
     public static final int SHOT_MOTOR = 8;
     public static final int TRANS_MOTOR = 7;
-    public static final int CLIMER_MOTOR = 0;  // TODO
-    public static final int PISTON_MOTOR = 9;
+    public static final int CLIMER_MOTOR = 0;
     public static final int PULLUP_MOTOR = 6;  // TODO
 
     // JoySticks And Bottons
@@ -20,20 +19,21 @@ public final class Constants {
     // Driver Joystick
     public static final int ANGLE_VISION_PID_BUTTON = 5; // TODO
     public static final int DRIVER_LEFT_AXIS = 1;
-    public static final int DRIVER_RIGHT_AXIS = 5; 
+    public static final int DRIVER_RIGHT_AXIS = 5;
+    public static final int COLLECTER_COLLECT_BUTTON = 5;
+    public static final int COLLECTER_EJECT_BUTTON = 6;
+
 
     // Arms Joystick
-    public static final int COLLECTER_COLLECT_BUTTON = 1;
-    public static final int COLLECTER_EJECT_BUTTON = 4;
+    public static final int SHOOT_BUTTON = 1;
+    public static final int SHOOT_DIS_BUTTON = 4;
     public static final int INTAKE_FORWORD_BUTTON = 2;
     public static final int INTAKE_REVERSE_BUTTON = 3;
 
-    public static final int Everest_Climb_BUTTON = 10;  // TODO
-    public static final int Everest_Dis_Climb_BUTTON = 10;  // TODO
-    public static final int Everest_Pullup_BUTTON = 5;  // TODO
-    public static final int Everest_Dis_Pullup_BUTTON = 6;  // TODO
-    public static final int Everest_Piston_BUTTON = 10;  // TODO
-    public static final int Everest_Dis_Piston_BUTTON = 10;  // TODO
+    public static final int Everest_Climb_BUTTON = 7;
+    public static final int Everest_Dis_Climb_BUTTON = 8;
+    public static final int Everest_Pullup_BUTTON = 5;
+    public static final int Everest_Dis_Pullup_BUTTON = 6;
     
     // PCM
     public static final int SOLONOID_A = 3;
