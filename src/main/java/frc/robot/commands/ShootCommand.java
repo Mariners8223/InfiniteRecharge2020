@@ -12,10 +12,6 @@ public class ShootCommand extends CommandBase {
 
   @Override
   public void initialize() {
-  }
-
-  @Override
-  public void execute() {
     if(dir) bull.shot_set_speed(1);
     else bull.shot_set_speed(-1);
   }

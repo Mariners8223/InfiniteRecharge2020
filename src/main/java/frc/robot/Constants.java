@@ -7,17 +7,19 @@ public final class Constants {
     public static final int LEFT_BACK_MOTOR = 3;
     public static final int RIGHT_BACK_MOTOR = 1;
     public static final int COLLACTER_MOTOR = 5;
-    public static final int SHOT_MOTOR = 8;
-    public static final int TRANS_MOTOR = 7;
+    public static final int SHOT_MOTOR = 6; //8
+    public static final int TRANS_MOTOR = 10; //TODO
     public static final int CLIMER_MOTOR = 0;
-    public static final int PULLUP_MOTOR = 6;  // TODO
+    public static final int PULLUP1_MOTOR = 7;
+    public static final int PULLUP2_MOTOR = 8;
+    public static final int SPINNER_MOTOR = 9;
 
     // JoySticks And Bottons
     public static final int DRIVER_STICK = 0;
     public static final int ARMS_STICK = 1;
 
     // Driver Joystick
-    public static final int ANGLE_VISION_PID_BUTTON = 5; // TODO
+    public static final int ANGLE_VISION_PID_BUTTON = 3; // TODO
     public static final int DRIVER_LEFT_AXIS = 1;
     public static final int DRIVER_RIGHT_AXIS = 5;
     public static final int COLLECTER_COLLECT_BUTTON = 5;
@@ -25,19 +27,23 @@ public final class Constants {
 
 
     // Arms Joystick
-    public static final int SHOOT_BUTTON = 1;
-    public static final int SHOOT_DIS_BUTTON = 4;
-    public static final int INTAKE_FORWORD_BUTTON = 2;
-    public static final int INTAKE_REVERSE_BUTTON = 3;
+    public static final int SHOOT_BUTTON = 8;
+    public static final int SHOOT_DIS_BUTTON = 7;
+    public static final int INTAKE_FORWORD_BUTTON = 6;
+    public static final int INTAKE_REVERSE_BUTTON = 7;
 
-    public static final int Everest_Climb_BUTTON = 7;
-    public static final int Everest_Dis_Climb_BUTTON = 8;
-    public static final int Everest_Pullup_BUTTON = 5;
-    public static final int Everest_Dis_Pullup_BUTTON = 6;
+    public static final int EVEREST_CLIMB_BUTTON = 1;
+    public static final int Everest_DIS_Climb_BUTTON = 4;
+    public static final int Everest_Pullup_BUTTON = 2;
+    public static final int ROLATE_BUTTON = 5;
+    public static final int Everest_Dis_Pullup_BUTTON = 3;
+
     
     // PCM
     public static final int SOLONOID_A = 3;
     public static final int SOLONOID_B = 4;
+    public static final int ROLATE_SOLONOID_A = 5; 
+    public static final int ROLATE_SOLONOID_B = 6; 
 
     // Encoder Staff
     public static final double SHOT_DISTANCE_PER_PULSE = 0.000396;//0.000505433;

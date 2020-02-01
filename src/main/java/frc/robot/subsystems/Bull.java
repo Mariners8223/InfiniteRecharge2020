@@ -14,9 +14,9 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Bull extends SubsystemBase {
-  private Spark collector;
-  private Spark transportation;
-  private Spark shot;
+  public final Spark collector;
+  public final Spark transportation;
+  public final Spark shot;
 
   private Encoder enc_shot;
   private Encoder enc_trans;
@@ -31,14 +31,14 @@ public class Bull extends SubsystemBase {
   public final double COLLECTOR_SPEED = 0.7;
   public final double TRANS_SPEED = 0.4;
 
-  private Compressor compressor;
+  // private Compressor compressor;
   private DoubleSolenoid solenoid;
 
   private static Bull instance;
 
   private Bull() {
     
-    compressor = new Compressor();
+    // compressor = new Compressor();
 
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
 
@@ -73,10 +73,10 @@ public class Bull extends SubsystemBase {
    * Strat/Stop the compressor.
    * @param comp Start = true , Stop = false
    */
-  public void set_compressor(final boolean comp) {
-    if(comp) compressor.start();
-    else compressor.stop();
-  }
+  // public void set_compressor(final boolean comp) {
+  //   if(comp) compressor.start();
+  //   else compressor.stop();
+  // }
 
   /**
    * Set the solenoid to forword postion ("DoubleSolenoid.Value.kForward")

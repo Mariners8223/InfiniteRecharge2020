@@ -2,8 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.IntakeForwordCommand;
-import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.PullUpCommend;
+import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorCommand;
 import frc.robot.commands.AngleVisionPidCommand;
 import frc.robot.subsystems.Bull;
@@ -28,13 +29,15 @@ public class RobotContainer {
   private static JoystickButton everest_pullup_button = new JoystickButton(arms_joystick, Constants.Everest_Pullup_BUTTON);
   private static JoystickButton everest_dis_pullup_button = new JoystickButton(arms_joystick, Constants.Everest_Dis_Pullup_BUTTON);
 
-  private static JoystickButton everest_climb_button = new JoystickButton(arms_joystick, Constants.Everest_Climb_BUTTON);
-  private static JoystickButton everest_dis_climb_button = new JoystickButton(arms_joystick, Constants.Everest_Dis_Climb_BUTTON);
+  private static JoystickButton everest_climb_button = new JoystickButton(arms_joystick, Constants.EVEREST_CLIMB_BUTTON);
+  private static JoystickButton everest_dis_climb_button = new JoystickButton(arms_joystick, Constants.Everest_DIS_Climb_BUTTON);
   
   private static JoystickButton angle_vision_pid_button = new JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
   
   private static JoystickButton shoot_button = new JoystickButton(arms_joystick, Constants.SHOOT_BUTTON);
-  private static JoystickButton shoot_dis_button = new JoystickButton(arms_joystick, Constants.SHOOT_BUTTON);
+  private static JoystickButton shoot_dis_button = new JoystickButton(arms_joystick, Constants.SHOOT_DIS_BUTTON);
+  
+  private static JoystickButton rolate_button = new JoystickButton(arms_joystick, Constants.ROLATE_BUTTON);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -42,23 +45,25 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-    collect_button.whileHeld(new SetMotorCommand(bull, Constants.COLLACTER_MOTOR, bull.COLLECTOR_SPEED));
-    eject_button.whileHeld(new SetMotorCommand(bull, Constants.COLLACTER_MOTOR, -bull.COLLECTOR_SPEED));
+    collect_button.whileHeld(new SetMotorCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
+    eject_button.whileHeld(new SetMotorCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
     
-    intake_forword_button.whileHeld(new IntakeForwordCommand());
-    intake_reverse_button.whileHeld(new IntakeReverseCommand());
+    intake_forword_button.whileHeld(new IntakeCommand(true));
+    intake_reverse_button.whileHeld(new IntakeCommand(false));
 
     //angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
 
-    everest_pullup_button.whileHeld(new SetMotorCommand(everest, Constants.PULLUP_MOTOR, everest.PULLUP_SPEED));
-    everest_dis_pullup_button.whileHeld(new SetMotorCommand(everest, Constants.PULLUP_MOTOR, -everest.PULLUP_SPEED));   
+    everest_pullup_button.whileHeld(new PullUpCommend(true));
+    everest_dis_pullup_button.whileHeld(new PullUpCommend(false));   
 
-    everest_climb_button.whileHeld(new SetMotorCommand(everest, Constants.CLIMER_MOTOR, everest.CLIMER_SPEED));
-    everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, Constants.CLIMER_MOTOR, -everest.CLIMER_SPEED));   
+    everest_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, everest.CLIMER_SPEED));
+    everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
 
     shoot_button.whileHeld(new ShootCommand(true));
     shoot_dis_button.whileHeld(new ShootCommand(false));
-  }
+
+    rolate_button.whileHeld(new RolateCommand());
+    }
 
 
   /**

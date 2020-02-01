@@ -5,17 +5,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Everest extends SubsystemBase {
-  public Spark climber;
-  public Spark pullup;
+  public final Spark climber;
+  public final Spark pullup1;
+  public final Spark pullup2;
 
   public final double CLIMER_SPEED = 0.5;
-  public final double PISTON_SPEED = 0.5;
-  public final double PULLUP_SPEED = 0.3;
+  public final double PULLUP_SPEED = 0.7;
 
   private static Everest instance;
 
   private Everest() {
-    pullup = new Spark(Constants.PULLUP_MOTOR);
+    pullup1 = new Spark(Constants.PULLUP1_MOTOR);
+    pullup2 = new Spark(Constants.PULLUP2_MOTOR);
     climber = new Spark(Constants.CLIMER_MOTOR);
   }
   
@@ -34,6 +35,7 @@ public class Everest extends SubsystemBase {
   }
 
   public void pullup_set_speed(double speed){
-    pullup.set(speed);
+    pullup1.set(speed);
+    pullup2.set(-speed);
   }
 }
