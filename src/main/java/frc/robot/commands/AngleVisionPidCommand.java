@@ -6,6 +6,7 @@ import frc.robot.subsystems.NetworktablesSubSystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AngleVisionPidCommand extends CommandBase {
   
@@ -25,7 +26,6 @@ public class AngleVisionPidCommand extends CommandBase {
   @Override
   public void execute() {
     chassis.pid_vision(NSS.get_angle());
-    System.out.println(NSS.get_angle());
   }
 
   @Override

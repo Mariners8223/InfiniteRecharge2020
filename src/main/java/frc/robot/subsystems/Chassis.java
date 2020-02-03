@@ -25,7 +25,7 @@ public class Chassis extends SubsystemBase {
   //private Encoder enc_right;
 
   private final PIDController angle_vision_pid;
-  private final double KP_ANGLE_VISION = 0.5;
+  private final double KP_ANGLE_VISION = 7;
   private final double KI_ANGLE_VISION = 0.1;
   private final double KD_ANGLE_VISION = 0.1;
   private final double PID_MAX_SPEED = 0.5;
@@ -84,8 +84,9 @@ public class Chassis extends SubsystemBase {
   public void pid_vision(double angle) {
     double speed = angle_vision_pid_output(angle);
     speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
-    set_speed(speed, -speed);
-    //System.out.println(speed);
+    set_speed(speed, -(speed));
+    System.out.println("spd: " + speed);
+    System.out.println("ang: " + angle);
   }
 
   public boolean stop_angle_vision_pid() {
