@@ -35,7 +35,7 @@ public class RobotContainer {
   private static JoystickButton angle_vision_pid_button = new JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
   
   private static JoystickButton shoot_button = new JoystickButton(arms_joystick, Constants.SHOOT_BUTTON);
-  private static JoystickButton shoot_dis_button = new JoystickButton(arms_joystick, Constants.SHOOT_DIS_BUTTON);
+  //private static JoystickButton shoot_dis_button = new JoystickButton(arms_joystick, Constants.SHOOT_DIS_BUTTON);
   
   private static JoystickButton rolate_button = new JoystickButton(arms_joystick, Constants.ROLATE_BUTTON);
 
@@ -51,7 +51,7 @@ public class RobotContainer {
     intake_forword_button.whileHeld(new IntakeCommand(true));
     intake_reverse_button.whileHeld(new IntakeCommand(false));
 
-    //angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
+    angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
 
     everest_pullup_button.whileHeld(new PullUpCommend(true));
     everest_dis_pullup_button.whileHeld(new PullUpCommend(false));   
@@ -60,10 +60,10 @@ public class RobotContainer {
     everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
 
     shoot_button.whileHeld(new ShootCommand(true));
-    shoot_dis_button.whileHeld(new ShootCommand(false));
+    //shoot_dis_button.whileHeld(new ShootCommand(false));
 
     rolate_button.whileHeld(new RolateCommand());
-    }
+  }
 
 
   /**

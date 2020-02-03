@@ -19,7 +19,7 @@ public final class Constants {
     public static final int ARMS_STICK = 1;
 
     // Driver Joystick
-    public static final int ANGLE_VISION_PID_BUTTON = 3; // TODO
+    public static final int ANGLE_VISION_PID_BUTTON = 9; // TODO
     public static final int DRIVER_LEFT_AXIS = 1;
     public static final int DRIVER_RIGHT_AXIS = 5;
     public static final int COLLECTER_COLLECT_BUTTON = 5;
@@ -28,7 +28,7 @@ public final class Constants {
 
     // Arms Joystick
     public static final int SHOOT_BUTTON = 8;
-    public static final int SHOOT_DIS_BUTTON = 7;
+    //public static final int SHOOT_DIS_BUTTON = 7;
     public static final int INTAKE_FORWORD_BUTTON = 6;
     public static final int INTAKE_REVERSE_BUTTON = 7;
 

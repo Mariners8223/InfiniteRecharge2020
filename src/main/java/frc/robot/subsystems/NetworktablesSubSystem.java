@@ -22,7 +22,7 @@ public class NetworktablesSubSystem extends SubsystemBase {
     networkTable = NetworkTableInstance.getDefault().getTable("tb");
 
     // listener creation
-    networkTable.addEntryListener("angle", (table, key, entry, value, flags) -> {
+    networkTable.addEntryListener("ang", (table, key, entry, value, flags) -> {
       angle = (double) value.getValue();
       SmartDashboard.putNumber("angle", angle);
       //System.out.print(angle);

@@ -25,6 +25,7 @@ public class AngleVisionPidCommand extends CommandBase {
   @Override
   public void execute() {
     chassis.pid_vision(NSS.get_angle());
+    System.out.println(NSS.get_angle());
   }
 
   @Override
@@ -35,7 +36,7 @@ public class AngleVisionPidCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean stop = chassis.stop_angle_vision_pid();
-    if (!stop) {
+    if (stop) {
       target_last_time = Timer.getFPGATimestamp();
     }
     return Timer.getFPGATimestamp() - target_last_time > wait && stop;
