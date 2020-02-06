@@ -1,11 +1,12 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
@@ -14,6 +15,8 @@ public class Chassis extends SubsystemBase {
   private Spark front_left;
   private Spark back_left;
   private SpeedControllerGroup left;
+
+  private AHRS gyro;
 
   private Spark front_right;
   private Spark back_right;
@@ -56,6 +59,8 @@ public class Chassis extends SubsystemBase {
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANC);
     angle_vision_pid.setSetpoint(0);
+
+    gyro = new AHRS();
   }
 
   /**
@@ -96,5 +101,13 @@ public class Chassis extends SubsystemBase {
   public void pid_reset() {
     angle_vision_pid.reset();
     set_speed(0, 0);
+  }
+
+  public double get_angle(){
+    return gyro.getYaw();
+  }
+
+  public void reset_angle(){
+    gyro.reset();
   }
 }

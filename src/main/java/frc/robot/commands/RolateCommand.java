@@ -30,7 +30,7 @@ public class RolateCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     rolate.spinner_set_speed(0);
-    rolate.rolate_stop();
+    rolate.rolate_move_forword();
   }
 
   // Returns true when the command should end.
