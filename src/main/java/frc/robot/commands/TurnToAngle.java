@@ -2,20 +2,28 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
+import edu.wpi.first.wpilibj.Timer;
 
 public class TurnToAngle extends CommandBase {
+  private double degrees;
   private Chassis chassis = Chassis.getInstance();
+  private double target_last_time = 0;
+  private double wait = 0.3;
+
 
   public TurnToAngle(double degrees) {
     addRequirements(chassis);
+    this.degrees = degrees;
   }
 
   @Override
   public void initialize() {
+    chassis.pid_gyro_enable(degrees);
   }
 
   @Override
   public void execute() {
+    chassis.pid_gyro_execute();
   }
 
   @Override
@@ -26,6 +34,10 @@ public class TurnToAngle extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    boolean stop = chassis.stop_gyro();
+    if (stop) {
+      target_last_time = Timer.getFPGATimestamp();
+    }
+    return Timer.getFPGATimestamp() - target_last_time > wait && stop;
   }
 }

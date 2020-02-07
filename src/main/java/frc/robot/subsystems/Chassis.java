@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -17,6 +16,11 @@ public class Chassis extends SubsystemBase {
   private SpeedControllerGroup left;
 
   private AHRS gyro;
+  private PIDController gyro_pid;
+  private final double KP_GYRO = 7;
+  private final double KI_GYRO = 0.1;
+  private final double KD_GYRO = 0.1;
+  private final double GYRO_TOLERANCE = 1;
 
   private Spark front_right;
   private Spark back_right;
@@ -27,12 +31,12 @@ public class Chassis extends SubsystemBase {
   //private Encoder enc_left;
   //private Encoder enc_right;
 
-  private final PIDController angle_vision_pid;
+  private PIDController angle_vision_pid;
   private final double KP_ANGLE_VISION = 7;
   private final double KI_ANGLE_VISION = 0.1;
   private final double KD_ANGLE_VISION = 0.1;
   private final double PID_MAX_SPEED = 0.5;
-  private final double ANGLE_VISION_TOLERANC = 0.05;
+  private final double ANGLE_VISION_TOLERANCE = 0.05;
 
   private static Chassis instance;
 
@@ -57,10 +61,12 @@ public class Chassis extends SubsystemBase {
     enc_right.reset();*/
 
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
-    angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANC);
+    angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANCE);
     angle_vision_pid.setSetpoint(0);
 
     gyro = new AHRS();
+    gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
+    gyro_pid.setTolerance(GYRO_TOLERANCE);
   }
 
   /**
@@ -109,5 +115,19 @@ public class Chassis extends SubsystemBase {
 
   public void reset_angle(){
     gyro.reset();
+  }
+
+  public void pid_gyro_enable(double degrees){
+    gyro_pid.setSetpoint(degrees);
+  }
+
+  public void pid_gyro_execute(){
+    double speed = gyro_pid.calculate(get_angle());
+    speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
+    set_speed(speed, -(speed));
+  }
+
+  public boolean stop_gyro() {
+    return gyro_pid.atSetpoint();
   }
 }
