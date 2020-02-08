@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -10,13 +11,15 @@ public class ChassisCommand extends CommandBase {
 
   public ChassisCommand() {
     addRequirements(chassis);
+    SmartDashboard.putNumber("Drive", 0.5);
   }
 
   @Override
   public void execute() {
     double x = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
     double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
-    chassis.set_speed(Math.signum(x) * x * x * 0.5, Math.signum(y) * y * y * 0.5);
+    double MaxSpeed = SmartDashboard.getNumber("Drive", 0.5);
+    chassis.set_speed(Math.signum(x) * x * x * MaxSpeed, Math.signum(y) * y * y * MaxSpeed);
   }
 
   @Override

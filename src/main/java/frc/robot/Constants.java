@@ -8,7 +8,7 @@ public final class Constants {
     public static final int RIGHT_BACK_MOTOR = 1;
     public static final int COLLACTER_MOTOR = 5;
     public static final int SHOT_MOTOR = 8;
-    public static final int TRANS_MOTOR = 10;
+    public static final int TRANS_MOTOR = 0;
     public static final int CLIMER_MOTOR = 0;
     public static final int PULLUP1_MOTOR = 7;
     public static final int PULLUP2_MOTOR = 6;
@@ -28,9 +28,9 @@ public final class Constants {
 
     // Arms Joystick
     public static final int SHOOT_BUTTON = 4;
-    public static final int SHOOT_DIS_BUTTON = 2;
-    public static final int TRANS_BUTTON = 3;
-    public static final int TRANS_DIS_BUTTON = 1;
+    public static final int SHOOT_DIS_BUTTON = 1;
+    public static final int TRANS_BUTTON = 2;
+    public static final int TRANS_DIS_BUTTON = 3;
 
     public static final int INTAKE_BUTTON = 6;
     public static final int ROLATE_BUTTON = 5;

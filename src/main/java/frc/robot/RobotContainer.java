@@ -6,13 +6,12 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PullUpCommend;
 import frc.robot.commands.RolateCommand;
+import frc.robot.commands.SetMotorCanCommand;
 import frc.robot.commands.SetMotorCommand;
 import frc.robot.commands.AngleVisionPidCommand;
 import frc.robot.subsystems.Bull;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Everest;
-import frc.robot.commands.ShootCommand;
-
 
 public class RobotContainer {
   public static Chassis chassis = Chassis.getInstance();
@@ -31,6 +30,9 @@ public class RobotContainer {
   
   private static JoystickButton shoot_button = new JoystickButton(arms_joystick, Constants.SHOOT_BUTTON);
   private static JoystickButton shoot_dis_button = new JoystickButton(arms_joystick, Constants.SHOOT_DIS_BUTTON);
+  
+  private static JoystickButton trans_button = new JoystickButton(arms_joystick, Constants.TRANS_BUTTON);
+  private static JoystickButton trans_dis_button = new JoystickButton(arms_joystick, Constants.TRANS_DIS_BUTTON);
 
   private static JoystickButton rolate_button = new JoystickButton(arms_joystick, Constants.ROLATE_BUTTON);
 
@@ -60,8 +62,12 @@ public class RobotContainer {
     everest_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, everest.CLIMER_SPEED));
     everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
 
-    shoot_button.whileHeld(new ShootCommand(true));
-    shoot_dis_button.whileHeld(new ShootCommand(false));
+    shoot_button.whileHeld(new SetMotorCommand(bull.shoot, bull.SHOOT_SPEED));
+    shoot_dis_button.whileHeld(new SetMotorCommand(bull.shoot, -bull.SHOOT_SPEED));
+
+    trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
+    trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
+
 
     rolate_button.whileHeld(new RolateCommand());
   }

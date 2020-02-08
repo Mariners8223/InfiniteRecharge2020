@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -15,8 +18,8 @@ import frc.robot.Constants;
 
 public class Bull extends SubsystemBase {
   public final Spark collector;
-  public final Spark transportation;
-  public final Spark shot;
+  public final VictorSPX transportation;
+  public final Spark shoot;
 
   private Encoder enc_shot;
   private Encoder enc_trans;
@@ -29,7 +32,9 @@ public class Bull extends SubsystemBase {
   private final double SHOOTER_TOLERANCE = 0.03;
 
   public final double COLLECTOR_SPEED = 0.7;
-  public final double TRANS_SPEED = 0.4;
+  public final double TRANS_SPEED = 0.3;
+  public final double SHOOT_SPEED = 1;
+
 
   // private Compressor compressor;
   private DoubleSolenoid solenoid;
@@ -42,8 +47,8 @@ public class Bull extends SubsystemBase {
 
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
 
-    transportation = new Spark(Constants.TRANS_MOTOR);
-    shot = new Spark(Constants.SHOT_MOTOR);
+    transportation = new VictorSPX(Constants.TRANS_MOTOR);
+    shoot = new Spark(Constants.SHOT_MOTOR);
     collector = new Spark(Constants.COLLACTER_MOTOR);
 
     // Eencoder setup
@@ -112,7 +117,7 @@ public class Bull extends SubsystemBase {
   }
 
   public void shot_set_speed(double speed) {
-    shot.set(speed);
+    shoot.set(speed);
   }
 
   public void shoot_enable(double speed) {
@@ -127,13 +132,18 @@ public class Bull extends SubsystemBase {
   public void shoot_disable() {
     shooter_speed_pid.reset();
     shot_set_speed(0);
+    transportation.set(ControlMode.PercentOutput, 0);
   }
 
   public void trans_move() {
-    transportation.set(-TRANS_SPEED);
+    transportation.set(ControlMode.PercentOutput ,-TRANS_SPEED);
   }
 
   public void trans_move_reverse() {
-    transportation.set(TRANS_SPEED);
+    transportation.set(ControlMode.PercentOutput, TRANS_SPEED);
+  }
+
+  public void trans_stop() {
+    transportation.set(ControlMode.PercentOutput, 0);
   }
 }

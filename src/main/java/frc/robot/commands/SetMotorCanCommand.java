@@ -1,31 +1,34 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class SetMotorCommand extends CommandBase {
-  private Spark motor;
+public class SetMotorCanCommand extends CommandBase {
+  private VictorSPX motor;
   double speed;
-  public SetMotorCommand(SubsystemBase subsystem, Spark motor, double speed) {
+  public SetMotorCanCommand(SubsystemBase subsystem, VictorSPX motor, double speed) {
     addRequirements(subsystem);
     this.motor = motor;
     this.speed = speed;
   }
 
-  public SetMotorCommand(Spark motor, double speed) {
+  public SetMotorCanCommand(VictorSPX motor, double speed) {
     this.motor = motor;
     this.speed = speed;
   }
 
   @Override
   public void execute() {
-    motor.set(speed);
+    motor.set(ControlMode.PercentOutput, speed);
   }
 
   @Override
   public void end(boolean interrupted) {
-    motor.set(0);
+    motor.set(ControlMode.PercentOutput, 0);
   }
 
   @Override
