@@ -25,7 +25,8 @@ public class AngleVisionPidCommand extends CommandBase {
 
   @Override
   public void execute() {
-    chassis.pid_vision(NSS.get_angle());
+    chassis.pid_vision(SmartDashboard.getNumber("ang", 0));
+    //System.out.println();
   }
 
   @Override

@@ -47,18 +47,18 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-    collect_button.whileHeld(new SetMotorCommand(bull, Constants.COLLACTER_MOTOR, bull.COLLECTOR_SPEED));
-    eject_button.whileHeld(new SetMotorCommand(bull, Constants.COLLACTER_MOTOR, -bull.COLLECTOR_SPEED));
+    collect_button.whileHeld(new SetMotorCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
+    eject_button.whileHeld(new SetMotorCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
     
     intake_forword_button.whileHeld(new IntakeCommand(!bull.get_intake_state()));
 
     //angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
 
-    everest_pullup_button.whileHeld(new SetMotorCommand(everest, Constants.PULLUP_MOTOR, everest.PULLUP_SPEED));
-    everest_dis_pullup_button.whileHeld(new SetMotorCommand(everest, Constants.PULLUP_MOTOR, -everest.PULLUP_SPEED));   
+    everest_pullup_button.whileHeld(new PullUpCommend(true));
+    everest_dis_pullup_button.whileHeld(new PullUpCommend(false));   
 
-    everest_climb_button.whileHeld(new SetMotorCommand(everest, Constants.CLIMER_MOTOR, everest.CLIMER_SPEED));
-    everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, Constants.CLIMER_MOTOR, -everest.CLIMER_SPEED));   
+    everest_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, everest.CLIMER_SPEED));
+    everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
 
     shoot_button.whileHeld(new ShootCommand(true));
     shoot_dis_button.whileHeld(new ShootCommand(false));
