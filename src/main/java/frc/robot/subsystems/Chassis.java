@@ -1,72 +1,133 @@
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
-  private Spark m_frontLeft;
-  private Spark m_backLeft;
-  private SpeedControllerGroup m_left;
+  private Spark front_left;
+  private Spark back_left;
+  private SpeedControllerGroup left;
 
-  private Spark m_frontRight;
-  private Spark m_backRight;
-  private SpeedControllerGroup m_right;
+  private AHRS gyro;
+  private PIDController gyro_pid;
+  private final double KP_GYRO = 7;
+  private final double KI_GYRO = 0.1;
+  private final double KD_GYRO = 0.1;
+  private final double GYRO_TOLERANCE = 1;
 
-  private DifferentialDrive m_drive;
+  private Spark front_right;
+  private Spark back_right;
+  private SpeedControllerGroup right;
 
-  private final PIDController angle_vision_pid;
-  private final double KP_ANGLE_VISION = 0;
-  private final double KI_ANGLE_VISION = 0;
-  private final double KD_ANGLE_VISION = 0;
+  private DifferentialDrive drive;
+
+  //private Encoder enc_left;
+  //private Encoder enc_right;
+
+  private PIDController angle_vision_pid;
+  private final double KP_ANGLE_VISION = 7;
+  private final double KI_ANGLE_VISION = 0.1;
+  private final double KD_ANGLE_VISION = 0.1;
   private final double PID_MAX_SPEED = 0.5;
-  private final double ANGLE_VISION_TOLERANC = 0.05;
+  private final double ANGLE_VISION_TOLERANCE = 0.05;
 
   private static Chassis instance;
 
-  private Chassis(){
-    m_frontLeft = new Spark(Constants.LEFT_FRONT_MOTOR);
-    m_backLeft = new Spark(Constants.LEFT_BACK_MOTOR);
-    m_left = new SpeedControllerGroup(m_frontLeft, m_backLeft);
+  private Chassis() {
+    front_left = new Spark(Constants.LEFT_FRONT_MOTOR);
+    back_left = new Spark(Constants.LEFT_BACK_MOTOR);
+    left = new SpeedControllerGroup(front_left, back_left);
 
-    m_frontRight = new Spark(Constants.RIGHT_FRONT_MOTOR);
-    m_backRight = new Spark(Constants.RIGHT_BACK_MOTOR);
-    m_right = new SpeedControllerGroup(m_frontRight, m_backRight);
+    front_right = new Spark(Constants.RIGHT_FRONT_MOTOR);
+    back_right = new Spark(Constants.RIGHT_BACK_MOTOR);
+    right = new SpeedControllerGroup(front_right, back_right);
 
-    m_drive = new DifferentialDrive(m_left, m_right);
+    drive = new DifferentialDrive(left, right);
+
+    // Encoder setup
+    /*enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
+    enc_left.setDistancePerPulse(Constants.LEFT_DISTANCE_PER_PULSE);
+    enc_left.reset();
+    
+    enc_right = new Encoder(Constants.ENC_RIGHT_PORT_A, Constants.ENC_RIGHT_PORT_B);
+    enc_right.setDistancePerPulse(Constants.RIGHT_DISTANCE_PER_PULSE);
+    enc_right.reset();*/
 
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
-    angle_vision_pid.enableContinuousInput(-1, 1);
-    angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANC);
+    angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANCE);
+    angle_vision_pid.setSetpoint(0);
+
+    gyro = new AHRS();
+    gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
+    gyro_pid.setTolerance(GYRO_TOLERANCE);
   }
 
+  /**
+   * Singleton function, returns the ONLY instance of the class.
+   * @return instance of the class.
+   */
   public static Chassis getInstance() {
-    if(instance == null) instance = new Chassis();
+    if (instance == null)
+      instance = new Chassis();
     return instance;
   }
 
-  public void setSpeed(double l, double r){
-    m_drive.tankDrive(l, r);
+  /**
+   * set speed for the drivetrain
+   * @param left - left motors speed
+   * @param right  - right motors speed
+   */
+  public void set_speed(double left, double right){
+    drive.tankDrive(left, right);
   }
 
-  public double angle_vision_pid_output( double angle){
+  public double angle_vision_pid_output(double angle) {
     return angle_vision_pid.calculate(angle, 0.0);
   }
 
-  public void pid_vision( double angle ) {
+  public void pid_vision(double angle) {
     double speed = angle_vision_pid_output(angle);
-    setSpeed(speed , -speed);
- }
+    speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
+    set_speed(speed, -(speed));
+    System.out.println("spd: " + speed);
+    System.out.println("ang: " + angle);
+  }
 
   public boolean stop_angle_vision_pid() {
     return angle_vision_pid.atSetpoint();
   }
 
-  public void pid_reset(){
+  public void pid_reset() {
     angle_vision_pid.reset();
-    setSpeed(0, 0);
+    set_speed(0, 0);
+  }
+
+  public double get_angle(){
+    return gyro.getYaw();
+  }
+
+  public void reset_angle(){
+    gyro.reset();
+  }
+
+  public void pid_gyro_enable(double degrees){
+    gyro_pid.setSetpoint(degrees);
+  }
+
+  public void pid_gyro_execute(){
+    double speed = gyro_pid.calculate(get_angle());
+    speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
+    set_speed(speed, -(speed));
+  }
+
+  public boolean stop_gyro() {
+    return gyro_pid.atSetpoint();
   }
 }
