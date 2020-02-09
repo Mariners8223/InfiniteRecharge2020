@@ -54,11 +54,11 @@ public final class Constants {
     public static final double LEFT_DISTANCE_PER_PULSE = 0.000396; // TODO
 
     // DIO
-    public static final int ENC_SHOT_PORT_A = 3;
-    public static final int ENC_SHOT_PORT_B = 2;
+    public static final int ENC_SHOT_PORT_A = 8;
+    public static final int ENC_SHOT_PORT_B = 9;
 
-    public static final int ENC_TRANS_PORT_A = 4; // TODO
-    public static final int ENC_TRANS_PORT_B = 5; // TODO
+    public static final int ENC_TRANS_PORT_A = 6; // TODO
+    public static final int ENC_TRANS_PORT_B = 7; // TODO
 
     public static final int ENC_LEFT_PORT_A = 4; // TODO
     public static final int ENC_LEFT_PORT_B = 5; // TODO

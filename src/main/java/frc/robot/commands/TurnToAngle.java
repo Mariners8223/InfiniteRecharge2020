@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnToAngle extends CommandBase {
   private double degrees;
@@ -18,6 +19,9 @@ public class TurnToAngle extends CommandBase {
 
   @Override
   public void initialize() {
+    
+    chassis.reset_angle();
+    chassis.pid_gyro_set(SmartDashboard.getNumber("gyro-P", 1),SmartDashboard.getNumber("gyro-I", 0),SmartDashboard.getNumber("gyro-D", 0));
     chassis.pid_gyro_enable(degrees);
   }
 
@@ -29,6 +33,7 @@ public class TurnToAngle extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     chassis.set_speed(0, 0);
+    
     chassis.reset_angle();
   }
 

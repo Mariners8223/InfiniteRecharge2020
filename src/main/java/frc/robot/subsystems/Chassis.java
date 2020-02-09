@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
@@ -18,9 +20,9 @@ public class Chassis extends SubsystemBase {
   private AHRS gyro;
   private PIDController gyro_pid;
   private final double KP_GYRO = 7;
-  private final double KI_GYRO = 0.1;
+  private final double KI_GYRO = 0.5;
   private final double KD_GYRO = 0.1;
-  private final double GYRO_TOLERANCE = 1;
+  private final double GYRO_TOLERANCE = 2;
 
   private Spark front_right;
   private Spark back_right;
@@ -35,7 +37,7 @@ public class Chassis extends SubsystemBase {
   private final double KP_ANGLE_VISION = 7;
   private final double KI_ANGLE_VISION = 0.1;
   private final double KD_ANGLE_VISION = 0.1;
-  private final double PID_MAX_SPEED = 0.5;
+  private final double PID_MAX_SPEED = 0.75;
   private final double ANGLE_VISION_TOLERANCE = 0.05;
 
   private static Chassis instance;
@@ -64,9 +66,18 @@ public class Chassis extends SubsystemBase {
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANCE);
     angle_vision_pid.setSetpoint(0);
 
+
+    
     gyro = new AHRS();
+    gyro.isCalibrating();
     gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
     gyro_pid.setTolerance(GYRO_TOLERANCE);
+    gyro_pid.enableContinuousInput(-180, 180);
+
+    SendableRegistry.setName(gyro_pid, "GyroPID");
+    SmartDashboard.putNumber("gyro-P", 7);
+    SmartDashboard.putNumber("gyro-I", 0);
+    SmartDashboard.putNumber("gyro-D", 0);
   }
 
   /**
@@ -109,16 +120,36 @@ public class Chassis extends SubsystemBase {
     set_speed(0, 0);
   }
 
+  public void Log(){
+    SmartDashboard.putBoolean("Gyro", gyro.isCalibrating() || SmartDashboard.getBoolean("Gyro", false));
+    SmartDashboard.putNumber("GyroXq", gyro.getQuaternionX());
+    SmartDashboard.putNumber("GyroZq", gyro.getQuaternionZ());
+    SmartDashboard.putNumber("GyroYq", gyro.getQuaternionY());
+    SmartDashboard.putNumber("Gyrox", gyro.getRawGyroX());
+    SmartDashboard.putNumber("Gyroz", gyro.getRawGyroY());
+    SmartDashboard.putNumber("Gyroy", gyro.getRawGyroZ());
+    SmartDashboard.putNumber("Yaw", gyro.getYaw());
+    SmartDashboard.putNumber("Roll", gyro.getRoll());
+    SmartDashboard.putNumber("Pitch", gyro.getPitch());
+    //gyro
+    
+  }
+
   public double get_angle(){
+    Log();
     return gyro.getYaw();
   }
 
   public void reset_angle(){
     gyro.reset();
   }
-
+  
   public void pid_gyro_enable(double degrees){
     gyro_pid.setSetpoint(degrees);
+  }
+
+  public void pid_gyro_set(double p, double i, double d){
+    gyro_pid.setPID(p,i,d);
   }
 
   public void pid_gyro_execute(){
