@@ -48,8 +48,8 @@ public final class Constants {
     public static final int ROLATE_SOLONOID_B = 6; 
 
     // Encoder Staff
-    public static final double SHOT_DISTANCE_PER_PULSE = 0.000396;//0.000505433;
-    public static final double TRANS_DISTANCE_PER_PULSE = 0.000396; // TODO
+    public static final double SHOT_DISTANCE_PER_PULSE = 0.0004748611161;//0.000396;//0.000505433;
+    public static final double TRANS_DISTANCE_PER_PULSE = 0.0002020712301086133; // TODO
     public static final double RIGHT_DISTANCE_PER_PULSE = 0.000396; // TODO
     public static final double LEFT_DISTANCE_PER_PULSE = 0.000396; // TODO
 

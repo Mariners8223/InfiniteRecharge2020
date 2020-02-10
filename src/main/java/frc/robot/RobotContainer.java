@@ -8,6 +8,7 @@ import frc.robot.commands.PullUpCommend;
 import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorCanCommand;
 import frc.robot.commands.SetMotorCommand;
+import frc.robot.commands.ShootVelocityCommand;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.AngleVisionPidCommand;
 import frc.robot.commands.ChassisCommand;
@@ -68,7 +69,7 @@ public class RobotContainer {
     everest_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, everest.CLIMER_SPEED));
     everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
 
-    shoot_button.whileHeld(new SetMotorCommand(bull.shoot, bull.SHOOT_SPEED));
+    shoot_button.whileHeld(new ShootVelocityCommand(40));//new SetMotorCommand(bull.shoot, bull.SHOOT_SPEED));
     shoot_dis_button.whileHeld(new SetMotorCommand(bull.shoot, -bull.SHOOT_SPEED));
 
     trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));

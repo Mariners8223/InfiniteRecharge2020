@@ -26,9 +26,9 @@ public class Bull extends SubsystemBase {
 
   private PIDController shooter_speed_pid;
 
-  private final double KP_SHOOTER_SPEED = 0;
-  private final double KI_SHOOTER_SPEED = 0;
-  private final double KD_SHOOTER_SPEED = 0;
+  private final double KP_SHOOTER_SPEED = 0.55;
+  private final double KI_SHOOTER_SPEED = 0.07;
+  private final double KD_SHOOTER_SPEED = 0.01;
   private final double SHOOTER_TOLERANCE = 0.03;
 
   public final double COLLECTOR_SPEED = 0.7;
@@ -52,19 +52,18 @@ public class Bull extends SubsystemBase {
     collector = new Spark(Constants.COLLACTER_MOTOR);
 
     // Eencoder setup
-    /*
-     * enc_shot = new Encoder(Constants.ENC_SHOT_PORT_A, Constants.ENC_SHOT_PORT_B);
-     * enc_shot.setDistancePerPulse(Constants.SHOT_DISTANCE_PER_PULSE);
-     * enc_shot.reset();
-     * 
-     * enc_trans = new Encoder(Constants.ENC_TRANS_PORT_A,
-     * Constants.ENC_TRANS_PORT_B);
-     * enc_trans.setDistancePerPulse(Constants.TRANS_DISTANCE_PER_PULSE);
-     * enc_trans.reset();
-     */
+     enc_shot = new Encoder(Constants.ENC_SHOT_PORT_A, Constants.ENC_SHOT_PORT_B);
+     enc_shot.setDistancePerPulse(Constants.SHOT_DISTANCE_PER_PULSE);
+     enc_shot.reset();
+      
+     enc_trans = new Encoder(Constants.ENC_TRANS_PORT_A,
+     Constants.ENC_TRANS_PORT_B);
+     enc_trans.setDistancePerPulse(Constants.TRANS_DISTANCE_PER_PULSE);
+     enc_trans.reset();
 
     shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
     shooter_speed_pid.setTolerance(SHOOTER_TOLERANCE);
+    shooter_speed_pid.reset();
   }
 
   /**
@@ -125,8 +124,11 @@ public class Bull extends SubsystemBase {
   }
 
   public void shoot() {
-    // shot_set_speed(MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()),
-    // 0, 1));
+    double s = shooter_speed_pid.calculate(enc_shot.getRate());
+    shot_set_speed(-s);
+    //shot_set_speed(1);
+    System.out.println(s);
+    SmartDashboard.putNumber("velocity", enc_shot.getRate());
   }
 
   public void shoot_disable() {
@@ -145,5 +147,9 @@ public class Bull extends SubsystemBase {
 
   public void trans_stop() {
     transportation.set(ControlMode.PercentOutput, 0);
+  }
+
+  public boolean shoot_stop() {
+  	return shooter_speed_pid.atSetpoint();
   }
 }
