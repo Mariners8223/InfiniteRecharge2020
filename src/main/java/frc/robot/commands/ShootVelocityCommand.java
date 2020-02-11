@@ -45,10 +45,12 @@ public class ShootVelocityCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean stop = bull.shoot_stop();
+    return false;
+    /*boolean stop = bull.shoot_stop();
     if (stop) {
       target_last_time = Timer.getFPGATimestamp();
     }
     return Timer.getFPGATimestamp() - target_last_time > wait && stop;
+  */
   }
 }

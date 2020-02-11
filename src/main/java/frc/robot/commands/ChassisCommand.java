@@ -19,7 +19,7 @@ public class ChassisCommand extends CommandBase {
     chassis.Log();
     double x = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
     double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
-    double MaxSpeed = SmartDashboard.getNumber("Drive", 0.5);
+    double MaxSpeed = SmartDashboard.getNumber("Drive", 1);
     chassis.set_speed(Math.signum(x) * x * x * MaxSpeed, Math.signum(y) * y * y * MaxSpeed);
   }
 

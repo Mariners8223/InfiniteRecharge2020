@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.GroupMotorControllers;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Spark;
@@ -13,9 +16,8 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
-  private Spark front_left;
-  private Spark back_left;
-  private SpeedControllerGroup left;
+  private VictorSPX front_left;
+  private VictorSPX back_left;
 
   private AHRS gyro;
   private PIDController gyro_pid;
@@ -24,9 +26,8 @@ public class Chassis extends SubsystemBase {
   private final double KD_GYRO = 0.1;
   private final double GYRO_TOLERANCE = 2;
 
-  private Spark front_right;
-  private Spark back_right;
-  private SpeedControllerGroup right;
+  private VictorSPX front_right;
+  private VictorSPX back_right;
 
   private DifferentialDrive drive;
 
@@ -43,15 +44,12 @@ public class Chassis extends SubsystemBase {
   private static Chassis instance;
 
   private Chassis() {
-    front_left = new Spark(Constants.LEFT_FRONT_MOTOR);
-    back_left = new Spark(Constants.LEFT_BACK_MOTOR);
-    left = new SpeedControllerGroup(front_left, back_left);
+    front_left = new VictorSPX(Constants.LEFT_FRONT_MOTOR);
+    back_left = new VictorSPX(Constants.LEFT_BACK_MOTOR);
+    
+    front_right = new VictorSPX(Constants.RIGHT_FRONT_MOTOR);
+    back_right = new VictorSPX(Constants.RIGHT_BACK_MOTOR);
 
-    front_right = new Spark(Constants.RIGHT_FRONT_MOTOR);
-    back_right = new Spark(Constants.RIGHT_BACK_MOTOR);
-    right = new SpeedControllerGroup(front_right, back_right);
-
-    drive = new DifferentialDrive(left, right);
 
     // Encoder setup
     /*enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
@@ -75,9 +73,9 @@ public class Chassis extends SubsystemBase {
     gyro_pid.enableContinuousInput(-180, 180);
 
     SendableRegistry.setName(gyro_pid, "GyroPID");
-    SmartDashboard.putNumber("gyro-P", 7);
-    SmartDashboard.putNumber("gyro-I", 0);
-    SmartDashboard.putNumber("gyro-D", 0);
+    //SmartDashboard.putNumber("gyro-P", 7);
+    //SmartDashboard.putNumber("gyro-I", 0);
+    //SmartDashboard.putNumber("gyro-D", 0);
   }
 
   /**
@@ -96,7 +94,11 @@ public class Chassis extends SubsystemBase {
    * @param right  - right motors speed
    */
   public void set_speed(double left, double right){
-    drive.tankDrive(left, right);
+    front_left.set(ControlMode.PercentOutput, left);
+    back_left.set(ControlMode.Follower, front_left.getDeviceID());
+
+    front_right.set(ControlMode.PercentOutput, right);
+    back_right.set(ControlMode.Follower, front_right.getDeviceID());
   }
 
   public double angle_vision_pid_output(double angle) {
@@ -107,8 +109,6 @@ public class Chassis extends SubsystemBase {
     double speed = angle_vision_pid_output(angle);
     speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
     set_speed(speed, -(speed));
-    System.out.println("spd: " + speed);
-    System.out.println("ang: " + angle);
   }
 
   public boolean stop_angle_vision_pid() {
@@ -121,16 +121,16 @@ public class Chassis extends SubsystemBase {
   }
 
   public void Log(){
-    SmartDashboard.putBoolean("Gyro", gyro.isCalibrating() || SmartDashboard.getBoolean("Gyro", false));
-    SmartDashboard.putNumber("GyroXq", gyro.getQuaternionX());
-    SmartDashboard.putNumber("GyroZq", gyro.getQuaternionZ());
-    SmartDashboard.putNumber("GyroYq", gyro.getQuaternionY());
-    SmartDashboard.putNumber("Gyrox", gyro.getRawGyroX());
-    SmartDashboard.putNumber("Gyroz", gyro.getRawGyroY());
-    SmartDashboard.putNumber("Gyroy", gyro.getRawGyroZ());
-    SmartDashboard.putNumber("Yaw", gyro.getYaw());
-    SmartDashboard.putNumber("Roll", gyro.getRoll());
-    SmartDashboard.putNumber("Pitch", gyro.getPitch());
+    //SmartDashboard.putBoolean("Gyro", gyro.isCalibrating() || SmartDashboard.getBoolean("Gyro", false));
+    //SmartDashboard.putNumber("GyroXq", gyro.getQuaternionX());
+    //SmartDashboard.putNumber("GyroZq", gyro.getQuaternionZ());
+    //SmartDashboard.putNumber("GyroYq", gyro.getQuaternionY());
+    // SmartDashboard.putNumber("Gyrox", gyro.getRawGyroX());
+    // SmartDashboard.putNumber("Gyroz", gyro.getRawGyroY());
+    // SmartDashboard.putNumber("Gyroy", gyro.getRawGyroZ());
+    // SmartDashboard.putNumber("Yaw", gyro.getYaw());
+    // SmartDashboard.putNumber("Roll", gyro.getRoll());
+    // SmartDashboard.putNumber("Pitch", gyro.getPitch());
     //gyro
     
   }

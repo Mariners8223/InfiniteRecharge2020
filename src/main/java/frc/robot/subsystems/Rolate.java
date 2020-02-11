@@ -24,6 +24,7 @@ public class Rolate extends SubsystemBase {
 
   private Rolate() {
     compressor = new Compressor();
+    compressor.stop();
     solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
 
     spinner = new Spark(Constants.SPINNER_MOTOR);
