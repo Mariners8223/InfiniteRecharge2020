@@ -16,7 +16,6 @@ public class ChassisCommand extends CommandBase {
 
   @Override
   public void execute() {
-    chassis.Log();
     double x = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
     double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
     double MaxSpeed = SmartDashboard.getNumber("Drive", 1);

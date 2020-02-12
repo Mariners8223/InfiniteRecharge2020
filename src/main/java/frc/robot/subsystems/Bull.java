@@ -21,8 +21,8 @@ public class Bull extends SubsystemBase {
   public final VictorSPX transportation;
   public final Spark shoot;
 
-  private Encoder enc_shot;
-  private Encoder enc_trans;
+  //private Encoder enc_shot;
+  //private Encoder enc_trans;
 
   private PIDController shooter_speed_pid;
 
@@ -52,6 +52,7 @@ public class Bull extends SubsystemBase {
     collector = new Spark(Constants.COLLACTER_MOTOR);
 
     // Eencoder setup
+    /*
      enc_shot = new Encoder(Constants.ENC_SHOT_PORT_A, Constants.ENC_SHOT_PORT_B);
      enc_shot.setDistancePerPulse(Constants.SHOT_DISTANCE_PER_PULSE);
      enc_shot.reset();
@@ -60,7 +61,7 @@ public class Bull extends SubsystemBase {
      Constants.ENC_TRANS_PORT_B);
      enc_trans.setDistancePerPulse(Constants.TRANS_DISTANCE_PER_PULSE);
      enc_trans.reset();
-
+    */
     shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
     shooter_speed_pid.setTolerance(SHOOTER_TOLERANCE);
     shooter_speed_pid.reset();
@@ -124,13 +125,12 @@ public class Bull extends SubsystemBase {
   }
 
   public void shoot() {
-    double s = MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), -1, 0);
+    double s = 1;//MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), -1, 0);
     shot_set_speed(-s);
     //shot_set_speed(1);
-    System.out.println(-s);
 
     SmartDashboard.putNumber("motorspeed", -s);
-    SmartDashboard.putNumber("velocity", enc_shot.getRate());
+    //SmartDashboard.putNumber("velocity", enc_shot.getRate());
   }
 
   public void shoot_disable() {

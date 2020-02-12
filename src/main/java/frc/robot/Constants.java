@@ -2,10 +2,6 @@ package frc.robot;
 
 public final class Constants {
     // PWM
-    public static final int LEFT_FRONT_MOTOR = 4;
-    public static final int RIGHT_FRONT_MOTOR = 2;
-    public static final int LEFT_BACK_MOTOR = 3;
-    public static final int RIGHT_BACK_MOTOR = 1;
     public static final int COLLACTER_MOTOR = 5;
     public static final int SHOT_MOTOR = 8;
     public static final int TRANS_MOTOR = 0;
@@ -13,6 +9,12 @@ public final class Constants {
     public static final int PULLUP1_MOTOR = 7;
     public static final int PULLUP2_MOTOR = 6;
     public static final int SPINNER_MOTOR = 9;
+
+    //CanBus
+    public static final int LEFT_FRONT_MOTOR = 4;
+    public static final int RIGHT_FRONT_MOTOR = 0;
+    public static final int LEFT_BACK_MOTOR = 3;
+    public static final int RIGHT_BACK_MOTOR = 2;
 
     // JoySticks And Bottons
     public static final int DRIVER_STICK = 0;
@@ -54,16 +56,16 @@ public final class Constants {
     public static final double LEFT_DISTANCE_PER_PULSE = 0.000396; // TODO
 
     // DIO
-    public static final int ENC_SHOT_PORT_A = 8;
-    public static final int ENC_SHOT_PORT_B = 9;
+    public static final int ENC_SHOT_PORT_A = 0; //TODO
+    public static final int ENC_SHOT_PORT_B = 1; //TODO
 
-    public static final int ENC_TRANS_PORT_A = 6; // TODO
-    public static final int ENC_TRANS_PORT_B = 7; // TODO
+    public static final int ENC_TRANS_PORT_A = 2; // TODO
+    public static final int ENC_TRANS_PORT_B = 3; // TODO
 
-    public static final int ENC_LEFT_PORT_A = 4; // TODO
-    public static final int ENC_LEFT_PORT_B = 5; // TODO
+    public static final int ENC_LEFT_PORT_A = 8; // TODO
+    public static final int ENC_LEFT_PORT_B = 9; // TODO
 
-    public static final int ENC_RIGHT_PORT_A = 4; // TODO
-    public static final int ENC_RIGHT_PORT_B = 5; // TODO
+    public static final int ENC_RIGHT_PORT_A = 7; // TODO
+    public static final int ENC_RIGHT_PORT_B = 6; // TODO
     
 }

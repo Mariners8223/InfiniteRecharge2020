@@ -1,12 +1,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.GroupMotorControllers;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
@@ -29,10 +27,8 @@ public class Chassis extends SubsystemBase {
   private VictorSPX front_right;
   private VictorSPX back_right;
 
-  private DifferentialDrive drive;
-
-  //private Encoder enc_left;
-  //private Encoder enc_right;
+  private Encoder enc_left;
+  private Encoder enc_right;
 
   private PIDController angle_vision_pid;
   private final double KP_ANGLE_VISION = 7;
@@ -52,13 +48,14 @@ public class Chassis extends SubsystemBase {
 
 
     // Encoder setup
-    /*enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
-    enc_left.setDistancePerPulse(Constants.LEFT_DISTANCE_PER_PULSE);
+    enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
+    enc_left.setDistancePerPulse(1);
     enc_left.reset();
+    //EncoderAMT10
     
     enc_right = new Encoder(Constants.ENC_RIGHT_PORT_A, Constants.ENC_RIGHT_PORT_B);
-    enc_right.setDistancePerPulse(Constants.RIGHT_DISTANCE_PER_PULSE);
-    enc_right.reset();*/
+    enc_right.setDistancePerPulse(1);
+    enc_right.reset();
 
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANCE);
@@ -97,7 +94,7 @@ public class Chassis extends SubsystemBase {
     front_left.set(ControlMode.PercentOutput, left);
     back_left.set(ControlMode.Follower, front_left.getDeviceID());
 
-    front_right.set(ControlMode.PercentOutput, right);
+    front_right.set(ControlMode.PercentOutput, -right);
     back_right.set(ControlMode.Follower, front_right.getDeviceID());
   }
 
