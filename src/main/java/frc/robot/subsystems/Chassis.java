@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -67,8 +68,14 @@ public class Chassis extends SubsystemBase {
     angle_vision_pid.setSetpoint(0);
 
 
-    
-    gyro = new AHRS();
+    try {
+      /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+      /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+      /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+      gyro = new AHRS(); 
+    } catch (RuntimeException ex ) {
+        DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+    }
     gyro.isCalibrating();
     gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
     gyro_pid.setTolerance(GYRO_TOLERANCE);
@@ -122,15 +129,11 @@ public class Chassis extends SubsystemBase {
 
   public void Log(){
     SmartDashboard.putBoolean("Gyro", gyro.isCalibrating() || SmartDashboard.getBoolean("Gyro", false));
-    SmartDashboard.putNumber("GyroXq", gyro.getQuaternionX());
-    SmartDashboard.putNumber("GyroZq", gyro.getQuaternionZ());
-    SmartDashboard.putNumber("GyroYq", gyro.getQuaternionY());
-    SmartDashboard.putNumber("Gyrox", gyro.getRawGyroX());
-    SmartDashboard.putNumber("Gyroz", gyro.getRawGyroY());
-    SmartDashboard.putNumber("Gyroy", gyro.getRawGyroZ());
-    SmartDashboard.putNumber("Yaw", gyro.getYaw());
-    SmartDashboard.putNumber("Roll", gyro.getRoll());
-    SmartDashboard.putNumber("Pitch", gyro.getPitch());
+    SmartDashboard.putBoolean(  "IMU_Connected",        gyro.isConnected());
+    SmartDashboard.putBoolean(  "IMU_IsCalibrating",    gyro.isCalibrating());
+    SmartDashboard.putNumber(   "IMU_Yaw",              gyro.getYaw());
+    SmartDashboard.putNumber(   "IMU_Pitch",            gyro.getPitch());
+    SmartDashboard.putNumber(   "IMU_Roll",             gyro.getRoll());
     //gyro
     
   }
@@ -155,7 +158,7 @@ public class Chassis extends SubsystemBase {
   public void pid_gyro_execute(){
     double speed = gyro_pid.calculate(get_angle());
     speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
-    set_speed(speed, -(speed));
+    //set_speed(speed, -(speed));
   }
 
   public boolean stop_gyro() {
