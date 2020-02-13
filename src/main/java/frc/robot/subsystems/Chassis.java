@@ -13,8 +13,8 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
-  private Spark front_left;
-  private Spark back_left;
+  public Spark front_left;
+  public Spark back_left;
   private SpeedControllerGroup left;
 
   private AHRS gyro;
@@ -24,8 +24,8 @@ public class Chassis extends SubsystemBase {
   private final double KD_GYRO = 0.1;
   private final double GYRO_TOLERANCE = 2;
 
-  private Spark front_right;
-  private Spark back_right;
+  public Spark front_right;
+  public Spark back_right;
   private SpeedControllerGroup right;
 
   private DifferentialDrive drive;

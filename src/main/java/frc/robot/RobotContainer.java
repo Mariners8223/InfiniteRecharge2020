@@ -60,7 +60,7 @@ public class RobotContainer {
     intake_forword_button.whileHeld(new IntakeCommand(!bull.get_intake_state()));
 
     //angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
-    gyro_button.whenPressed(new TurnToAngle(90));
+    //gyro_button.whenPressed(new TurnToAngle(90));
     gyro_button1.whileHeld(new ChassisCommand());
 
     everest_pullup_button.whileHeld(new PullUpCommend(true));
@@ -69,7 +69,7 @@ public class RobotContainer {
     everest_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, everest.CLIMER_SPEED));
     everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
 
-    shoot_button.whileHeld(new ShootVelocityCommand(40));//new SetMotorCommand(bull.shoot, bull.SHOOT_SPEED));
+    shoot_button.whileHeld(new ShootVelocityCommand(100));//new SetMotorCommand(bull.shoot, bull.SHOOT_SPEED));
     shoot_dis_button.whileHeld(new SetMotorCommand(bull.shoot, -bull.SHOOT_SPEED));
 
     trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));

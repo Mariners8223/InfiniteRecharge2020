@@ -9,7 +9,7 @@ public class Everest extends SubsystemBase {
   public final Spark pullup1;
   public final Spark pullup2;
 
-  public final double CLIMER_SPEED = 0.5;
+  public final double CLIMER_SPEED = 0.8;
   public final double PULLUP_SPEED = 0.7;
 
   private static Everest instance;

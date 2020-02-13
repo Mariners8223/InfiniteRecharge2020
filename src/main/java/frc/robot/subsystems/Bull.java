@@ -26,9 +26,9 @@ public class Bull extends SubsystemBase {
 
   private PIDController shooter_speed_pid;
 
-  private final double KP_SHOOTER_SPEED = 0.55;
+  private final double KP_SHOOTER_SPEED = 0.35;
   private final double KI_SHOOTER_SPEED = 0.07;
-  private final double KD_SHOOTER_SPEED = 0.01;
+  private final double KD_SHOOTER_SPEED = 0.0;
   private final double SHOOTER_TOLERANCE = 0.03;
 
   public final double COLLECTOR_SPEED = 0.7;
