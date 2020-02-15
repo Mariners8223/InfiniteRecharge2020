@@ -12,14 +12,17 @@ import frc.robot.commands.ShootVelocityCommand;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.AngleVisionPidCommand;
 import frc.robot.commands.ChassisCommand;
+import frc.robot.commands.DriveStraight;
 import frc.robot.subsystems.Bull;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Everest;
+import frc.robot.subsystems.NetworktablesSubSystem;
 
 public class RobotContainer {
   public static Chassis chassis = Chassis.getInstance();
   public static Bull bull = Bull.getInstance();
   public static Everest everest = Everest.getInstance();
+  private NetworktablesSubSystem nts = NetworktablesSubSystem.getInstance();
 
   public static Joystick driver_joystick = new Joystick(Constants.DRIVER_STICK);
   public static Joystick arms_joystick = new Joystick(Constants.ARMS_STICK);
@@ -29,7 +32,7 @@ public class RobotContainer {
 
   private static JoystickButton intake_forword_button = new JoystickButton(arms_joystick, Constants.INTAKE_BUTTON);
 
-  private static JoystickButton angle_vision_pid_button = new JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
+  private static JoystickButton angle_vision_pid_button = new JoystickButton(driver_joystick, Constants.ANGLE_VISION_PID_BUTTON);
   private static JoystickButton gyro_button = new JoystickButton(driver_joystick, 4);
   private static JoystickButton gyro_button1 = new JoystickButton(driver_joystick, 1);
   
@@ -59,8 +62,8 @@ public class RobotContainer {
     
     intake_forword_button.whileHeld(new IntakeCommand(!bull.get_intake_state()));
 
-    //angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
-    gyro_button.whenPressed(new TurnToAngle(90));
+    angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
+    gyro_button.whenPressed(new DriveStraight(2, true));//new TurnToAngle(90));
     gyro_button1.whileHeld(new ChassisCommand());
 
     everest_pullup_button.whileHeld(new PullUpCommend(true));

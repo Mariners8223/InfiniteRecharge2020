@@ -19,7 +19,7 @@ public final class Constants {
     public static final int ARMS_STICK = 1;
 
     // Driver Joystick
-    public static final int ANGLE_VISION_PID_BUTTON = 5; // TODO
+    public static final int ANGLE_VISION_PID_BUTTON = 3; // TODO
     public static final int DRIVER_LEFT_AXIS = 1;
     public static final int DRIVER_RIGHT_AXIS = 5;
     public static final int COLLECTER_COLLECT_BUTTON = 5;

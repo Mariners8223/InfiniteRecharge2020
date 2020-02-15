@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.NetworktablesSubSystem;
 
 public class ChassisCommand extends CommandBase {
   private final Chassis chassis = Chassis.getInstance();
-
+  private NetworktablesSubSystem nss = NetworktablesSubSystem.getInstance();
   public ChassisCommand() {
     addRequirements(chassis);
     SmartDashboard.putNumber("Drive", 0.5);
@@ -21,6 +22,7 @@ public class ChassisCommand extends CommandBase {
     double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
     double MaxSpeed = SmartDashboard.getNumber("Drive", 0.5);
     chassis.set_speed(Math.signum(x) * x * x * MaxSpeed, Math.signum(y) * y * y * MaxSpeed);
+    SmartDashboard.putNumber("angle", nss.get_angle());
   }
 
   @Override

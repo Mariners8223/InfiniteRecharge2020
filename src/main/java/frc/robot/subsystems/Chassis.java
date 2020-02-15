@@ -20,9 +20,9 @@ public class Chassis extends SubsystemBase {
 
   private AHRS gyro;
   private PIDController gyro_pid;
-  private final double KP_GYRO = 7;
-  private final double KI_GYRO = 0.5;
-  private final double KD_GYRO = 0.1;
+  private final double KP_GYRO = 0.005;
+  private final double KI_GYRO = 0;
+  private final double KD_GYRO = 0;
   private final double GYRO_TOLERANCE = 2;
 
   public Spark front_right;
@@ -40,6 +40,13 @@ public class Chassis extends SubsystemBase {
   private final double KD_ANGLE_VISION = 0.1;
   private final double PID_MAX_SPEED = 0.75;
   private final double ANGLE_VISION_TOLERANCE = 0.05;
+  
+  // drive stight deacceleration
+  private PIDController deacceleration_drive_pid;
+  private final double KP_DEACCELERATION = 0.5;
+  private final double KI_DEACCELERATION = 0;
+  private final double KD_DEACCELERATION = 0;
+  private final double PID_DEACCELERATION_MAX_SPEED = 0.6;
 
   private static Chassis instance;
 
@@ -67,11 +74,8 @@ public class Chassis extends SubsystemBase {
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANCE);
     angle_vision_pid.setSetpoint(0);
 
-
+    // NavX setup
     try {
-      /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
-      /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
-      /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
       gyro = new AHRS(); 
     } catch (RuntimeException ex ) {
         DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
@@ -82,9 +86,8 @@ public class Chassis extends SubsystemBase {
     gyro_pid.enableContinuousInput(-180, 180);
 
     SendableRegistry.setName(gyro_pid, "GyroPID");
-    SmartDashboard.putNumber("gyro-P", 7);
-    SmartDashboard.putNumber("gyro-I", 0);
-    SmartDashboard.putNumber("gyro-D", 0);
+
+    deacceleration_drive_pid = new PIDController(KP_DEACCELERATION, KI_DEACCELERATION, KD_DEACCELERATION);
   }
 
   /**
@@ -158,10 +161,38 @@ public class Chassis extends SubsystemBase {
   public void pid_gyro_execute(){
     double speed = gyro_pid.calculate(get_angle());
     speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
-    //set_speed(speed, -(speed));
+    set_speed(speed, -(speed));
   }
 
   public boolean stop_gyro() {
     return gyro_pid.atSetpoint();
   }
+
+  /**
+   * distance travled by th robot
+   * @return mean of the chassis encoders
+   */
+  public double get_distance(){
+    return 0.0;
+  }
+  
+  /**
+   * start the deacceleration PID
+   */
+  public void deacceleration_enable(double setpoint){
+    deacceleration_drive_pid.setSetpoint(setpoint);
+  }
+
+  /**
+   * calculate the PID output for the deacceleration PID
+   * @param stop_val input - time/distance
+   * @return speed for motors
+   */
+  public double get_deacceleration(double stop_val){
+    double speed = deacceleration_drive_pid.calculate(stop_val);
+    return MathUtil.clamp(speed, -PID_DEACCELERATION_MAX_SPEED, PID_DEACCELERATION_MAX_SPEED);
+  }
+  
+
+
 }
