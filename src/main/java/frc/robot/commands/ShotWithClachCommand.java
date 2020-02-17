@@ -8,32 +8,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Bull;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 
-public class ShootVelocityCommand extends CommandBase {
+public class ShotWithClachCommand extends CommandBase {
   Bull bull = Bull.getInstance();
-  double speed;
-  private double target_last_time = 0;
-  private double wait = 0.3;
 
-  public ShootVelocityCommand(double speed) {
-    this.speed = -speed;
+  Spark motor;
+
+  public ShotWithClachCommand() {
+    this.motor = bull.shoot;
   }
 
   @Override
   public void initialize() {
-    bull.shoot_enable(speed);
   }
 
   @Override
   public void execute() {
-    bull.shoot();
+    double speed = RobotContainer.arms_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
+    motor.setSpeed(((speed+1)/2)*0.4+0.6);
   }
 
   @Override
   public void end(boolean interrupted) {
-    bull.shoot_disable();
+    motor.setSpeed(0);
   }
 
   @Override

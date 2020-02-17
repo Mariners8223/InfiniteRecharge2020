@@ -1,6 +1,8 @@
 package frc.robot;
 
 public final class Constants {
+    public static final double MAX_SPEED = 0.6;
+    public static final double Turn_sensetivity = 0.5;
     // PWM
     public static final int LEFT_FRONT_MOTOR = 4;
     public static final int RIGHT_FRONT_MOTOR = 2;
