@@ -31,9 +31,11 @@ public class Bull extends SubsystemBase {
   private final double KD_SHOOTER_SPEED = 0.0;
   private final double SHOOTER_TOLERANCE = 1;
 
-  public final double COLLECTOR_SPEED = 0.7;
-  public final double TRANS_SPEED = 0.4;
+  public final double COLLECTOR_SPEED = 0.85;
+  public final double TRANS_SPEED = 0.5;
   public final double SHOOT_SPEED = 1;
+
+  public boolean shoot_trigger = false;
 
 
   // private Compressor compressor;

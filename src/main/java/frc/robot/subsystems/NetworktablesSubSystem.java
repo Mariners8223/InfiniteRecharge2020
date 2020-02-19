@@ -27,7 +27,7 @@ public class NetworktablesSubSystem extends SubsystemBase {
     inst.startClientTeam(8223);
     inst.startDSClient(); 
     System.out.println(inst.isConnected());
-    networkTable = inst.getTable("Vision");
+    networkTable = inst.getTable("SmartDashboard");
 
 
     System.out.println("Start list");

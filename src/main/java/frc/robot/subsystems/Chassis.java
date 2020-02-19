@@ -35,16 +35,16 @@ public class Chassis extends SubsystemBase {
   //private Encoder enc_right;
 
   private PIDController angle_vision_pid;
-  private final double KP_ANGLE_VISION = 7;
-  private final double KI_ANGLE_VISION = 0.1;
-  private final double KD_ANGLE_VISION = 0.1;
+  private final double KP_ANGLE_VISION = 0.6;
+  private final double KI_ANGLE_VISION = 0.0;
+  private final double KD_ANGLE_VISION = 0;
   private final double PID_MAX_SPEED = 0.75;
-  private final double ANGLE_VISION_TOLERANCE = 0.05;
+  private final double ANGLE_VISION_TOLERANCE = 0.1;
   
   // drive stight deacceleration
   private PIDController deacceleration_drive_pid;
-  private final double KP_DEACCELERATION = 0.5;
-  private final double KI_DEACCELERATION = 0;
+  private final double KP_DEACCELERATION = 0.4;
+  private final double KI_DEACCELERATION = 0.001;
   private final double KD_DEACCELERATION = 0;
   private final double PID_DEACCELERATION_MAX_SPEED = 0.6;
 
