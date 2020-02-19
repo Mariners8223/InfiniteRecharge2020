@@ -13,6 +13,8 @@ public class AngleVisionPidCommand extends CommandBase {
   private Chassis chassis = Chassis.getInstance();
   private Bull bull = Bull.getInstance();
   private NetworktablesSubSystem NSS = NetworktablesSubSystem.getInstance();  // NSS = NetworktablesSubSystem
+  
+  private double target_time = 0;
 
   private double target_last_time = 0;
   private double wait = 0;
@@ -37,10 +39,13 @@ public class AngleVisionPidCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean stop = chassis.stop_angle_vision_pid();
-    if (stop) {
-      target_last_time = Timer.getFPGATimestamp();
+    if (stop && target_last_time == 0) {
+      target_time = Timer.getFPGATimestamp() - target_last_time;
     }
-    return Timer.getFPGATimestamp() - target_last_time > wait && stop;
+    else{
+      target_last_time = 0;
+    }
+    return target_time > wait && stop;
   }
 
 }

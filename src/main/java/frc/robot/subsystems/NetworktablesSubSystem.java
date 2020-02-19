@@ -1,55 +1,32 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.NetworkTablesJNI;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+
 
 public class NetworktablesSubSystem extends SubsystemBase {
-  private NetworkTableEntry ang;
+  private NetworkTableInstance inst;
   private NetworkTable networkTable;
-  private double angle;
-  private double distance;
 
   private static NetworktablesSubSystem instance = new NetworktablesSubSystem();
 
   private NetworktablesSubSystem() {
-    
     // initiate variables
-    angle = 0;
-    distance = 0;
-    networkTable = NetworkTableInstance.getDefault().getTable("tb");
-    
-    System.out.println("Start list");
-
-    // listener creation
-    networkTable.addEntryListener("ang", (table, key, entry, value, flags) -> {
-      System.out.println("ang-called");
-      angle = (double) value.getValue();
-      SmartDashboard.putNumber("angle", angle);
-      System.out.print("from nss:" + angle);
-    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
-    
-    networkTable.addEntryListener("vel", (table, key, entry, value, flags) -> {
-      System.out.println("vel-called");
-        distance = (double) value.getValue();
-        SmartDashboard.putNumber("velocity", distance);
-        //System.out.print(distance);
-      }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
-
-      ang = networkTable.getEntry("ang");
+    inst = NetworkTableInstance.getDefault();
+    inst.startClientTeam(8223);
+    inst.startDSClient(); 
+    System.out.println(inst.isConnected());
+    networkTable = inst.getTable("SmartDashboard");
   }
 
   /**
    * Get the distance from the target.
    * @return distance from target
    */
-  public double get_distance(){
-    return distance;
+  public double get_velocity(){
+    return networkTable.getEntry("vel").getDouble(0);
+    // return distance;
   }
 
   /**
@@ -57,8 +34,8 @@ public class NetworktablesSubSystem extends SubsystemBase {
    * @return angle from target
    */
   public double get_angle(){
-    
-      return ang.getDouble(0);
+    return networkTable.getEntry("ang").getDouble(0);
+      // return ang.getDouble(0);
   }
 
   /**

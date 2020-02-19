@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -14,7 +17,7 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Rolate extends SubsystemBase {
-  public final Spark spinner;
+  public final VictorSPX spinner;
 
   public final double SPINNER_SPEED = 0.3;
   private Compressor compressor;
@@ -27,7 +30,7 @@ public class Rolate extends SubsystemBase {
     compressor.stop();
     solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
 
-    spinner = new Spark(Constants.SPINNER_MOTOR);
+    spinner = new VictorSPX(Constants.SPINNER_MOTOR);
 
   }
 
@@ -64,7 +67,7 @@ public class Rolate extends SubsystemBase {
   }
 
   public void spinner_set_speed(double speed){
-    spinner.set(speed);
+    spinner.set(ControlMode.PercentOutput, speed);
   }
 
 

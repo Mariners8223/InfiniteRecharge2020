@@ -1,14 +1,15 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.PullUpCommend;
 import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorCanCommand;
-import frc.robot.commands.SetMotorCommand;
 import frc.robot.commands.ShootVelocityCommand;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.AngleVisionPidCommand;
@@ -18,9 +19,12 @@ import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Everest;
 
 public class RobotContainer {
+  //VictorSPX m = new VictorSPX(0);
   public static Chassis chassis = Chassis.getInstance();
   public static Bull bull = Bull.getInstance();
   public static Everest everest = Everest.getInstance();
+
+  public static Command autCommand;
 
   public static Joystick driver_joystick = new Joystick(Constants.DRIVER_STICK);
   public static Joystick arms_joystick = new Joystick(Constants.ARMS_STICK);
@@ -55,8 +59,8 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-    collect_button.whileHeld(new SetMotorCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
-    eject_button.whileHeld(new SetMotorCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
+    collect_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
+    eject_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
     
     intake_forword_button.whileHeld(new IntakeCommand(!bull.get_intake_state()));
 
@@ -64,20 +68,21 @@ public class RobotContainer {
     //gyro_button.whenPressed(new TurnToAngle(90));
     gyro_button1.whileHeld(new ChassisCommand());
 
-    everest_pullup_button.whileHeld(new PullUpCommend(true));
-    everest_dis_pullup_button.whileHeld(new PullUpCommend(false));   
+    everest_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, everest.PULLUP_SPEED));
+    everest_dis_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, -everest.PULLUP_SPEED));
 
-    everest_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, everest.CLIMER_SPEED));
-    everest_dis_climb_button.whileHeld(new SetMotorCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
+    everest_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, everest.CLIMER_SPEED));
+    everest_dis_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
     SmartDashboard.putNumber("speed", 0);
-    shoot_button.whileHeld(new ShootVelocityCommand(30));//new SetMotorCommand(bull.shoot, bull.SHOOT_SPEED));
-    shoot_dis_button.whileHeld(new SetMotorCommand(bull.shoot, -bull.SHOOT_SPEED));
+    shoot_button.whileHeld(new SetMotorCanCommand(bull.shoot, -bull.SHOOT_SPEED));
+    shoot_dis_button.whileHeld(new SetMotorCanCommand(bull.shoot, bull.SHOOT_SPEED));
 
     trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
     trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
 
 
     rolate_button.whileHeld(new RolateCommand());
+    //shoot_button.whileHeld(new SetMotorCanCommand(bull.shoot, 0.03));
   }
 
 
@@ -86,8 +91,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  /*public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }*/
+  public Command getAutonomousCommand() {
+    return null;
+  }
 }

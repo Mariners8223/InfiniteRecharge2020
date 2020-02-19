@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.networktables.EntryListenerFlags;
@@ -17,9 +18,9 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Bull extends SubsystemBase {
-  public final Spark collector;
-  public final VictorSPX transportation;
-  public final Spark shoot;
+  public final VictorSPX collector;
+  public final TalonSRX transportation;
+  public final VictorSPX shoot;
 
   //private Encoder enc_shot;
   //private Encoder enc_trans;
@@ -47,9 +48,9 @@ public class Bull extends SubsystemBase {
 
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
 
-    transportation = new VictorSPX(Constants.TRANS_MOTOR);
-    shoot = new Spark(Constants.SHOT_MOTOR);
-    collector = new Spark(Constants.COLLACTER_MOTOR);
+    transportation = new TalonSRX(Constants.TRANS_MOTOR);
+    shoot = new VictorSPX(Constants.SHOT_MOTOR);
+    collector = new VictorSPX(Constants.COLLACTER_MOTOR);
 
     // Eencoder setup
     /*
@@ -117,7 +118,7 @@ public class Bull extends SubsystemBase {
   }
 
   public void shot_set_speed(double speed) {
-    shoot.set(speed);
+    shoot.set(ControlMode.PercentOutput, speed);
   }
 
   public void shoot_enable(double speed) {
