@@ -12,7 +12,7 @@ public class AngleVisionPidCommand extends CommandBase {
   
   private Chassis chassis = Chassis.getInstance();
   private Bull bull = Bull.getInstance();
-  private NetworktablesSubSystem NSS = NetworktablesSubSystem.getInstance();  // NSS = NetworktablesSubSystem
+  private NetworktablesSubSystem NSS = NetworktablesSubSystem.getInstance();
   
   private double target_time = 0;
 

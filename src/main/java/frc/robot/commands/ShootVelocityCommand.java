@@ -1,26 +1,16 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Bull;
-import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.Timer;
 
 public class ShootVelocityCommand extends CommandBase {
   Bull bull = Bull.getInstance();
   double speed;
-  private double target_last_time = 0;
-  private double wait = 0.3;
-  /**
-   * Creates a new ShootVelocityCommand.
-   */
+  // private double target_last_time = 0;
+  // private double wait = 0.3;
+
   public ShootVelocityCommand(double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.speed = -speed;
   }
 

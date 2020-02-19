@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,16 +8,12 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorCanCommand;
-import frc.robot.commands.ShootVelocityCommand;
-import frc.robot.commands.TurnToAngle;
-import frc.robot.commands.AngleVisionPidCommand;
 import frc.robot.commands.ChassisCommand;
 import frc.robot.subsystems.Bull;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Everest;
 
 public class RobotContainer {
-  //VictorSPX m = new VictorSPX(0);
   public static Chassis chassis = Chassis.getInstance();
   public static Bull bull = Bull.getInstance();
   public static Everest everest = Everest.getInstance();
@@ -34,8 +28,8 @@ public class RobotContainer {
 
   private static JoystickButton intake_forword_button = new JoystickButton(arms_joystick, Constants.INTAKE_BUTTON);
 
-  private static JoystickButton angle_vision_pid_button = new JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
-  private static JoystickButton gyro_button = new JoystickButton(driver_joystick, 4);
+  //private static JoystickButton angle_vision_pid_button = new JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
+  //private static JoystickButton gyro_button = new JoystickButton(driver_joystick, 4);
   private static JoystickButton gyro_button1 = new JoystickButton(driver_joystick, 1);
   
   private static JoystickButton shoot_button = new JoystickButton(arms_joystick, Constants.SHOOT_BUTTON);
@@ -82,7 +76,6 @@ public class RobotContainer {
 
 
     rolate_button.whileHeld(new RolateCommand());
-    //shoot_button.whileHeld(new SetMotorCanCommand(bull.shoot, 0.03));
   }
 
 

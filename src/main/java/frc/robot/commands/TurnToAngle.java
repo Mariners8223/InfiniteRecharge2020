@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TurnToAngle extends CommandBase {
   private double degrees;
   private Chassis chassis = Chassis.getInstance();
+  private double target_time = 0;
   private double target_last_time = 0;
   private double wait = 0.3;
 
@@ -40,9 +41,12 @@ public class TurnToAngle extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean stop = chassis.stop_gyro();
-    if (stop) {
-      target_last_time = Timer.getFPGATimestamp();
+    if (stop && target_last_time == 0) {
+      target_time = Timer.getFPGATimestamp() - target_last_time;
     }
-    return Timer.getFPGATimestamp() - target_last_time > wait && stop;
+    else{
+      target_last_time = 0;
+    }
+    return target_time > wait && stop;
   }
 }
