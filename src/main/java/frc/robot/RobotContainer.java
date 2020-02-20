@@ -8,15 +8,18 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorCanCommand;
+import frc.robot.commands.ShotWithClachCommand;
 import frc.robot.commands.ChassisCommand;
 import frc.robot.subsystems.Bull;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Everest;
+import frc.robot.subsystems.Rolate;
 
 public class RobotContainer {
   public static Chassis chassis = Chassis.getInstance();
   public static Bull bull = Bull.getInstance();
   public static Everest everest = Everest.getInstance();
+  public static Rolate rolate = Rolate.getInstance();
 
   public static Command autCommand;
 
@@ -68,14 +71,13 @@ public class RobotContainer {
     everest_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, everest.CLIMER_SPEED));
     everest_dis_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, -everest.CLIMER_SPEED));   
     SmartDashboard.putNumber("speed", 0);
-    shoot_button.whileHeld(new SetMotorCanCommand(bull.shoot, -bull.SHOOT_SPEED));
+    shoot_button.toggleWhenPressed(new ShotWithClachCommand(), bull.shoot_trigger);//new SetMotorCanCommand(bull.shoot, -bull.SHOOT_SPEED));
     shoot_dis_button.whileHeld(new SetMotorCanCommand(bull.shoot, bull.SHOOT_SPEED));
+    trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
+    trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
 
-    trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
-    trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
 
-
-    rolate_button.whileHeld(new RolateCommand());
+    rolate_button.toggleWhenPressed(new RolateCommand(), rolate.rolate_toggle);
   }
 
 

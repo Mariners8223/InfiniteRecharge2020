@@ -22,6 +22,7 @@ public class RolateCommand extends CommandBase {
   public void end(boolean interrupted) {
     rolate.spinner_set_speed(0);
     rolate.rolate_move_forword();
+    rolate.rolate_toggle = !rolate.rolate_toggle;
   }
 
   @Override

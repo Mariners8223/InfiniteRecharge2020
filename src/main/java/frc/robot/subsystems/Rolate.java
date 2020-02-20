@@ -15,11 +15,13 @@ public class Rolate extends SubsystemBase {
   private Compressor compressor;
   private DoubleSolenoid solenoid;
 
+  public boolean rolate_toggle;
+
   private static Rolate instance;
 
   private Rolate() {
     compressor = new Compressor();
-    compressor.stop();
+    // compressor.stop();
     solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
 
     spinner = new VictorSPX(Constants.SPINNER_MOTOR);

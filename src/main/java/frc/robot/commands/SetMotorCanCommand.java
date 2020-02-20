@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SetMotorCanCommand extends CommandBase {
   private com.ctre.phoenix.motorcontrol.can.BaseMotorController motor;
   double speed;
+  
+  public SetMotorCanCommand(com.ctre.phoenix.motorcontrol.can.BaseMotorController motor, double speed) {
+    this.motor = motor;
+    this.speed = speed;
+  }
+
   public SetMotorCanCommand(SubsystemBase subsystem, com.ctre.phoenix.motorcontrol.can.BaseMotorController motor, double speed) {
     addRequirements(subsystem);
     this.motor = motor;
     this.speed = speed;
   }
 
-  public SetMotorCanCommand(com.ctre.phoenix.motorcontrol.can.BaseMotorController motor, double speed) {
-    this.motor = motor;
-    this.speed = speed;
-  }
 
   @Override
   public void execute() {
