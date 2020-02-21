@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
@@ -37,9 +38,13 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public void execute() {
+    SmartDashboard.putNumber("encleft", chassis.enc_left.getDistance());
+    SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
     double speed = chassis.get_deacceleration(chassis.get_distance());
     double fix = chassis.gyro_calculate();
-    chassis.set_speed(speed-fix, speed+fix);
+    System.out.println(chassis.get_angle());
+    chassis.set_speed(speed, fix);
+    
   }
 
   @Override

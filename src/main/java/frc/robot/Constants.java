@@ -42,8 +42,8 @@ public final class Constants {
     public static final int Everest_Dis_Pullup_BUTTON = 4 * 45;
 
     // PCM
-    public static final int SOLONOID_A = 3;
-    public static final int SOLONOID_B = 4;
+    public static final int SOLONOID_A = 0;
+    public static final int SOLONOID_B = 7;
     public static final int ROLATE_SOLONOID_A = 5; 
     public static final int ROLATE_SOLONOID_B = 6; 
 
