@@ -5,9 +5,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Bull extends SubsystemBase {
@@ -15,8 +17,7 @@ public class Bull extends SubsystemBase {
   public final TalonSRX transportation;
   public final VictorSPX shoot;
 
-  //private Encoder enc_shot;
-  //private Encoder enc_trans;
+  private Encoder enc_shot;
 
   private PIDController shooter_speed_pid;
 
@@ -25,7 +26,7 @@ public class Bull extends SubsystemBase {
   private final double KD_SHOOTER_SPEED = 0.000; // 1
   private final double SHOOTER_TOLERANCE = 0.03;
 
-  public final double COLLECTOR_SPEED = 1;
+  public final double COLLECTOR_SPEED = -1;
   public final double TRANS_SPEED = 0.4;
   public final double SHOOT_SPEED = 1;
 
@@ -48,16 +49,11 @@ public class Bull extends SubsystemBase {
     collector = new VictorSPX(Constants.COLLACTER_MOTOR);
 
     // Eencoder setup
-    /*
+    
      enc_shot = new Encoder(Constants.ENC_SHOT_PORT_A, Constants.ENC_SHOT_PORT_B);
      enc_shot.setDistancePerPulse(Constants.SHOT_DISTANCE_PER_PULSE);
      enc_shot.reset();
-      
-     enc_trans = new Encoder(Constants.ENC_TRANS_PORT_A,
-     Constants.ENC_TRANS_PORT_B);
-     enc_trans.setDistancePerPulse(Constants.TRANS_DISTANCE_PER_PULSE);
-     enc_trans.reset();
-    */
+
     shooter_speed_pid = new PIDController(KP_SHOOTER_SPEED, KI_SHOOTER_SPEED, KD_SHOOTER_SPEED);
     shooter_speed_pid.setTolerance(SHOOTER_TOLERANCE);
     shooter_speed_pid.reset();
@@ -121,12 +117,12 @@ public class Bull extends SubsystemBase {
   }
 
   public void shoot() {
-    double s = 1;//MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), -1, 0);
+    double s = MathUtil.clamp(shooter_speed_pid.calculate(enc_shot.getRate()), -1, 0);
     shot_set_speed(-s);
     //shot_set_speed(1);
 
     SmartDashboard.putNumber("motorspeed", -s);
-    //SmartDashboard.putNumber("velocity", enc_shot.getRate());
+    SmartDashboard.putNumber("velocity", enc_shot.getRate());
   }
 
   public void shoot_disable() {

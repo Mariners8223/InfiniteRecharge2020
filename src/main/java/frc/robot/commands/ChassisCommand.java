@@ -16,10 +16,12 @@ public class ChassisCommand extends CommandBase {
 
   @Override
   public void execute() {
+    SmartDashboard.putNumber("encleft", chassis.enc_left.getDistance());
+    SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
     double x = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
     double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
     double MaxSpeed = SmartDashboard.getNumber("Drive", 1);
-    chassis.set_speed(Math.signum(x) * x * x * MaxSpeed, Math.signum(y) * y * y * MaxSpeed);
+    chassis.set_speed(x * MaxSpeed, y * MaxSpeed);
   }
 
   @Override

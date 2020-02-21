@@ -28,12 +28,17 @@ public class ShotWithClachCommand extends CommandBase {
     this.motor = bull.shoot;
   }
 
+  
+  @Override
+  public void initialize() {
+    SmartDashboard.putBoolean("shoot_trigger", !bull.shoot_trigger);
+  }
   /**
    * change the speed of the shoot from 0.6 to 1 by the left joystioc of the arms controller
    */
   @Override
   public void execute() {
-    double speed = -RobotContainer.arms_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
+    double speed = -RobotContainer.arms_joystick.getRawAxis(1);
     speed = -(((speed+1)/2)*0.4+0.6);  // map ths speed from -1 1 to 0.6 1
     motor.set(ControlMode.PercentOutput, speed);
     SmartDashboard.putNumber("ShoterSpeed", speed);
@@ -45,6 +50,7 @@ public class ShotWithClachCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     bull.shoot_trigger = !bull.shoot_trigger;
+    SmartDashboard.putBoolean("shoot_trigger", !bull.shoot_trigger);
     motor.set(ControlMode.PercentOutput, 0);
   }
 
