@@ -60,8 +60,7 @@ public class RobotContainer {
     collect_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
     eject_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
     
-    intake_forword_button.whileHeld(new IntakeCommand(!bull.get_intake_state()));
-
+    
     //angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
     //gyro_button.whenPressed(new TurnToAngle(90));
     gyro_button1.whileHeld(new ChassisCommand());
@@ -77,7 +76,7 @@ public class RobotContainer {
     trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
     trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
 
-
+    intake_forword_button.toggleWhenPressed(new IntakeCommand(), bull.intake_toggle);
     rolate_button.toggleWhenPressed(new RolateCommand(), rolate.rolate_toggle);
   }
 

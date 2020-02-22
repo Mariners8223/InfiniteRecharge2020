@@ -16,22 +16,28 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
+
+  // Chassis Motors
+  private VictorSPX front_right;
+  private VictorSPX back_right;
   private VictorSPX front_left;
   private VictorSPX back_left;
 
+  // Chassis Encoders
+  public Encoder enc_left;
+  public Encoder enc_right;
+
+  // NavX Gyro
   private AHRS gyro;
+
+  // Turn by angle PID
   private PIDController gyro_pid;
   private final double KP_GYRO = 0.005;
   private final double KI_GYRO = 0;
   private final double KD_GYRO = 0;
   private final double GYRO_TOLERANCE = 2;
 
-  private VictorSPX front_right;
-  private VictorSPX back_right;
-
-  public Encoder enc_left;
-  public Encoder enc_right;
-
+  // Turn by Vision PID
   private PIDController angle_vision_pid;
   private final double KP_ANGLE_VISION = 0.6;
   private final double KI_ANGLE_VISION = 0.0;
@@ -39,16 +45,18 @@ public class Chassis extends SubsystemBase {
   private final double PID_MAX_SPEED = 0.75;
   private final double ANGLE_VISION_TOLERANCE = 0.1;
 
-  // drive stight deacceleration
+  // Deacceleration Drive PID
   private PIDController deacceleration_drive_pid;
   private final double KP_DEACCELERATION = 0.4;
   private final double KI_DEACCELERATION = 0.001;
   private final double KD_DEACCELERATION = 0;
   private final double PID_DEACCELERATION_MAX_SPEED = 0.6;
 
+  // Singletone Instance
   private static Chassis instance;
 
   private Chassis() {
+    // Motors Steup
     front_left = new VictorSPX(Constants.LEFT_FRONT_MOTOR);
     back_left = new VictorSPX(Constants.LEFT_BACK_MOTOR);
     
@@ -60,21 +68,21 @@ public class Chassis extends SubsystemBase {
     front_right.setNeutralMode(NeutralMode.Brake);
     back_left.setNeutralMode(NeutralMode.Brake);
 
-    // Encoder setup
+    // Encoders setup
     enc_left = new Encoder(Constants.ENC_LEFT_PORT_A, Constants.ENC_LEFT_PORT_B);
     enc_left.setDistancePerPulse(Constants.LEFT_DISTANCE_PER_PULSE);
     enc_left.reset();
-    //EncoderAMT10
     
     enc_right = new Encoder(Constants.ENC_RIGHT_PORT_A, Constants.ENC_RIGHT_PORT_B);
     enc_right.setDistancePerPulse(Constants.RIGHT_DISTANCE_PER_PULSE);
     enc_right.reset();
 
+    // Turn by Vision PID
     angle_vision_pid = new PIDController(KP_ANGLE_VISION, KI_ANGLE_VISION, KD_ANGLE_VISION);
     angle_vision_pid.setTolerance(ANGLE_VISION_TOLERANCE);
     angle_vision_pid.setSetpoint(0);
 
-    // NavX setup
+    // NavX Setup and PID
     try {
       gyro = new AHRS(); 
     } catch (RuntimeException ex ) {
@@ -84,9 +92,9 @@ public class Chassis extends SubsystemBase {
     gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
     gyro_pid.setTolerance(GYRO_TOLERANCE);
     gyro_pid.enableContinuousInput(-180, 180);
-
     SendableRegistry.setName(gyro_pid, "GyroPID");
 
+    // Deacceleration Drive PID
     deacceleration_drive_pid = new PIDController(KP_DEACCELERATION, KI_DEACCELERATION, KD_DEACCELERATION);
   }
 
@@ -112,22 +120,34 @@ public class Chassis extends SubsystemBase {
     front_right.set(ControlMode.PercentOutput, -forword + side);
     back_right.set(ControlMode.Follower, front_right.getDeviceID());
     
-    System.out.println(forword);
     if(forword == 0 && side == 0){
       front_left.setNeutralMode(NeutralMode.Brake);
     }
   }
 
+  /**
+   * 
+   * @param angle
+   * @return
+   */
   public double angle_vision_pid_output(double angle) {
     return angle_vision_pid.calculate(angle, 0.0);
   }
 
+  /**
+   * 
+   * @param angle
+   */
   public void pid_vision(double angle) {
     double speed = angle_vision_pid_output(angle);
     speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
     set_speed(speed, -(speed));
   }
 
+  /**
+   * 
+   * @return
+   */
   public boolean stop_angle_vision_pid() {
     return angle_vision_pid.atSetpoint();
   }

@@ -13,6 +13,7 @@ public class RolateCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    System.out.println("Rolate-------------------");
     rolate.spinner_set_speed(rolate.SPINNER_SPEED);
     rolate.rolate_move_reverse();
   }
@@ -20,6 +21,7 @@ public class RolateCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    System.out.println("Rolate///////////////////////////");
     rolate.spinner_set_speed(0);
     rolate.rolate_move_forword();
     rolate.rolate_toggle = !rolate.rolate_toggle;

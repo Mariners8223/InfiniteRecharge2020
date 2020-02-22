@@ -42,7 +42,7 @@ public class DriveStraight extends CommandBase {
     SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
     double speed = chassis.get_deacceleration(chassis.get_distance());
     double fix = chassis.gyro_calculate();
-    System.out.println(chassis.get_angle());
+    // System.out.println(chassis.get_angle());
     chassis.set_speed(speed, fix);
     
   }

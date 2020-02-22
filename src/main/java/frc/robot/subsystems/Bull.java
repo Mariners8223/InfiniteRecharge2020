@@ -31,6 +31,7 @@ public class Bull extends SubsystemBase {
   public final double SHOOT_SPEED = 1;
 
   public boolean shoot_trigger = false;
+  public boolean intake_toggle = false;
 
 
   // private Compressor compressor;

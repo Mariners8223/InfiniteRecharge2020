@@ -5,22 +5,23 @@ import frc.robot.subsystems.Bull;
 
 public class IntakeCommand extends CommandBase {
   Bull bull = Bull.getInstance();
-  boolean dir;
 
-  public IntakeCommand(boolean dir) {
+  public IntakeCommand() {
     addRequirements(bull);
-    this.dir = dir;
   }
 
   @Override
-  public void execute() {
-    if(dir) bull.intake_move_forword();
-    else bull.intake_move_reverse();
+  public void initialize() {
+    System.out.println("intake_toggle");
+    bull.intake_move_forword();
   }
+
 
   @Override
   public void end(boolean interrupted) {
-    //bull.intake_stop();
+    System.out.println("intake_toggle///////////////////////////");
+    bull.intake_move_reverse();
+    bull.intake_toggle = !bull.intake_toggle;
   }
 
   @Override
