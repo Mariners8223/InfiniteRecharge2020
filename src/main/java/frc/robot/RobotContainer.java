@@ -9,7 +9,9 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorCanCommand;
 import frc.robot.commands.ShotWithClachCommand;
+import frc.robot.commands.TransportAutoCommand;
 import frc.robot.commands.TurnToAngle;
+import frc.robot.commands.Auto1Command;
 import frc.robot.commands.ChassisCommand;
 import frc.robot.commands.DriveStraight;
 import frc.robot.subsystems.Bull;
@@ -89,6 +91,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new TurnToAngle(90);
+    return new Auto1Command();
   }
 }

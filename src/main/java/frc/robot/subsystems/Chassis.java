@@ -7,7 +7,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,7 +38,7 @@ public class Chassis extends SubsystemBase {
 
   // Turn by angle PID
   private PIDController gyro_turn_pid;
-  private final double KP_TURN_GYRO = 0.00385;
+  private final double KP_TURN_GYRO = 0.0039;
   private final double KI_TURN_GYRO = 0.0003;
   private final double KD_TURN_GYRO = 0;
   private final double GYRO_TURN_TOLERANCE = 2;
@@ -54,8 +53,8 @@ public class Chassis extends SubsystemBase {
 
   // Deacceleration Drive PID
   private PIDController deacceleration_drive_pid;
-  private final double KP_DEACCELERATION = 0.2;
-  private final double KI_DEACCELERATION = 0.0;
+  private final double KP_DEACCELERATION = 0.38;
+  private final double KI_DEACCELERATION = 0.04;
   private final double KD_DEACCELERATION = 0;
   private final double PID_DEACCELERATION_MAX_SPEED = 0.6;
 

@@ -147,4 +147,8 @@ public class Bull extends SubsystemBase {
   public boolean shoot_stop() {
   	return shooter_speed_pid.atSetpoint();
   }
+
+  public double shoot_speed(){
+    return enc_shot.getRate();
+  }
 }

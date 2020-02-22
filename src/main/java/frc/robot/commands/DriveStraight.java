@@ -42,9 +42,9 @@ public class DriveStraight extends CommandBase {
     SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
     double speed = chassis.get_deacceleration(chassis.get_distance());
     double fix = chassis.gyro_calculate();
-    // System.out.println(chassis.get_angle());
+    System.out.println(chassis.get_angle());
     System.out.println(fix);
-    chassis.set_speed(0.2, fix);
+    chassis.set_speed(speed, fix);
     
   }
 
@@ -58,6 +58,6 @@ public class DriveStraight extends CommandBase {
     if (is_time){
       return Timer.getFPGATimestamp() - start_time > stop_val;
     }
-    return chassis.get_distance() > stop_val;
+    return Math.abs(chassis.get_distance()) > Math.abs(stop_val);
   }
 }
