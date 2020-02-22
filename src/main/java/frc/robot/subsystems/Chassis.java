@@ -32,23 +32,30 @@ public class Chassis extends SubsystemBase {
 
   // Turn by angle PID
   private PIDController gyro_pid;
-  private final double KP_GYRO = 0.005;
-  private final double KI_GYRO = 0;
+  private final double KP_GYRO = 0.006;
+  private final double KI_GYRO = 0.0012;
   private final double KD_GYRO = 0;
-  private final double GYRO_TOLERANCE = 2;
+  private final double GYRO_TOLERANCE = 0;
+
+  // Turn by angle PID
+  private PIDController gyro_turn_pid;
+  private final double KP_TURN_GYRO = 0.00385;
+  private final double KI_TURN_GYRO = 0.0003;
+  private final double KD_TURN_GYRO = 0;
+  private final double GYRO_TURN_TOLERANCE = 2;
 
   // Turn by Vision PID
   private PIDController angle_vision_pid;
   private final double KP_ANGLE_VISION = 0.6;
   private final double KI_ANGLE_VISION = 0.0;
   private final double KD_ANGLE_VISION = 0;
-  private final double PID_MAX_SPEED = 0.75;
+  public final double PID_MAX_SPEED = 0.75;
   private final double ANGLE_VISION_TOLERANCE = 0.1;
 
   // Deacceleration Drive PID
   private PIDController deacceleration_drive_pid;
-  private final double KP_DEACCELERATION = 0.4;
-  private final double KI_DEACCELERATION = 0.001;
+  private final double KP_DEACCELERATION = 0.2;
+  private final double KI_DEACCELERATION = 0.0;
   private final double KD_DEACCELERATION = 0;
   private final double PID_DEACCELERATION_MAX_SPEED = 0.6;
 
@@ -92,7 +99,12 @@ public class Chassis extends SubsystemBase {
     gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
     gyro_pid.setTolerance(GYRO_TOLERANCE);
     gyro_pid.enableContinuousInput(-180, 180);
+    gyro_pid.setSetpoint(0);
     SendableRegistry.setName(gyro_pid, "GyroPID");
+
+    gyro_turn_pid = new PIDController(KP_TURN_GYRO, KI_TURN_GYRO, KD_TURN_GYRO);
+    gyro_turn_pid.setTolerance(GYRO_TURN_TOLERANCE);
+    gyro_turn_pid.enableContinuousInput(-180, 180);
 
     // Deacceleration Drive PID
     deacceleration_drive_pid = new PIDController(KP_DEACCELERATION, KI_DEACCELERATION, KD_DEACCELERATION);
@@ -119,10 +131,7 @@ public class Chassis extends SubsystemBase {
 
     front_right.set(ControlMode.PercentOutput, -forword + side);
     back_right.set(ControlMode.Follower, front_right.getDeviceID());
-    
-    if(forword == 0 && side == 0){
-      front_left.setNeutralMode(NeutralMode.Brake);
-    }
+    Log();
   }
 
   /**
@@ -161,6 +170,10 @@ public class Chassis extends SubsystemBase {
     gyro_pid.reset();
   }
 
+  public void pid_turn_reset(){
+    gyro_turn_pid.reset();
+  }
+
   public void pid_acc_reset(){
     deacceleration_drive_pid.reset();
   }
@@ -187,7 +200,7 @@ public class Chassis extends SubsystemBase {
   }
   
   public void pid_gyro_enable(double degrees){
-    gyro_pid.setSetpoint(degrees);
+    gyro_turn_pid.setSetpoint(degrees);
   }
 
   public void pid_gyro_set(double p, double i, double d){
@@ -198,10 +211,8 @@ public class Chassis extends SubsystemBase {
     return gyro_pid.calculate(get_angle());
   }
 
-  public void pid_gyro_execute(){
-    double speed = gyro_pid.calculate(get_angle());
-    speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
-    set_speed(speed, -(speed));
+  public double gyro_turn_calculate(){
+    return gyro_turn_pid.calculate(get_angle());
   }
 
   public boolean stop_gyro() {
@@ -213,7 +224,7 @@ public class Chassis extends SubsystemBase {
    * @return mean of the chassis encoders
    */
   public double get_distance(){
-    return (enc_left.getDistance()+enc_right.getDistance())/2;
+    return (enc_left.getDistance() + enc_right.getDistance())/2;
   }
   
   /**

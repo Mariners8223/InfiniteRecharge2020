@@ -43,7 +43,8 @@ public class DriveStraight extends CommandBase {
     double speed = chassis.get_deacceleration(chassis.get_distance());
     double fix = chassis.gyro_calculate();
     // System.out.println(chassis.get_angle());
-    chassis.set_speed(speed, fix);
+    System.out.println(fix);
+    chassis.set_speed(0.2, fix);
     
   }
 

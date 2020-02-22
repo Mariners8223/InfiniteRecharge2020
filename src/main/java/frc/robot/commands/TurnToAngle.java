@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,15 +21,16 @@ public class TurnToAngle extends CommandBase {
 
   @Override
   public void initialize() {
-    
     chassis.reset_angle();
-    chassis.pid_gyro_set(SmartDashboard.getNumber("gyro-P", 1),SmartDashboard.getNumber("gyro-I", 0),SmartDashboard.getNumber("gyro-D", 0));
+    chassis.pid_turn_reset();
     chassis.pid_gyro_enable(degrees);
   }
 
   @Override
   public void execute() {
-    chassis.pid_gyro_execute();
+    double speed = chassis.gyro_turn_calculate();
+    speed = MathUtil.clamp(speed, -chassis.PID_MAX_SPEED, chassis.PID_MAX_SPEED);
+    chassis.set_speed(0, speed);
   }
 
   @Override
