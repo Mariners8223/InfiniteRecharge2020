@@ -22,11 +22,15 @@ public class TransportAutoCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    bull.shot_set_speed(-1);
     System.out.println(bull.shoot_speed());
-    if(bull.shoot_speed() < -35){
+    if(bull.shoot_speed() < -25){
       time+=Timer.getFPGATimestamp() - last_time;
       bull.trans_move_reverse();
       last_time = Timer.getFPGATimestamp();
+    }
+    else{
+      bull.trans_stop();
     }
   }
 
@@ -40,6 +44,6 @@ public class TransportAutoCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return time > 1;
+    return time > 5;
   }
 }

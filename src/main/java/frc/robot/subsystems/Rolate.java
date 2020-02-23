@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -9,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Rolate extends SubsystemBase {
-  public final VictorSPX spinner;
+  public final TalonSRX spinner;
 
   public final double SPINNER_SPEED = 0.3;
   private Compressor compressor;
@@ -24,7 +25,7 @@ public class Rolate extends SubsystemBase {
     //compressor.stop();
     solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
 
-    spinner = new VictorSPX(Constants.SPINNER_MOTOR);
+    spinner = new TalonSRX(Constants.SPINNER_MOTOR);
 
   }
 

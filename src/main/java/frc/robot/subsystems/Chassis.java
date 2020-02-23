@@ -56,6 +56,7 @@ public class Chassis extends SubsystemBase {
   private final double KP_DEACCELERATION = 0.38;
   private final double KI_DEACCELERATION = 0.04;
   private final double KD_DEACCELERATION = 0;
+  public final double DEACCELERATION_TOLERANCE = 0.05;
   private final double PID_DEACCELERATION_MAX_SPEED = 0.6;
 
   // Singletone Instance
@@ -107,6 +108,7 @@ public class Chassis extends SubsystemBase {
 
     // Deacceleration Drive PID
     deacceleration_drive_pid = new PIDController(KP_DEACCELERATION, KI_DEACCELERATION, KD_DEACCELERATION);
+    deacceleration_drive_pid.setTolerance(DEACCELERATION_TOLERANCE);
   }
 
   /**
@@ -121,16 +123,15 @@ public class Chassis extends SubsystemBase {
 
   /**
    * set speed for the drivetrain
-   * @param left - left motors speed
-   * @param right  - right motors speed
+   * @param Speed - Speed of the motors
+   * @param Steering  - Stiring of the motors
    */
-  public void set_speed(double forword, double side){
-    front_left.set(ControlMode.PercentOutput, forword + side);
+  public void set_speed(double speed, double steering){
+    front_left.set(ControlMode.PercentOutput, speed + steering);
     back_left.set(ControlMode.Follower, front_left.getDeviceID());
 
-    front_right.set(ControlMode.PercentOutput, -forword + side);
+    front_right.set(ControlMode.PercentOutput, -speed + steering);
     back_right.set(ControlMode.Follower, front_right.getDeviceID());
-    Log();
   }
 
   /**
@@ -246,6 +247,10 @@ public class Chassis extends SubsystemBase {
   public void enc_reset() {
     enc_left.reset();
     enc_right.reset();
+  }
+
+  public boolean deacc_stop(){
+    return deacceleration_drive_pid.atSetpoint();
   }
   
 }

@@ -51,13 +51,11 @@ public class DriveStraight extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     chassis.set_speed(0, 0);
+    System.out.println("fekhslfhskughskghrkghsghskghskgh");
   }
 
   @Override
   public boolean isFinished() {
-    if (is_time){
-      return Timer.getFPGATimestamp() - start_time > stop_val;
-    }
-    return Math.abs(chassis.get_distance()) > Math.abs(stop_val);
+    return chassis.deacc_stop();
   }
 }

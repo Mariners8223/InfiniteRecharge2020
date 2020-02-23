@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeToggleCommand;
 import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorCanCommand;
 import frc.robot.commands.ShotWithClachCommand;
 import frc.robot.commands.TransportAutoCommand;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.Auto1Command;
+import frc.robot.commands.CameraCommand;
 import frc.robot.commands.ChassisCommand;
 import frc.robot.commands.DriveStraight;
 import frc.robot.subsystems.Bull;
@@ -51,26 +53,30 @@ public class RobotContainer {
   private static JoystickButton rolate_button = new JoystickButton(arms_joystick, Constants.ROLATE_BUTTON);
 
   private static POVButton everest_pullup_button = new POVButton(arms_joystick, Constants.Everest_Pullup_BUTTON);
-  private static POVButton everest_dis_pullup_button = new POVButton(arms_joystick,
-      Constants.Everest_Dis_Pullup_BUTTON);
+  // private static POVButton everest_dis_pullup_button = new
+  // POVButton(arms_joystick,
+  // Constants.Everest_Dis_Pullup_BUTTON);
 
   private static POVButton everest_climb_button = new POVButton(arms_joystick, Constants.Everest_Climb_BUTTON);
   private static POVButton everest_dis_climb_button = new POVButton(arms_joystick, Constants.Everest_Dis_Climb_BUTTON);
+
+  private static JoystickButton cam_button = new JoystickButton(arms_joystick, 8);
 
   public RobotContainer() {
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-    collect_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
-    eject_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
-
+    collect_button.whileHeld(new IntakeToggleCommand());
+    // collect_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
+    // eject_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
+    
     // angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
     // gyro_button.whenPressed(new TurnToAngle(90));
     gyro_button1.whileHeld(new ChassisCommand());
 
     everest_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, everest.PULLUP_SPEED));
-    everest_dis_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, -everest.PULLUP_SPEED));
+    // everest_dis_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, -everest.PULLUP_SPEED));
 
     everest_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, everest.CLIMER_SPEED));
     everest_dis_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, -everest.CLIMER_SPEED));
@@ -81,8 +87,14 @@ public class RobotContainer {
     trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
     trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
 
-    intake_forword_button.toggleWhenPressed(new IntakeCommand(), bull.intake_toggle);
+    // intake_forword_button.toggleWhenPressed(new IntakeCommand(), bull.intake_toggle);
     rolate_button.toggleWhenPressed(new RolateCommand(), rolate.rolate_toggle);
+
+    //cam_button.whenPressed(new CameraCommand());
+  }
+
+  public static boolean is_eject_button(){
+    return eject_button.get();
   }
 
   /**

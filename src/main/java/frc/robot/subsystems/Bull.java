@@ -151,4 +151,8 @@ public class Bull extends SubsystemBase {
   public double shoot_speed(){
     return enc_shot.getRate();
   }
+
+  public void collector_set_speed(double speed){
+    collector.set(ControlMode.PercentOutput, speed);
+  }
 }

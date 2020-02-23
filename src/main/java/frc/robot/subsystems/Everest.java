@@ -8,15 +8,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Everest extends SubsystemBase {
+  // Motors
   public final TalonSRX climber;
   public final VictorSPX pullup;
 
+  // Constanse
   public final double CLIMER_SPEED = 0.5;
   public final double PULLUP_SPEED = 0.7;
 
+  // Singletone Instance
   private static Everest instance;
 
   private Everest() {
+    // Motors Setup
     pullup = new VictorSPX(Constants.PULLUP_MOTOR);
     climber = new TalonSRX(Constants.CLIMER_MOTOR);
   }
