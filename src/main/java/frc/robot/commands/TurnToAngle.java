@@ -31,6 +31,7 @@ public class TurnToAngle extends CommandBase {
     double speed = chassis.gyro_turn_calculate();
     speed = MathUtil.clamp(speed, -chassis.PID_MAX_SPEED, chassis.PID_MAX_SPEED);
     chassis.set_speed(0, speed);
+    SmartDashboard.putNumber("turn", speed);
   }
 
   @Override

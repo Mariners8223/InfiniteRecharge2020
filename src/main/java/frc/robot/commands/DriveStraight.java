@@ -8,24 +8,14 @@ import frc.robot.subsystems.Chassis;
 public class DriveStraight extends CommandBase {
   private Chassis chassis = Chassis.getInstance();
   private double stop_val;
-  private boolean is_time;
   private double start_time;
 
   public DriveStraight(double dist) {
     addRequirements(chassis);
     this.stop_val = dist;
-    this.is_time = false;
+    start_time = Timer.getFPGATimestamp();
   }
 
-  public DriveStraight(double dist, boolean time) {
-    addRequirements(chassis);
-    this.stop_val = dist;
-    this.is_time = time;
-    if(is_time){
-      start_time = Timer.getFPGATimestamp();
-    }
-
-  }
 
   @Override
   public void initialize() {
@@ -38,8 +28,8 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public void execute() {
-    SmartDashboard.putNumber("encleft", chassis.enc_left.getDistance());
-    SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
+    // SmartDashboard.putNumber("encleft", chassis.enc_left.getDistance());
+    // SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
     double speed = chassis.get_deacceleration(chassis.get_distance());
     double fix = chassis.gyro_calculate();
     System.out.println(chassis.get_angle());
@@ -56,6 +46,6 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return chassis.deacc_stop();
+    return chassis.deacc_stop() || Timer.getFPGATimestamp() - start_time > 5;
   }
 }

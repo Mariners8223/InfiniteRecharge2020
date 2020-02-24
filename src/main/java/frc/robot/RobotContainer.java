@@ -13,6 +13,7 @@ import frc.robot.commands.ShotWithClachCommand;
 import frc.robot.commands.TransportAutoCommand;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.Auto1Command;
+import frc.robot.commands.Auto2_1Command;
 import frc.robot.commands.CameraCommand;
 import frc.robot.commands.ChassisCommand;
 import frc.robot.commands.DriveStraight;
@@ -49,6 +50,9 @@ public class RobotContainer {
 
   private static JoystickButton trans_button = new JoystickButton(arms_joystick, Constants.TRANS_BUTTON);
   private static JoystickButton trans_dis_button = new JoystickButton(arms_joystick, Constants.TRANS_DIS_BUTTON);
+  private static JoystickButton trans_full_button = new JoystickButton(driver_joystick, Constants.TRANS_BUTTON);
+
+
 
   private static JoystickButton rolate_button = new JoystickButton(arms_joystick, Constants.ROLATE_BUTTON);
 
@@ -79,12 +83,13 @@ public class RobotContainer {
 
     everest_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, everest.CLIMER_SPEED));
     everest_dis_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, -everest.CLIMER_SPEED));
-    SmartDashboard.putNumber("speed", 0);
+    // SmartDashboard.putNumber("speed", 0);
     shoot_button.toggleWhenPressed(new ShotWithClachCommand(), bull.shoot_trigger);// new SetMotorCanCommand(bull.shoot,
                                                                                    // -bull.SHOOT_SPEED));
-    shoot_dis_button.whileHeld(new SetMotorCanCommand(bull.shoot, 0.2));
+    shoot_dis_button.whileHeld(new SetMotorCanCommand(bull.shoot, 0.5));
     trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
     trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
+    trans_full_button.whileHeld(new SetMotorCanCommand(bull.transportation, -0.7));
 
     // intake_forword_button.toggleWhenPressed(new IntakeCommand(), bull.intake_toggle);
     rolate_button.toggleWhenPressed(new RolateCommand(), rolate.rolate_toggle);
@@ -106,6 +111,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Auto1Command();
+    return new TurnToAngle(90);
   }
 }

@@ -31,7 +31,7 @@ public class ShotWithClachCommand extends CommandBase {
   
   @Override
   public void initialize() {
-    SmartDashboard.putBoolean("shoot_trigger", !bull.shoot_trigger);
+    SmartDashboard.putBoolean("shoot_trigger", true);
   }
   /**
    * change the speed of the shoot from 0.6 to 1 by the left joystioc of the arms controller
@@ -50,7 +50,7 @@ public class ShotWithClachCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     bull.shoot_trigger = !bull.shoot_trigger;
-    SmartDashboard.putBoolean("shoot_trigger", !bull.shoot_trigger);
+    SmartDashboard.putBoolean("shoot_trigger", false);
     motor.set(ControlMode.PercentOutput, 0);
   }
 

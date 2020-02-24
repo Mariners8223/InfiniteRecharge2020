@@ -38,7 +38,7 @@ public class Chassis extends SubsystemBase {
 
   // Turn by angle PID
   private PIDController gyro_turn_pid;
-  private final double KP_TURN_GYRO = 0.0039;
+  private final double KP_TURN_GYRO = 0.005;
   private final double KI_TURN_GYRO = 0.0003;
   private final double KD_TURN_GYRO = 0;
   private final double GYRO_TURN_TOLERANCE = 2;
@@ -53,7 +53,7 @@ public class Chassis extends SubsystemBase {
 
   // Deacceleration Drive PID
   private PIDController deacceleration_drive_pid;
-  private final double KP_DEACCELERATION = 0.38;
+  private final double KP_DEACCELERATION = 0.42;
   private final double KI_DEACCELERATION = 0.04;
   private final double KD_DEACCELERATION = 0;
   public final double DEACCELERATION_TOLERANCE = 0.05;

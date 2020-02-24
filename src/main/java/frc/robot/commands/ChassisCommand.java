@@ -11,7 +11,7 @@ public class ChassisCommand extends CommandBase {
 
   public ChassisCommand() {
     addRequirements(chassis);
-    SmartDashboard.putNumber("Drive", 0.5);
+    SmartDashboard.putNumber("Drive", 0.75);
   }
 
   @Override

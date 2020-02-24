@@ -124,8 +124,8 @@ public class Bull extends SubsystemBase {
     shot_set_speed(-s);
     //shot_set_speed(1);
 
-    SmartDashboard.putNumber("motorspeed", -s);
-    SmartDashboard.putNumber("velocity", enc_shot.getRate());
+    // SmartDashboard.putNumber("motorspeed", -s);
+    // SmartDashboard.putNumber("velocity", enc_shot.getRate());
   }
 
   /**

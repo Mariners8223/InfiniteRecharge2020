@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Bull;
 
 public class TransportAutoCommand extends CommandBase {
-  double last_time = Timer.getFPGATimestamp();
+  double last_time;
   double time = 0;
 
   Bull bull = Bull.getInstance();
@@ -17,6 +17,7 @@ public class TransportAutoCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    last_time = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -25,7 +26,8 @@ public class TransportAutoCommand extends CommandBase {
     bull.shot_set_speed(-1);
     System.out.println(bull.shoot_speed());
     if(bull.shoot_speed() < -25){
-      time+=Timer.getFPGATimestamp() - last_time;
+      time += Timer.getFPGATimestamp() - last_time;
+      System.out.println("time: " + time);
       bull.trans_move_reverse();
       last_time = Timer.getFPGATimestamp();
     }
