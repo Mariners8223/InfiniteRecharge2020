@@ -111,6 +111,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new TurnToAngle(90);
+    return new Auto1Command();
   }
 }
