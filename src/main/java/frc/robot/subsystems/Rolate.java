@@ -10,21 +10,30 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Rolate extends SubsystemBase {
-  public final TalonSRX spinner;
 
-  public final double SPINNER_SPEED = 0.3;
+  // Motor, Compressor and Solenoid Setup
   private Compressor compressor;
   private DoubleSolenoid solenoid;
+  public final TalonSRX spinner;
 
+  // Speed Constances
+  public final double SPINNER_SPEED = 0.3;
+
+  // Command Toggle
   public boolean rolate_toggle;
 
+  // Singletone Instance
   private static Rolate instance;
 
   private Rolate() {
+    // Compresor Setup
     compressor = new Compressor();
     //compressor.stop();
-    solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
 
+    // Solonoid Setup
+    solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
+    
+    // Motors Setup
     spinner = new TalonSRX(Constants.SPINNER_MOTOR);
 
   }
@@ -38,8 +47,17 @@ public class Rolate extends SubsystemBase {
       instance = new Rolate();
     return instance;
   }
-
  
+  /**
+   * Strat/Stop the compressor.
+   * 
+   * @param comp Start = true , Stop = false
+   */
+  public void set_compressor(final boolean comp) {
+   if(comp) compressor.start();
+   else compressor.stop();
+  }
+
   /**
    * Set the solenoid to forword postion ("DoubleSolenoid.Value.kForward")
    */
@@ -61,6 +79,10 @@ public class Rolate extends SubsystemBase {
     solenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
+  /**
+   * Set the speed of the rolate motor
+   * @param speed motors speed
+   */
   public void spinner_set_speed(double speed){
     spinner.set(ControlMode.PercentOutput, speed);
   }

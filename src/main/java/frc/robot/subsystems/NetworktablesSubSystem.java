@@ -10,21 +10,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class NetworktablesSubSystem extends SubsystemBase {
+  // NetworkTables Setup
   private NetworkTableInstance inst;
   private NetworkTable networkTable;
 
-  private static NetworktablesSubSystem instance = new NetworktablesSubSystem();
+  // Singletone Instance
+  private static NetworktablesSubSystem instance;
 
+  // 2 Camera Setup
   public VideoSink camsServer = CameraServer.getInstance().getServer();
   UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture(0);
   UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(1);
-  int corrent_cam = 0;
+  private boolean corrent_cam = true;
 
   private NetworktablesSubSystem() {
     // initiate variables
     inst = NetworkTableInstance.getDefault();
     inst.startClientTeam(8223);
     inst.startDSClient(); 
+
     // System.out.println(inst.isConnected());
     networkTable = inst.getTable("SmartDashboard");
   }
@@ -35,7 +39,6 @@ public class NetworktablesSubSystem extends SubsystemBase {
    */
   public double get_velocity(){
     return networkTable.getEntry("vel").getDouble(0);
-    // return distance;
   }
 
   /**
@@ -44,7 +47,6 @@ public class NetworktablesSubSystem extends SubsystemBase {
    */
   public double get_angle(){
     return networkTable.getEntry("ang").getDouble(0);
-      // return ang.getDouble(0);
   }
 
   /**
@@ -57,14 +59,21 @@ public class NetworktablesSubSystem extends SubsystemBase {
     return instance;
   }
 
+  /** 
+   * get the current camera object
+   * @return camera object
+   */
   public UsbCamera get_corrent_cam() {
-    if(corrent_cam == 1) {
+    if(corrent_cam) {
       return camera1;
     }
 	  return camera0;
   }
 
-  public void next_cam() {
-	  corrent_cam = (corrent_cam + 1) % 2;
+  /**
+   * switch the camera boolean
+   */
+  public void switch_camera() {
+	  corrent_cam = !corrent_cam;
   }
 }

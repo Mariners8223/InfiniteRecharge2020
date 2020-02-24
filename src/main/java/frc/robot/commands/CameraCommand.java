@@ -14,7 +14,7 @@ public class CameraCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ntss.next_cam();
+    ntss.switch_camera();
     ntss.camsServer.setSource(ntss.get_corrent_cam());
   }
 

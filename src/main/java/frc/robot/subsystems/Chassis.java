@@ -135,17 +135,17 @@ public class Chassis extends SubsystemBase {
   }
 
   /**
-   * 
-   * @param angle
-   * @return
+   * Turn by angle PID caculate
+   * @param angle current angle - error
+   * @return PID output
    */
   public double angle_vision_pid_output(double angle) {
     return angle_vision_pid.calculate(angle, 0.0);
   }
 
   /**
-   * 
-   * @param angle
+   * Turn the robot by a given value (from the razbery pi)
+   * @param angle given angle
    */
   public void pid_vision(double angle) {
     double speed = angle_vision_pid_output(angle);
@@ -154,18 +154,24 @@ public class Chassis extends SubsystemBase {
   }
 
   /**
-   * 
-   * @return
+   * Is the vision PID at setpoint
+   * @return Is at setpoint
    */
-  public boolean stop_angle_vision_pid() {
+  public boolean is_stop_angle_vision_pid() {
     return angle_vision_pid.atSetpoint();
   }
 
+  /**
+   * reset the Vision PID
+   */
   public void pid_reset() {
     angle_vision_pid.reset();
     set_speed(0, 0);
   }
 
+  /**
+   * reset the Turn to angle PID
+   */
   public void pid_angle_reset(){
     gyro_pid.reset();
   }

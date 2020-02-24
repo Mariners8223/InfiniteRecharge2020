@@ -38,7 +38,7 @@ public class AngleVisionPidCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    boolean stop = chassis.stop_angle_vision_pid();
+    boolean stop = chassis.is_stop_angle_vision_pid();
     if (stop && target_last_time == 0) {
       target_time = Timer.getFPGATimestamp() - target_last_time;
     }
