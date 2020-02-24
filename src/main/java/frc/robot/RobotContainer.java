@@ -53,9 +53,8 @@ public class RobotContainer {
   private static JoystickButton rolate_button = new JoystickButton(arms_joystick, Constants.ROLATE_BUTTON);
 
   private static POVButton everest_pullup_button = new POVButton(arms_joystick, Constants.Everest_Pullup_BUTTON);
-  // private static POVButton everest_dis_pullup_button = new
-  // POVButton(arms_joystick,
-  // Constants.Everest_Dis_Pullup_BUTTON);
+  private static JoystickButton everest_dis_pullup_button = new JoystickButton(arms_joystick, Constants.Everest_Dis_Pullup_BUTTON);
+  private static JoystickButton everest_dis_pullup_button2 = new JoystickButton(arms_joystick, Constants.Everest_Dis_Pullup_BUTTON+1);
 
   private static POVButton everest_climb_button = new POVButton(arms_joystick, Constants.Everest_Climb_BUTTON);
   private static POVButton everest_dis_climb_button = new POVButton(arms_joystick, Constants.Everest_Dis_Climb_BUTTON);
@@ -76,14 +75,14 @@ public class RobotContainer {
     gyro_button1.whileHeld(new ChassisCommand());
 
     everest_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, everest.PULLUP_SPEED));
-    // everest_dis_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, -everest.PULLUP_SPEED));
+    //everest_dis_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, -everest.PULLUP_SPEED));
 
     everest_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, everest.CLIMER_SPEED));
     everest_dis_climb_button.whileHeld(new SetMotorCanCommand(everest, everest.climber, -everest.CLIMER_SPEED));
     SmartDashboard.putNumber("speed", 0);
     shoot_button.toggleWhenPressed(new ShotWithClachCommand(), bull.shoot_trigger);// new SetMotorCanCommand(bull.shoot,
                                                                                    // -bull.SHOOT_SPEED));
-    shoot_dis_button.whileHeld(new SetMotorCanCommand(bull.shoot, bull.SHOOT_SPEED));
+    shoot_dis_button.whileHeld(new SetMotorCanCommand(bull.shoot, 0.2));
     trans_button.whileHeld(new SetMotorCanCommand(bull.transportation, bull.TRANS_SPEED));
     trans_dis_button.whileHeld(new SetMotorCanCommand(bull.transportation, -bull.TRANS_SPEED));
 
@@ -95,6 +94,10 @@ public class RobotContainer {
 
   public static boolean is_eject_button(){
     return eject_button.get();
+  }
+
+  public static boolean is_dis_pullup_button(){
+    return everest_dis_pullup_button2.get();
   }
 
   /**

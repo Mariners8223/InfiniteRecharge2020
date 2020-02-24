@@ -31,6 +31,7 @@ public final class Constants {
     public static final int SHOOT_DIS_BUTTON = 1;
     public static final int TRANS_BUTTON = 2;
     public static final int TRANS_DIS_BUTTON = 3;
+    public static final int Everest_Dis_Pullup_BUTTON = 7;
 
     public static final int INTAKE_BUTTON = 6;
     public static final int ROLATE_BUTTON = 5;
@@ -39,7 +40,6 @@ public final class Constants {
     public static final int Everest_Climb_BUTTON = 2 * 45;
     public static final int Everest_Dis_Climb_BUTTON = 6 * 45;
     public static final int Everest_Pullup_BUTTON = 0 * 45;
-    public static final int Everest_Dis_Pullup_BUTTON = 4 * 45;
 
     // PCM
     public static final int SOLONOID_A = 5;

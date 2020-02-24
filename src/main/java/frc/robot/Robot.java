@@ -20,8 +20,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robotContainer = new RobotContainer();
     CommandScheduler.getInstance().setDefaultCommand(chassis, chassisCommand);
-    // CameraServer.getInstance().startAutomaticCapture(0);
-    // CameraServer.getInstance().startAutomaticCapture(1);
+    CameraServer.getInstance().startAutomaticCapture(0);
+    CameraServer.getInstance().startAutomaticCapture(1);
   }
 
   @Override
