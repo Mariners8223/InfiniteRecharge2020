@@ -8,8 +8,15 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
@@ -96,6 +103,7 @@ public class Chassis extends SubsystemBase {
         DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
     }
     gyro.isCalibrating();
+    gyro.reset();
     gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
     gyro_pid.setTolerance(GYRO_TOLERANCE);
     gyro_pid.enableContinuousInput(-180, 180);
@@ -259,4 +267,59 @@ public class Chassis extends SubsystemBase {
     return deacceleration_drive_pid.atSetpoint();
   }
   
+  
+
+  // Path Weaver
+  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.WHEELS_SPACE_BETWEEN);
+  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());//kinematics, getHeading());
+
+  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.PATH_WEAVER_KS, Constants.PATH_WEAVER_KV, Constants.PATH_WEAVER_KA);
+
+  PIDController leftPIDController = new PIDController(Constants.PATH_WEAVER_KP, 0, 0);
+  PIDController rightPIDController = new PIDController(Constants.PATH_WEAVER_KP, 0, 0);
+
+  Pose2d pose = new Pose2d();
+
+  public Rotation2d getHeading() {
+    return Rotation2d.fromDegrees(-gyro.getAngle());
+  }
+
+  public DifferentialDriveKinematics getKinematics() {
+    return kinematics;
+  }
+
+  public Pose2d getPose() {
+    return pose;
+  }
+
+  public SimpleMotorFeedforward getFeedforward() {
+    return feedforward;
+  }
+
+  public PIDController getLeftPIDController() {
+    return leftPIDController;
+  }
+
+  public PIDController getRightPIDController() {
+    return rightPIDController;
+  }
+
+  public DifferentialDriveWheelSpeeds getSpeeds() {
+    return new DifferentialDriveWheelSpeeds(enc_left.getRate(), enc_right.getRate());
+  }
+
+  public void setOutputVolts(double leftVolts, double rightVolts) {
+    // Maby need to add back wheels
+    front_left.set(ControlMode.PercentOutput, leftVolts / 12);
+    front_right.set(ControlMode.PercentOutput, rightVolts / 12);
+  }
+
+  public void reset() {
+    odometry.resetPosition(new Pose2d(), getHeading());
+  }
+
+  @Override
+  public void periodic() {
+    pose = odometry.update(getHeading(), enc_left.getRate(), enc_right.getRate());
+  }
 }

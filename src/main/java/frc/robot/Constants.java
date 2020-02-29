@@ -61,6 +61,16 @@ public final class Constants {
 
     public static final int ENC_RIGHT_PORT_A = 7;
     public static final int ENC_RIGHT_PORT_B = 6;
+
+    // Path Weaver
+    public static final double MAX_SPEED_M_PER_S = 2;
+    public static final double MAX_ACALERTON_M_PER_S_PER_S = 2;
+    public static final double WHEELS_SPACE_BETWEEN = 0.8;
+    public static final double WHEELS_DIAMETER_CM = 20;
+    public static final double PATH_WEAVER_KS = 0.3;
+    public static final double PATH_WEAVER_KV = 1.96;
+    public static final double PATH_WEAVER_KA = 0.06;
+    public static final double PATH_WEAVER_KP = 2.95;
     
 }
   
