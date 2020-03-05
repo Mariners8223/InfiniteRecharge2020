@@ -1,7 +1,13 @@
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.core.JsonFactory;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -10,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -125,18 +132,29 @@ public class RobotContainer {
     config.setKinematics(chassis.getKinematics());
 
     chassis.reset_angle();
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(1, 1, Rotation2d.fromDegrees(90.0))),
-        config
-    );  // , new Pose2d(2.3, 1.2, Rotation2d.fromDegrees(90.0))
+    // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    //     Arrays.asList(new Pose2d(), new Pose2d(0, 0, Rotation2d.fromDegrees(0))),
+    //     config
+    // );  // , new Pose2d(2.3, 1.2, Rotation2d.fromDegrees(90.0))
 
-    // String trajectoryJSON = "paths/YourPath.wpilib.json";
+    String trajectoryJSON = "path/output/PathTow.wpilib.json";
+    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+    Trajectory trajectory;
+    try {
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+      return new Auto1Command();
+    
+    }
+    
     // try {
     //   Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
     //   Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     // } catch (IOException ex) {
     //   DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-    // } 
+    // }
 
 
     RamseteCommand command = new RamseteCommand(
@@ -152,6 +170,7 @@ public class RobotContainer {
         chassis
     );
 
+    // return new Auto1Command();
     return command.andThen(() -> chassis.setOutputVolts(0, 0));
   }
 }
