@@ -45,11 +45,11 @@ public class Chassis extends SubsystemBase {
 
   // Turn by Vision PID
   private PIDController angle_vision_pid;
-  private final double KP_ANGLE_VISION = 0.6;
-  private final double KI_ANGLE_VISION = 0.0;
+  private final double KP_ANGLE_VISION = 0.45;
+  private final double KI_ANGLE_VISION = 0.1;
   private final double KD_ANGLE_VISION = 0;
   public final double PID_MAX_SPEED = 0.75;
-  private final double ANGLE_VISION_TOLERANCE = 0.1;
+  private final double ANGLE_VISION_TOLERANCE = 0.05;
 
   // Deacceleration Drive PID
   private PIDController deacceleration_drive_pid;
@@ -149,8 +149,9 @@ public class Chassis extends SubsystemBase {
    */
   public void pid_vision(double angle) {
     double speed = angle_vision_pid_output(angle);
-    speed = MathUtil.clamp(speed, -PID_MAX_SPEED, PID_MAX_SPEED);
-    set_speed(speed, -(speed));
+    speed = MathUtil.clamp(speed, -0.5, 0.5);
+    set_speed(0, -speed);
+    System.out.println(angle_vision_pid.getPositionError());
   }
 
   /**

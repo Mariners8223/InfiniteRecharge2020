@@ -12,6 +12,7 @@ import frc.robot.commands.SetMotorCanCommand;
 import frc.robot.commands.ShotWithClachCommand;
 import frc.robot.commands.TransportAutoCommand;
 import frc.robot.commands.TurnToAngle;
+import frc.robot.commands.AngleVisionPidCommand;
 import frc.robot.commands.Auto1Command;
 import frc.robot.commands.Auto2_1Command;
 import frc.robot.commands.ChassisCommand;
@@ -38,11 +39,10 @@ public class RobotContainer {
 
   private static JoystickButton intake_forword_button = new JoystickButton(arms_joystick, Constants.INTAKE_BUTTON);
 
-  // private static JoystickButton angle_vision_pid_button = new
-  // JoystickButton(arms_joystick, Constants.ANGLE_VISION_PID_BUTTON);
+  private static JoystickButton angle_vision_pid_button = new JoystickButton(driver_joystick, 1);
   // private static JoystickButton gyro_button = new
   // JoystickButton(driver_joystick, 4);
-  private static JoystickButton gyro_button1 = new JoystickButton(driver_joystick, 1);
+  // private static JoystickButton gyro_button1 = new JoystickButton(driver_joystick, 1);
 
   private static JoystickButton shoot_button = new JoystickButton(arms_joystick, Constants.SHOOT_BUTTON);
   private static JoystickButton shoot_dis_button = new JoystickButton(arms_joystick, Constants.SHOOT_DIS_BUTTON);
@@ -51,6 +51,7 @@ public class RobotContainer {
   private static JoystickButton trans_dis_button = new JoystickButton(arms_joystick, Constants.TRANS_DIS_BUTTON);
   private static JoystickButton trans_full_button = new JoystickButton(driver_joystick, Constants.TRANS_BUTTON);
 
+  private static JoystickButton trans_auto_button = new JoystickButton(driver_joystick, 4);
 
 
   private static JoystickButton rolate_button = new JoystickButton(arms_joystick, Constants.ROLATE_BUTTON);
@@ -73,9 +74,9 @@ public class RobotContainer {
     // collect_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, bull.COLLECTOR_SPEED));
     // eject_button.whileHeld(new SetMotorCanCommand(bull, bull.collector, -bull.COLLECTOR_SPEED));
     
-    // angle_vision_pid_button.whileHeld(new AngleVisionPidCommand());
+    angle_vision_pid_button.whenHeld(new AngleVisionPidCommand());
     // gyro_button.whenPressed(new TurnToAngle(90));
-    gyro_button1.whileHeld(new ChassisCommand());
+    // gyro_button1.whileHeld(new ChassisCommand());
 
     everest_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, everest.PULLUP_SPEED));
     //everest_dis_pullup_button.whileHeld(new SetMotorCanCommand(everest, everest.pullup, -everest.PULLUP_SPEED));
@@ -93,6 +94,7 @@ public class RobotContainer {
     // intake_forword_button.toggleWhenPressed(new IntakeCommand(), bull.intake_toggle);
     rolate_button.toggleWhenPressed(new RolateCommand(), rolate.rolate_toggle);
 
+    trans_auto_button.whileHeld(new TransportAutoCommand(100000));
     //cam_button.whenPressed(new CameraCommand());
   }
 
@@ -110,6 +112,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Auto1Command();
+    return new AngleVisionPidCommand();//Auto1Command();
   }
 }

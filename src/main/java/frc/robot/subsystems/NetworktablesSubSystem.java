@@ -6,21 +6,33 @@ import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class NetworktablesSubSystem extends SubsystemBase {
-  SerialPort rpi;
   // NetworkTables Setup
+  private NetworkTableInstance inst;
   private NetworkTable networkTable;
 
   // Singletone Instance
   private static NetworktablesSubSystem instance;
 
-
   private NetworktablesSubSystem() {
-    rpi = new SerialPort(9600, SerialPort.Port.kOnboard, 8);
+    // initiate variables
+    inst = NetworkTableInstance.getDefault();
+    inst.startClientTeam(8223);
+    inst.startDSClient(); 
+
+    // System.out.println(inst.isConnected());
+    networkTable = inst.getTable("SmartDashboard");
+  }
+
+  /**
+   * Get the distance from the target.
+   * @return distance from target
+   */
+  public double get_velocity(){
+    return networkTable.getEntry("vel").getDouble(0);
   }
 
   /**
@@ -28,7 +40,7 @@ public class NetworktablesSubSystem extends SubsystemBase {
    * @return angle from target
    */
   public double get_angle(){
-    return Double.parseDouble(rpi.readString());
+    return networkTable.getEntry("ang").getDouble(0);
   }
 
   /**

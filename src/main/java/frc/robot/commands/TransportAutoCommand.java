@@ -7,11 +7,12 @@ import frc.robot.subsystems.Bull;
 public class TransportAutoCommand extends CommandBase {
   double last_time;
   double time = 0;
+  double need_t;
 
   Bull bull = Bull.getInstance();
 
-  public TransportAutoCommand() {
-    
+  public TransportAutoCommand(double need_t) {
+    this.need_t = need_t;
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +26,7 @@ public class TransportAutoCommand extends CommandBase {
   public void execute() {
     bull.shot_set_speed(-1);
     System.out.println(bull.shoot_speed());
-    if(bull.shoot_speed() < -25){
+    if(bull.shoot_speed() < -30){
       time += Timer.getFPGATimestamp() - last_time;
       System.out.println("time: " + time);
       bull.trans_move_reverse();
@@ -46,6 +47,6 @@ public class TransportAutoCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return time > 5;
+    return time > need_t;
   }
 }

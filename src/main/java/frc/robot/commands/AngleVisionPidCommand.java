@@ -17,7 +17,7 @@ public class AngleVisionPidCommand extends CommandBase {
   private double target_time = 0;
 
   private double target_last_time = 0;
-  private double wait = 0;
+  private double wait = 1000;
 
   public AngleVisionPidCommand() {
     addRequirements(chassis);
@@ -39,8 +39,11 @@ public class AngleVisionPidCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean stop = chassis.is_stop_angle_vision_pid();
-    if (stop && target_last_time == 0) {
+    if (stop && target_last_time != 0) {
       target_time = Timer.getFPGATimestamp() - target_last_time;
+    }
+    else if(stop){
+      target_last_time = Timer.getFPGATimestamp();
     }
     else{
       target_last_time = 0;

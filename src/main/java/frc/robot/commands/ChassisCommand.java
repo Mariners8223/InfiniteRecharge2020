@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.NetworktablesSubSystem;
 
 public class ChassisCommand extends CommandBase {
   private final Chassis chassis = Chassis.getInstance();
@@ -18,6 +19,8 @@ public class ChassisCommand extends CommandBase {
   public void execute() {
     //SmartDashboard.putNumber("encleft", chassis.enc_left.getDistance());
     //SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
+    //SmartDashboard.putNumber("angle from serial", NetworktablesSubSystem.getInstance().get_angle());
+    System.out.println(NetworktablesSubSystem.getInstance().get_angle());
     double x = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
     double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
     double MaxSpeed = SmartDashboard.getNumber("Drive", 1);

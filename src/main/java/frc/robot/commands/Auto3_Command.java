@@ -22,8 +22,8 @@ public class Auto3_Command extends SequentialCommandGroup {
     public Auto3_Command() {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());
-        super(new TransportAutoCommand(), new TurnToAngle(-ang), new Auto3P_Command(), new DriveStraight(dist),
-                new TurnToAngle(ang), new TransportAutoCommand());
+        super(new TransportAutoCommand(5), new TurnToAngle(-ang), new Auto3P_Command(), new DriveStraight(dist),
+                new TurnToAngle(ang), new TransportAutoCommand(5));
   }
 }
  
