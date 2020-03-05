@@ -1,8 +1,17 @@
 package frc.robot;
 
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.IntakeCommand;
@@ -110,6 +119,39 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Auto1Command();
+    // return new Auto1Command();
+    
+    TrajectoryConfig config = new TrajectoryConfig(Constants.MAX_SPEED_M_PER_S, Constants.MAX_ACALERTON_M_PER_S_PER_S);
+    config.setKinematics(chassis.getKinematics());
+
+    chassis.reset_angle();
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        Arrays.asList(new Pose2d(), new Pose2d(1, 1, Rotation2d.fromDegrees(90.0))),
+        config
+    );  // , new Pose2d(2.3, 1.2, Rotation2d.fromDegrees(90.0))
+
+    // String trajectoryJSON = "paths/YourPath.wpilib.json";
+    // try {
+    //   Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+    //   Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    // } catch (IOException ex) {
+    //   DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    // } 
+
+
+    RamseteCommand command = new RamseteCommand(
+        trajectory,
+        chassis::getPose,
+        new RamseteController(2, .7),
+        chassis.getFeedforward(),
+        chassis.getKinematics(),
+        chassis::getSpeeds,
+        chassis.getLeftPIDController(),
+        chassis.getRightPIDController(),
+        chassis::setOutputVolts,
+        chassis
+    );
+
+    return command.andThen(() -> chassis.setOutputVolts(0, 0));
   }
 }
