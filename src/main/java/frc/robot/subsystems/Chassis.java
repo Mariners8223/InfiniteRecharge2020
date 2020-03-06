@@ -279,6 +279,7 @@ public class Chassis extends SubsystemBase {
   public Rotation2d getHeading() {
     // return new Rotation2d();
     double g = -gyro.getYaw();
+    SmartDashboard.putNumber("GYROVALUE", g);
     // System.out.println(g);
     return Rotation2d.fromDegrees(g);
   }

@@ -131,9 +131,9 @@ public class RobotContainer {
     TrajectoryConfig config = new TrajectoryConfig(Constants.MAX_SPEED_M_PER_S, Constants.MAX_ACALERTON_M_PER_S_PER_S);
     config.setKinematics(chassis.getKinematics());
 
-    chassis.reset_angle();
+    // chassis.reset_angle();
     // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-    //     Arrays.asList(new Pose2d(), new Pose2d(0, 0, Rotation2d.fromDegrees(0))),
+    //     Arrays.asList(new Pose2d(), new Pose2d(3, 0, Rotation2d.fromDegrees(0))),
     //     config
     // );  // , new Pose2d(2.3, 1.2, Rotation2d.fromDegrees(90.0))
 

@@ -67,10 +67,10 @@ public final class Constants {
     public static final double MAX_ACALERTON_M_PER_S_PER_S = 0.002;
     public static final double WHEELS_SPACE_BETWEEN = 0.8;
     public static final double WHEELS_DIAMETER_CM = 13.4;
-    public static final double PATH_WEAVER_KS = 1.02;
-    public static final double PATH_WEAVER_KV = 0.0879;
-    public static final double PATH_WEAVER_KA = 0.00621;
-    public static final double PATH_WEAVER_KP = 2.0;
+    public static final double PATH_WEAVER_KS = 1.1; //1.6; //1.02;
+    public static final double PATH_WEAVER_KV = 0.746; //0.1; //0.0879;
+    public static final double PATH_WEAVER_KA = 0.0356; //0.02; //0.00621;
+    public static final double PATH_WEAVER_KP = 1.43;
     
     
 }
