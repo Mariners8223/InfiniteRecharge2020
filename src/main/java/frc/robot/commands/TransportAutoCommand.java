@@ -20,7 +20,7 @@ public class TransportAutoCommand extends CommandBase {
   @Override
   public void initialize() {
     last_time = Timer.getFPGATimestamp();
-    bull.shoot_enable(32);
+    bull.shoot_enable(30);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

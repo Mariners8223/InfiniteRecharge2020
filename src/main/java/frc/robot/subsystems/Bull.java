@@ -26,7 +26,7 @@ public class Bull extends SubsystemBase {
   private final double KP_SHOOTER_SPEED = 0.14;
   private final double KI_SHOOTER_SPEED = 0.02; // 7
   private final double KD_SHOOTER_SPEED = 0.005; // 1
-  private final double SHOOTER_TOLERANCE = 2;
+  private final double SHOOTER_TOLERANCE = 1;
 
   // Speed Contance
   public final double COLLECTOR_SPEED = -1;
