@@ -17,7 +17,7 @@ public class Rolate extends SubsystemBase {
   public final TalonSRX spinner;
 
   // Speed Constances
-  public final double SPINNER_SPEED = 0.3;
+  public final double SPINNER_SPEED = 0.6;
 
   // Command Toggle
   public boolean rolate_toggle;
@@ -28,7 +28,7 @@ public class Rolate extends SubsystemBase {
   private Rolate() {
     // Compresor Setup
     compressor = new Compressor();
-    compressor.stop();
+    // compressor.stop();
 
     // Solonoid Setup
     solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);

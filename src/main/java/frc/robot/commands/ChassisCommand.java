@@ -20,8 +20,9 @@ public class ChassisCommand extends CommandBase {
     //SmartDashboard.putNumber("encleft", chassis.enc_left.getDistance());
     //SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
     //SmartDashboard.putNumber("angle from serial", NetworktablesSubSystem.getInstance().get_angle());
-    System.out.println(NetworktablesSubSystem.getInstance().get_angle());
+    // System.out.println(NetworktablesSubSystem.getInstance().get_angle());
     double x = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_LEFT_AXIS);
+
     double y = RobotContainer.driver_joystick.getRawAxis(Constants.DRIVER_RIGHT_AXIS);
     double MaxSpeed = SmartDashboard.getNumber("Drive", 1);
     chassis.set_speed(x * MaxSpeed, y * MaxSpeed);

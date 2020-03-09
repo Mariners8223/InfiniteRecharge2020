@@ -45,11 +45,11 @@ public class Chassis extends SubsystemBase {
 
   // Turn by Vision PID
   private PIDController angle_vision_pid;
-  private final double KP_ANGLE_VISION = 0.45;
+  private final double KP_ANGLE_VISION = 0.3;
   private final double KI_ANGLE_VISION = 0.1;
-  private final double KD_ANGLE_VISION = 0;
+  private final double KD_ANGLE_VISION = 0.0;
   public final double PID_MAX_SPEED = 0.75;
-  private final double ANGLE_VISION_TOLERANCE = 0.05;
+  private final double ANGLE_VISION_TOLERANCE = 0.01;
 
   // Deacceleration Drive PID
   private PIDController deacceleration_drive_pid;
