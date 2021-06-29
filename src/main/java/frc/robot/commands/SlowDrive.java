@@ -5,32 +5,37 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
-public class DriveStraight extends CommandBase {
+public class SlowDrive extends CommandBase {
   private Chassis chassis = Chassis.getInstance();
-  private double stop_val;
+  private double speed = -0.2;
   private double start_time;
+  private double time;
 
-  public DriveStraight(double dist) {
+
+  public SlowDrive(double time) {
     addRequirements(chassis);
-    this.stop_val = dist;
+    this.time = time;
+    start_time = Timer.getFPGATimestamp();
+  }
+  public SlowDrive() {
+    addRequirements(chassis);
+    this.time = 5;
     start_time = Timer.getFPGATimestamp();
   }
 
 
   @Override
   public void initialize() {
-    chassis.deacceleration_enable(this.stop_val);
-    chassis.reset_angle();
-    chassis.pid_angle_reset();
-    chassis.pid_acc_reset();
-    chassis.enc_reset();
+    chassis.set_speed(speed, 0);//fix);
+    
   }
+  
 
   @Override
   public void execute() {
     // SmartDashboard.putNumber("encleft", chassis.enc_left.getDistance());
     // SmartDashboard.putNumber("encright", chassis.enc_right.getDistance());
-    double speed = chassis.get_deacceleration(chassis.get_distance());
+    // double speed = chassis.get_deacceleration(chassis.get_distance());
     // double fix = chassis.gyro_calculate();
     // System.out.println(chassis.get_angle());
     // System.out.println(fix);
@@ -46,6 +51,6 @@ public class DriveStraight extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() - start_time > 5; //chassis.deacc_stop() || 
+    return (Timer.getFPGATimestamp() - start_time) > time;
   }
 }

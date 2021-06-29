@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -27,7 +27,7 @@ public class Chassis extends SubsystemBase {
   public Encoder enc_right;
 
   // NavX Gyro
-  private AHRS gyro;
+  //private AHRS gyro;
 
   // Turn by angle PID
   private PIDController gyro_pid;
@@ -91,11 +91,11 @@ public class Chassis extends SubsystemBase {
 
     // NavX Setup and PID
     try {
-      gyro = new AHRS(); 
+      //gyro = new AHRS(); 
     } catch (RuntimeException ex ) {
         DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
     }
-    gyro.isCalibrating();
+    //gyro.isCalibrating();
     gyro_pid = new PIDController(KP_GYRO, KI_GYRO, KD_GYRO);
     gyro_pid.setTolerance(GYRO_TOLERANCE);
     gyro_pid.enableContinuousInput(-180, 180);
@@ -188,22 +188,22 @@ public class Chassis extends SubsystemBase {
   public void Log(){
     
     
-    SmartDashboard.putBoolean("Gyro", gyro.isCalibrating() || SmartDashboard.getBoolean("Gyro", false));
+    /*SmartDashboard.putBoolean("Gyro", gyro.isCalibrating() || SmartDashboard.getBoolean("Gyro", false));
     SmartDashboard.putBoolean(  "IMU_Connected",        gyro.isConnected());
     SmartDashboard.putBoolean(  "IMU_IsCalibrating",    gyro.isCalibrating());
     SmartDashboard.putNumber(   "IMU_Yaw",              gyro.getYaw());
     SmartDashboard.putNumber(   "IMU_Pitch",            gyro.getPitch());
-    SmartDashboard.putNumber(   "IMU_Roll",             gyro.getRoll());
+    SmartDashboard.putNumber(   "IMU_Roll",             gyro.getRoll());*/
     
   }
 
-  public double get_angle(){
-    Log();
-    return gyro.getYaw();
-  }
+  //public double get_angle(){
+    //Log();
+    //return gyro.getYaw();
+  //}
 
   public void reset_angle(){
-    gyro.reset();
+    //gyro.reset();
   }
   
   public void pid_gyro_enable(double degrees){
@@ -214,13 +214,13 @@ public class Chassis extends SubsystemBase {
     gyro_pid.setPID(p,i,d);
   }
 
-  public double gyro_calculate(){
+  /*public double gyro_calculate(){
     return gyro_pid.calculate(get_angle());
   }
 
-  public double gyro_turn_calculate(){
+/*public double gyro_turn_calculate(){
     return gyro_turn_pid.calculate(get_angle());
-  }
+  }*/
 
   public boolean stop_gyro() {
     return gyro_pid.atSetpoint();

@@ -9,12 +9,12 @@ import frc.robot.Constants;
 
 public class Everest extends SubsystemBase {
   // Motors
-  public final TalonSRX climber;
+  public final VictorSPX climber;
   public final VictorSPX pullup;
 
   // Constanse
-  public final double CLIMER_SPEED = 0.5;
-  public final double PULLUP_SPEED = 0.7;
+  public final double CLIMER_SPEED = 0.8;
+  public final double PULLUP_SPEED = 1;
 
   // Singletone Instance
   private static Everest instance;
@@ -22,7 +22,7 @@ public class Everest extends SubsystemBase {
   private Everest() {
     // Motors Setup
     pullup = new VictorSPX(Constants.PULLUP_MOTOR);
-    climber = new TalonSRX(Constants.CLIMER_MOTOR);
+    climber = new VictorSPX(Constants.CLIMER_MOTOR);
   }
   
   /**

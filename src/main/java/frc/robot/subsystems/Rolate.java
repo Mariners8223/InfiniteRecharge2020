@@ -13,8 +13,8 @@ public class Rolate extends SubsystemBase {
 
   // Motor, Compressor and Solenoid Setup
   private Compressor compressor;
-  private DoubleSolenoid solenoid;
-  public final TalonSRX spinner;
+  // private DoubleSolenoid solenoid;
+  // public final TalonSRX spinner;
 
   // Speed Constances
   public final double SPINNER_SPEED = 0.6;
@@ -31,10 +31,10 @@ public class Rolate extends SubsystemBase {
     // compressor.stop();
 
     // Solonoid Setup
-    solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
+    // solenoid = new DoubleSolenoid(Constants.ROLATE_SOLONOID_A, Constants.ROLATE_SOLONOID_B);
     
     // Motors Setup
-    spinner = new TalonSRX(Constants.SPINNER_MOTOR);
+    // spinner = new TalonSRX(Constants.SPINNER_MOTOR);
 
   }
 
@@ -62,21 +62,21 @@ public class Rolate extends SubsystemBase {
    * Set the solenoid to forword postion ("DoubleSolenoid.Value.kForward")
    */
   public void rolate_move_forword(){
-    solenoid.set(DoubleSolenoid.Value.kForward);
+    // solenoid.set(DoubleSolenoid.Value.kForward);
   }
 
   /**
    * Stop the solenoid ("DoubleSolenoid.Value.kOff")
    */
   public void rolate_stop(){
-    solenoid.set(DoubleSolenoid.Value.kOff);
+    // solenoid.set(DoubleSolenoid.Value.kOff);
   }
 
   /**
    * Set the solenoid to reverse postion ("DoubleSolenoid.Value.kReverse")
    */
   public void rolate_move_reverse(){
-    solenoid.set(DoubleSolenoid.Value.kReverse);
+    // solenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
   /**
@@ -84,7 +84,7 @@ public class Rolate extends SubsystemBase {
    * @param speed motors speed
    */
   public void spinner_set_speed(double speed){
-    spinner.set(ControlMode.PercentOutput, speed);
+    // spinner.set(ControlMode.PercentOutput, speed);
   }
 
 

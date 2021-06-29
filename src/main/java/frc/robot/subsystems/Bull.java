@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.Faults;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -15,8 +17,9 @@ import frc.robot.Constants;
 public class Bull extends SubsystemBase {
   // Motors Setup
   public final VictorSPX collector;
-  public final TalonSRX transportation;
-  public final VictorSPX shoot;
+  public final VictorSPX plate;
+  public final TalonFX shoot;
+  public final VictorSPX omni;
 
   // Encoder Setup
   private Encoder enc_shot;
@@ -26,12 +29,13 @@ public class Bull extends SubsystemBase {
   private final double KP_SHOOTER_SPEED = 1;
   private final double KI_SHOOTER_SPEED = 0.0; // 7
   private final double KD_SHOOTER_SPEED = 0.00; // 1
-  private final double SHOOTER_TOLERANCE = 1;
+  private final double SHOOTER_TOLERANCE = 3;
 
   // Speed Contance
-  public final double COLLECTOR_SPEED = -1;
-  public final double TRANS_SPEED = 0.4;
+  public final double COLLECTOR_SPEED = -0.8;
+  public final double TRANS_SPEED = 0.3;
   public final double SHOOT_SPEED = 1;
+  public final double OMNI_SPEED = 0.25;
 
   // Command Setup
   public boolean shoot_trigger = false;
@@ -46,8 +50,9 @@ public class Bull extends SubsystemBase {
   private Bull() {
     // Motors and Encoders
     solenoid = new DoubleSolenoid(Constants.SOLONOID_A, Constants.SOLONOID_B);
-    transportation = new TalonSRX(Constants.TRANS_MOTOR);
-    shoot = new VictorSPX(Constants.SHOT_MOTOR);
+    plate = new VictorSPX(Constants.TRANS_MOTOR);
+    shoot = new TalonFX(Constants.SHOT_MOTOR);
+    omni = new VictorSPX(Constants.OMNI_MOTOR);
     collector = new VictorSPX(Constants.COLLACTER_MOTOR);
 
     // Eencoder setup
@@ -75,7 +80,7 @@ public class Bull extends SubsystemBase {
   /**
    * Set the solenoid to forword postion ("DoubleSolenoid.Value.kForward")
    */
-  public void intake_move_forword() {
+  public void intake_toggle() {
     solenoid.set(DoubleSolenoid.Value.kForward);
   }
 
@@ -101,6 +106,14 @@ public class Bull extends SubsystemBase {
   }
 
   /**
+   * Set the solenoid to reverse postion ("DoubleSolenoid.Value.kReverse")
+   */
+  public void intake_move_forword() {
+    solenoid.set(DoubleSolenoid.Value.kForward);
+  }
+
+
+  /**
    * Set speed of the shooter motors
    * @param speed speed of the motor
    */
@@ -118,6 +131,15 @@ public class Bull extends SubsystemBase {
 
   public boolean shoot_on_t(){
     return shooter_speed_pid.atSetpoint();
+  }
+
+  public double enc_v_shooter(){
+    // System.out.println("speed: " + shoot.getSelectedSensorVelocity());
+    double enc_speed = shoot.getSelectedSensorVelocity(); // speed in unints per 100 ms
+    enc_speed = enc_speed / Constants.FALCON_UNUTES_PER_ROTATION; // rotaion per 100 ms
+    enc_speed = enc_speed * 600; // roation per min
+    SmartDashboard.putNumber("Encoder Speed", enc_speed);
+    return enc_speed;
   }
 
   /**
@@ -138,19 +160,19 @@ public class Bull extends SubsystemBase {
   public void shoot_disable() {
     shooter_speed_pid.reset();
     shot_set_speed(0);
-    transportation.set(ControlMode.PercentOutput, 0);
+    plate.set(ControlMode.PercentOutput, 0);
   }
 
   public void trans_move() {
-    transportation.set(ControlMode.PercentOutput ,-TRANS_SPEED);
+    plate.set(ControlMode.PercentOutput ,-TRANS_SPEED);
   }
 
   public void trans_move_reverse() {
-    transportation.set(ControlMode.PercentOutput, TRANS_SPEED);
+    plate.set(ControlMode.PercentOutput, TRANS_SPEED);
   }
 
   public void trans_stop() {
-    transportation.set(ControlMode.PercentOutput, 0);
+    plate.set(ControlMode.PercentOutput, 0);
   }
 
   /**
