@@ -10,6 +10,7 @@ import frc.robot.commands.IntakeToggleCommand;
 import frc.robot.commands.RolateCommand;
 import frc.robot.commands.SetMotorAxisCommand;
 import frc.robot.commands.SetMotorCanCommand;
+import frc.robot.commands.ShootVelocityCommand;
 import frc.robot.commands.ShotWithClachCommand;
 import frc.robot.commands.TransportAutoCommand;
 import frc.robot.commands.TurnToAngle;
@@ -93,7 +94,7 @@ public class RobotContainer {
     shot_button.toggleWhenPressed(new ShotWithClachCommand(), bull.shoot_trigger);// new SetMotorCanCommand(bull.shoot,
     //                                                                                // -bull.SHOOT_SPEED));
     // shoot_dis_button.whileHeld(new SetMotorCanCommand(bull.shoot, 0.5));
-    trans_button.whileHeld(new SetMotorCanCommand(bull.plate, bull.TRANS_SPEED, bull.omni, bull.OMNI_SPEED));
+    trans_button.whileHeld(new SetMotorCanCommand(bull.plate, bull.TRANS_SPEED, bull.omni, 0.7));
     trans_neg_button.whileHeld(new SetMotorCanCommand(bull.plate, -bull.TRANS_SPEED,bull.omni, -bull.OMNI_SPEED));
     // shot_button.whileHeld(new SetMotorCanCommand(bull.shoot, bull.SHOOT_SPEED));
     // shot_button.whileHeld(new SetMotorAxisCommand(bull.shoot, 3, arms_joystick));
@@ -125,7 +126,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Auto1Command();
+    // return new Auto1Command();
     // return new AngleVisionPidCommand();
+    return new ShootVelocityCommand(4500);
   }
 }

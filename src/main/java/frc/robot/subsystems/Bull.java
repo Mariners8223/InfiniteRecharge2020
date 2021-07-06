@@ -26,10 +26,11 @@ public class Bull extends SubsystemBase {
 
   // Shooter PID Setup
   public PIDController shooter_speed_pid;
-  private final double KP_SHOOTER_SPEED = 1;
+  private final double KP_SHOOTER_SPEED = 0.01;
   private final double KI_SHOOTER_SPEED = 0.0; // 7
   private final double KD_SHOOTER_SPEED = 0.00; // 1
-  private final double SHOOTER_TOLERANCE = 3;
+  private final double SHOOTER_TOLERANCE = 50;
+
 
   // Speed Contance
   public final double COLLECTOR_SPEED = -0.8;
@@ -146,12 +147,16 @@ public class Bull extends SubsystemBase {
    * Set the motor speed by the PID
    */
   public void shoot() {
-    double s = MathUtil.clamp(shooter_speed_pid.calculate(Math.abs(enc_shot.getRate())), 0, 1);
-    shot_set_speed(-s);
+    double s = 2 * sigmoid(shooter_speed_pid.calculate(Math.abs(enc_v_shooter()))) - 1;
+    shot_set_speed(s);
     //shot_set_speed(1);
 
-    // SmartDashboard.putNumber("motorspeed", -s);
+    SmartDashboard.putNumber("motorspeed", s);
     // SmartDashboard.putNumber("velocity", enc_shot.getRate());
+  }
+
+  private double sigmoid(double a){
+    return 1 / (1+Math.exp(-a));
   }
 
   /**
